@@ -1,51 +1,86 @@
 # Da Cecot Food Inc — Website
 
 A custom static rebuild of [dacecotfood.com](https://www.dacecotfood.com/) — an authentic Italian
-comfort food pasta bar and street food kitchen in Edmonton, AB.
+comfort food pasta bar and street food kitchen in Edmonton, AB. Production-ready: full SEO/AIO,
+structured data, responsive, accessible.
 
 ## Stack
 
-Clean static site — no framework, no build step. Plain HTML, CSS, and a small amount of vanilla JS.
+Clean static site — plain HTML, CSS, and vanilla JS. No runtime framework. Pages are generated
+from shared templates by a small Node build script so SEO scaffolding, nav, and footer stay
+consistent across all 13 pages. **The output is plain static HTML** (ideal for SEO/crawlers).
 
-## Pages
+## Pages (13)
 
 | File | Page |
 |------|------|
 | `index.html` | Home |
-| `menu.html` | Menu (Pasta Bar, Drinks & Dessert, Philosophy) |
-| `about.html` | About / our family story |
+| `menu.html` | Menu (Pasta Bar, Drinks & Dessert, Philosophy, FAQ) |
+| `about.html` | About / family story |
+| `experiences.html` | Experiences hub (links the 5 sub-pages) |
+| `sunday-pasta-classes.html` | Sunday Pasta Classes |
+| `pasta-drop-in.html` | Public Pasta Drop-In (Thursdays) |
+| `food-drink-experiences.html` | Food & Drink Special Experiences |
+| `private-events.html` | Private Events (La Famiglia) |
+| `catering.html` | Catering |
+| `events.html` | Events overview |
 | `reservations.html` | Reservation request form |
-| `events.html` | Pasta classes, private events, space rental |
-| `experiences.html` | "At Our Family Table" weekend special |
 | `contact.html` | Contact form + Google Maps embed |
 | `partnerships.html` | Wholesale & retail partnerships |
+
+Plus: `404.html`, `sitemap.xml`, `robots.txt`, `favicon.svg`.
+
+## Build
+
+Pages are authored in the generator, not by hand-editing the `.html` files directly.
+
+```bash
+node .claude/build.js     # regenerates all 13 pages + 404 + sitemap + robots + favicon + styles.min.css
+```
+
+- `.claude/build.js` — head/SEO, nav (with Experiences dropdown), footer, schema helpers, and the
+  7 core pages.
+- `.claude/build-experiences.js` — the 6 Experiences pages and the final writer (sitemap, robots,
+  404, favicon, CSS minification).
+
+> ⚠️ Edit the generator and re-run the build. Editing the `.html` files directly will be
+> overwritten on the next build.
+
+## SEO / AIO
+
+- Unique title + meta description, canonical, Open Graph, Twitter card on every page
+- One `<h1>` per page, semantic `header`/`nav`/`main`/`section`/`article`/`footer`
+- Alt text on every image, lazy loading + `decoding=async`
+- JSON-LD: `Restaurant` (home), `Restaurant`+`LocalBusiness` (contact), `Event` (classes/drop-in),
+  `Service` (experiences/private events/catering), `FAQPage` (where FAQs exist), `BreadcrumbList`
+- Direct "What is…" answer paragraphs + FAQ accordions for AI Overviews / featured snippets
+- Entity-rich copy (Edmonton, Italian cuisine, Da Cecot Food), internal linking, clean slugs
+- `sitemap.xml` + `robots.txt`, minified CSS (`styles.min.css`)
 
 ## Structure
 
 ```
-css/styles.css        Design system + all component styles
-js/main.js            Mobile nav, scroll reveal, back-to-top, form handling
-*.html                One file per page (shared header/footer markup)
-.claude/              Local preview server config (node static server on :4321)
+css/styles.css         Design system source
+css/styles.min.css     Minified, linked by pages (generated)
+js/main.js             Mobile nav, dropdown, FAQ accordion, scroll reveal, back-to-top, forms
+*.html                 Generated static pages
+favicon.svg            Brand monogram favicon
+.claude/               Generator + local preview server (node static server on :4321)
 ```
-
-## Design system
-
-- **Colours:** cream `#f9f7ef`, dark brown `#4a1e18`, dark olive `#374225`,
-  terracotta `#ad5217`, gold `#c4a035`
-- **Type:** Playfair Display (serif headings) + Inter (sans body)
-- **Patterns:** alternating dark/cream sections, pill CTAs, circular portrait crops,
-  two-column value props, three-column offering grids, generous vertical spacing,
-  fade-up-on-scroll (progressive enhancement), mobile hamburger menu
 
 ## Local preview
 
 ```bash
-node .claude/static-server.js   # serves on http://localhost:4321
+node .claude/static-server.js   # http://localhost:4321
 ```
+
+## Images
+
+Currently sourced from the client's Wix CDN (the live site's real photos). The client also has a
+Google Drive folder of originals — see `DRIVE-PHOTOS.md` for the filename/ID inventory and the
+access issue blocking automated import.
 
 ## Notes
 
-The contact form and reservation form are front-end mockups (no backend).
-Booking/ordering on the original Wix site (Cookin, Wix Bookings) link out or
-are represented by native form UI here.
+Contact and reservation forms are front-end mockups (no backend). Cookin ordering and bookings
+link out to / are represented by native form UI.

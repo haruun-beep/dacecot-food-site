@@ -25,6 +25,26 @@
       });
     }
 
+    /* ---- Dropdown (click on mobile, hover handled by CSS on desktop) ---- */
+    document.querySelectorAll('.dropdown-toggle').forEach(function (btn) {
+      var menu = btn.parentElement.querySelector('.dropdown-menu');
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var open = menu.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+
+    /* ---- FAQ accordion ---- */
+    document.querySelectorAll('.faq-q').forEach(function (q) {
+      q.addEventListener('click', function () {
+        var item = q.closest('.faq-item');
+        var isOpen = item.classList.contains('open');
+        item.classList.toggle('open', !isOpen);
+        q.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+      });
+    });
+
     /* ---- Header shadow + back-to-top on scroll ---- */
     var header = document.querySelector('.header');
     var toTop = document.querySelector('.back-to-top');

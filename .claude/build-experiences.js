@@ -1,0 +1,548 @@
+/* ============================================================
+   Da Cecot Food — Experiences sub-pages + final site writer
+   Required by build.js (run: node .claude/build.js)
+   ============================================================ */
+const B = require('./build.js');
+const { pages, page, breadcrumb, breadcrumbSchema, faqBlock, faqSchema, cta, img, IMG, BASE, EXPERIENCE_PAGES, ROOT, fs, path } = B;
+
+const NAP = {
+  name: 'Da Cecot Food Inc', phone: '(825) 888-4218',
+  street: '8137 104 Street', city: 'Edmonton', region: 'AB', country: 'CA', postal: 'T6E 4E3'
+};
+const POSTAL_ADDRESS = {
+  '@type': 'PostalAddress', streetAddress: NAP.street, addressLocality: NAP.city,
+  addressRegion: NAP.region, postalCode: NAP.postal, addressCountry: NAP.country
+};
+
+function eventSchema({ slug, name, desc, image, byDay, startTime, price }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: name,
+    description: desc,
+    image: image,
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    eventStatus: 'https://schema.org/EventScheduled',
+    location: { '@type': 'Place', name: NAP.name, address: POSTAL_ADDRESS },
+    organizer: { '@type': 'Organization', name: NAP.name, url: BASE },
+    eventSchedule: {
+      '@type': 'Schedule',
+      repeatFrequency: 'P1W',
+      byDay: byDay,
+      startTime: startTime
+    },
+    offers: {
+      '@type': 'Offer',
+      price: price,
+      priceCurrency: 'CAD',
+      availability: 'https://schema.org/InStock',
+      url: `${BASE}/${slug}.html`
+    }
+  };
+}
+function serviceSchema({ slug, name, desc, image, priceNote }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: name,
+    name: name,
+    description: desc,
+    image: image,
+    provider: { '@type': 'Restaurant', name: NAP.name, url: BASE, address: POSTAL_ADDRESS, telephone: NAP.phone },
+    areaServed: { '@type': 'City', name: 'Edmonton' },
+    url: `${BASE}/${slug}.html`,
+    offers: { '@type': 'Offer', priceCurrency: 'CAD', description: priceNote, url: `${BASE}/${slug}.html` }
+  };
+}
+const trail = (label) => [{ slug: 'index', label: 'Home' }, { slug: 'experiences', label: 'Experiences' }, { slug: '', label: label }];
+
+/* small helper: standard experience page sections */
+function expHero(id, h1, sub, image, dark) {
+  return `    <section class="hero hero--page${dark ? ' hero--dark' : ''}" style="background-image:url('${image}');" aria-labelledby="${id}">
+      <div class="hero__inner reveal">
+        <h1 id="${id}">${h1}</h1>
+        <p>${sub}</p>
+      </div>
+    </section>`;
+}
+
+/* ============================================================
+   EXPERIENCES HUB
+   ============================================================ */
+const hubFaqs = [
+  { q: 'What experiences does Da Cecot offer?', a: 'Da Cecot offers five Italian food experiences in Edmonton: Sunday Pasta Classes, a weekly Public Pasta Drop-In, Food & Drink Special Experiences, Private Events (La Famiglia), and Catering. Each is built around fresh handmade pasta and the warmth of an Italian family table.' },
+  { q: 'How do I book a Da Cecot experience?', a: 'Most experiences can be booked through our reservations page or by contacting us at (825) 888-4218 or info@dacecotfood.com. Private events and catering start with an inquiry so we can tailor the details to your group.' },
+  { q: 'Where are Da Cecot experiences held?', a: 'All experiences take place at our kitchen and dining room at 8137 104 Street, Edmonton, AB — except catering, which we bring to your location across the Edmonton area.' }
+];
+const hubCards = [
+  { slug: 'sunday-pasta-classes', t: 'Sunday Pasta Classes', img: IMG.pastawine, d: 'Learn to make fresh pasta by hand in a relaxed Sunday class — then sit down and enjoy what you made.' },
+  { slug: 'pasta-drop-in', t: 'Public Pasta Drop-In', img: IMG.greenpasta, d: 'Our casual Thursday community pasta night. No reservation needed — just pull up a chair.' },
+  { slug: 'food-drink-experiences', t: 'Food & Drink Experiences', img: IMG.wine, d: 'Curated tasting evenings and wine-paired Italian menus for a special night out.' },
+  { slug: 'private-events', t: 'Private Events', img: IMG.dining, d: 'Host your group at our family table with a private, multi-course La Famiglia dinner.' },
+  { slug: 'catering', t: 'Catering', img: IMG.lasagna, d: 'Bring Da Cecot to your event with budget-friendly, heat-and-serve Italian catering.' }
+];
+pages.push(page({
+  slug: 'experiences',
+  active: 'experiences',
+  title: 'Experiences | Pasta Classes & Italian Dining, Edmonton',
+  description: 'Discover Da Cecot experiences in Edmonton: Sunday pasta classes, Thursday drop-in nights, wine pairings, private La Famiglia dinners & catering. Reserve now.',
+  ogImage: IMG.dining,
+  schema: [breadcrumbSchema([{ slug: 'index', label: 'Home' }, { slug: 'experiences', label: 'Experiences' }]), faqSchema(hubFaqs)],
+  body: `${breadcrumb([{ slug: 'index', label: 'Home' }, { slug: 'experiences', label: 'Experiences' }])}
+
+    <section class="hero hero--page" style="background-image:url('${IMG.dining}');" aria-labelledby="xp-h1">
+      <div class="hero__inner reveal">
+        <h1 id="xp-h1">Experiences</h1>
+        <p>From hands-on pasta classes to private dinners at our family table — here's how to share a little Italian magic with us in Edmonton.</p>
+      </div>
+    </section>
+
+    <section class="section section--cream" aria-labelledby="xp-intro-h">
+      <div class="container text-center narrow reveal" style="margin-bottom:54px;">
+        <h2 id="xp-intro-h">Five ways to gather around the table</h2>
+        <p>Da Cecot is more than a pasta bar. We host classes, community nights, tastings, private dinners, and catering — each one an invitation to slow down, eat well, and feel like family. Choose the experience that fits your occasion.</p>
+      </div>
+      <div class="container">
+        <div class="card-grid reveal">
+${hubCards.map(c => `          <article class="xp-card">
+            ${img(c.img, c.t + ' at Da Cecot Food, Edmonton')}
+            <div class="xp-card__body">
+              <h3>${c.t}</h3>
+              <p>${c.d}</p>
+              <a class="xp-card__link" href="${c.slug}.html">Learn more</a>
+            </div>
+          </article>`).join('\n')}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--brown" aria-labelledby="weekend-h">
+      <div class="container">
+        <div class="two-col reveal">
+          ${img(IMG.dining, 'A dinner table set with pasta and wine for the At Our Family Table experience', 'circle-img')}
+          <div>
+            <span class="label">Weekend Special</span>
+            <h2 id="weekend-h">At Our Family Table</h2>
+            <p>Join us for a relaxed, intimate evening of fixed-menu dining — the kind of unhurried meal that feels like Sunday dinner at nonna's. Good food, good wine, and good company, all at our family table.</p>
+            <p class="price-tag">Starting from CA$15.00 / guest</p>
+            <ul class="detail-list">
+              <li><strong>Duration:</strong> 2 hrs 30 min</li>
+              <li><strong>Availability:</strong> Weekends · multiple dates</li>
+            </ul>
+            ${cta('reservations.html', 'Reserve Now', 'terra')}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--cream" aria-labelledby="xp-faq-h">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:40px;"><h2 id="xp-faq-h">Experiences FAQ</h2></div>
+${faqBlock(hubFaqs)}
+      </div>
+    </section>`
+}));
+
+/* ============================================================
+   1. SUNDAY PASTA CLASSES
+   ============================================================ */
+const classFaqs = [
+  { q: 'Do I need any cooking experience?', a: 'Not at all. Our Sunday pasta classes are beginner-friendly and fully guided. Whether you have never touched a rolling pin or you cook every night, our team walks you through every step from dough to plate.' },
+  { q: 'What is included in a pasta class?', a: 'Your spot includes hands-on instruction, all ingredients and equipment, an apron to use, the pasta you make to enjoy together at the end, and the recipes to take home so you can recreate them.' },
+  { q: 'How long is a class and how many people can attend?', a: 'Classes run about 2.5 to 3 hours and are capped at 15 guests so everyone gets personal attention. They run on select Sundays — contact us for the next available dates.' },
+  { q: 'Can I come on my own or book for a couple?', a: 'Both work beautifully. Pricing starts from $95 per person, with a couples option from $185. Solo guests are always welcome and often leave with new friends.' },
+  { q: 'Can I buy a pasta class as a gift?', a: 'Yes — a pasta class makes a memorable gift. Reach out at (825) 888-4218 or info@dacecotfood.com and we will help you arrange it.' }
+];
+pages.push(page({
+  slug: 'sunday-pasta-classes',
+  active: 'sunday-pasta-classes',
+  title: 'Sunday Pasta Classes in Edmonton | Da Cecot Food',
+  description: 'Learn to make fresh pasta by hand at Da Cecot in Edmonton. Beginner-friendly Sunday classes, small groups, all included. Starting from $95 — book your spot.',
+  ogImage: IMG.pastawine,
+  schema: [
+    breadcrumbSchema(trail('Sunday Pasta Classes').map((t, i) => i === 2 ? { slug: 'sunday-pasta-classes', label: t.label } : t)),
+    eventSchema({ slug: 'sunday-pasta-classes', name: 'Sunday Pasta Class', desc: 'Hands-on Italian pasta-making class in Edmonton, from dough to plate, ending with a shared meal.', image: IMG.pastawine, byDay: 'https://schema.org/Sunday', startTime: '12:00', price: '95' }),
+    faqSchema(classFaqs)
+  ],
+  body: `${breadcrumb(trail('Sunday Pasta Classes').map((t, i) => i === 2 ? { slug: 'sunday-pasta-classes', label: t.label } : t))}
+
+${expHero('spc-h1', 'Sunday Pasta Classes', 'Roll up your sleeves and learn to make fresh pasta by hand — then sit down and savour what you created.', IMG.pastawine, true)}
+
+    <section class="section section--cream" aria-labelledby="spc-what-h">
+      <div class="container narrow reveal text-center">
+        <h2 id="spc-what-h">What is a Da Cecot pasta class?</h2>
+        <p class="lead">A Sunday pasta class at Da Cecot is a hands-on, beginner-friendly workshop in Edmonton where you make fresh Italian pasta from scratch — mixing the dough, shaping it by hand, and finishing it with one of our signature sauces. You'll spend about 2.5–3 hours with our family, then sit down to eat everything you've made.</p>
+      </div>
+    </section>
+
+    <section class="section section--brown" aria-labelledby="spc-incl-h">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:14px;"><h2 id="spc-incl-h">What's included</h2></div>
+        <div class="info-grid reveal">
+          <div><h3>Hands-on instruction</h3><p>Step-by-step guidance from our family — no experience needed.</p></div>
+          <div><h3>All ingredients &amp; tools</h3><p>Flour, eggs, equipment, and an apron are all provided.</p></div>
+          <div><h3>A shared meal</h3><p>Sit down and enjoy the pasta you made, together at the table.</p></div>
+          <div><h3>Recipes to take home</h3><p>Leave with the techniques and recipes to recreate it all.</p></div>
+        </div>
+        <div class="text-center" style="margin-top:30px;">
+          <p class="price-tag">Starting from $95 per person · $185 per couple</p>
+          <p style="opacity:0.85;">About 2.5–3 hours · Maximum 15 guests · Select Sundays</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--cream" aria-labelledby="spc-book-h">
+      <div class="container text-center narrow reveal">
+        <h2 id="spc-book-h">How to book a class</h2>
+        <p>Classes are small and fill quickly. Reserve your spot online, or contact us at <a href="tel:+18258884218">(825) 888-4218</a> or <a href="mailto:info@dacecotfood.com">info@dacecotfood.com</a> for the next available Sunday dates and group bookings.</p>
+        ${cta('reservations.html', 'Book Your Spot', 'green')}
+      </div>
+    </section>
+
+    <section class="section section--brown" aria-labelledby="spc-faq-h">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:40px;"><h2 id="spc-faq-h">Pasta class FAQ</h2></div>
+${faqBlock(classFaqs)}
+      </div>
+    </section>`
+}));
+
+/* ============================================================
+   2. PUBLIC PASTA DROP-IN
+   ============================================================ */
+const dropFaqs = [
+  { q: 'Do I need a reservation for the pasta drop-in?', a: 'No reservation is required. The Public Pasta Drop-In is a casual, walk-in night — just show up on Thursday between 4 PM and 8 PM and grab a seat. For larger groups, a quick call ahead helps us be ready for you.' },
+  { q: 'When is the pasta drop-in?', a: 'Our Public Pasta Drop-In runs every Thursday from 4 PM to 8 PM at 8137 104 Street, Edmonton. It is our weekly community pasta night.' },
+  { q: 'What can I order at the drop-in?', a: 'Choose from our pasta bar — a rotating selection of fresh pasta shapes and house sauces, including our signature Caserecce — plus tiramisu and drinks. Everything is available to dine in or take to go.' },
+  { q: 'Is the drop-in family-friendly?', a: 'Absolutely. The drop-in is relaxed and welcoming for all ages, families, and solo diners alike — exactly the kind of easy weeknight meal we love to share.' }
+];
+pages.push(page({
+  slug: 'pasta-drop-in',
+  active: 'pasta-drop-in',
+  title: 'Public Pasta Drop-In (Thursdays) | Da Cecot, Edmonton',
+  description: 'Da Cecot’s casual Thursday pasta night in Edmonton. Walk in 4–8 PM, no reservation needed — fresh pasta, house sauces & good company. Dine in or take out.',
+  ogImage: IMG.greenpasta,
+  schema: [
+    breadcrumbSchema(trail('Public Pasta Drop-In').map((t, i) => i === 2 ? { slug: 'pasta-drop-in', label: t.label } : t)),
+    eventSchema({ slug: 'pasta-drop-in', name: 'Public Pasta Drop-In', desc: 'Casual weekly walk-in pasta night at Da Cecot in Edmonton, every Thursday evening.', image: IMG.greenpasta, byDay: 'https://schema.org/Thursday', startTime: '16:00', price: '0' }),
+    faqSchema(dropFaqs)
+  ],
+  body: `${breadcrumb(trail('Public Pasta Drop-In').map((t, i) => i === 2 ? { slug: 'pasta-drop-in', label: t.label } : t))}
+
+${expHero('drop-h1', 'Public Pasta Drop-In', 'Our casual Thursday community pasta night in Edmonton. No reservation, no fuss — just pull up a chair.', IMG.greenpasta, true)}
+
+    <section class="section section--cream" aria-labelledby="drop-what-h">
+      <div class="container narrow reveal text-center">
+        <h2 id="drop-what-h">What is the Public Pasta Drop-In?</h2>
+        <p class="lead">The Public Pasta Drop-In is Da Cecot's weekly walk-in pasta night, held every Thursday from 4 PM to 8 PM in Edmonton. There's nothing to book — simply drop by, choose your pasta and sauce from the bar, and enjoy fresh Italian comfort food in a relaxed, neighbourly setting.</p>
+      </div>
+    </section>
+
+    <section class="section section--brown" aria-labelledby="drop-expect-h">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:14px;"><h2 id="drop-expect-h">What to expect</h2></div>
+        <div class="info-grid reveal">
+          <div><h3>Walk-in welcome</h3><p>No reservation needed — seating is first come, first served.</p></div>
+          <div><h3>Build your bowl</h3><p>Pick a fresh pasta shape and a house sauce, including our signature Caserecce.</p></div>
+          <div><h3>Dine in or take out</h3><p>Stay and relax, or grab it &amp; go on your way home.</p></div>
+          <div><h3>Community vibe</h3><p>A friendly weeknight table for families, friends, and solo diners.</p></div>
+        </div>
+        <div class="text-center" style="margin-top:30px;">
+          <p class="price-tag">À la carte · Contact for current pricing</p>
+          <p style="opacity:0.85;">Every Thursday · 4 PM – 8 PM · 8137 104 Street, Edmonton</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--cream" aria-labelledby="drop-how-h">
+      <div class="container text-center narrow reveal">
+        <h2 id="drop-how-h">How to join</h2>
+        <p>Just show up on Thursday between 4 PM and 8 PM — no booking required. Bringing a bigger group? Give us a call at <a href="tel:+18258884218">(825) 888-4218</a> so we can save room for everyone.</p>
+        ${cta('contact.html', 'Call Ahead for Groups', 'green')}
+      </div>
+    </section>
+
+    <section class="section section--brown" aria-labelledby="drop-faq-h">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:40px;"><h2 id="drop-faq-h">Drop-in FAQ</h2></div>
+${faqBlock(dropFaqs)}
+      </div>
+    </section>`
+}));
+
+/* ============================================================
+   3. FOOD & DRINK SPECIAL EXPERIENCES
+   ============================================================ */
+const fdFaqs = [
+  { q: 'What are Food & Drink Experiences?', a: 'Food & Drink Experiences are Da Cecot’s special ticketed evenings in Edmonton — multi-course tasting menus, wine-paired Italian dinners, Cicchetti small-bite nights, and seasonal themed events. Each is a hosted, curated occasion beyond our everyday pasta bar.' },
+  { q: 'What is included?', a: 'Depending on the evening, your ticket includes a multi-course menu, curated wine or beverage pairings, and a hosted experience guided by our family. Each event page or inquiry will outline exactly what is served.' },
+  { q: 'How much do these experiences cost?', a: 'Pricing varies by event and what is included. Contact us for current dates and pricing, and we will share the details for each upcoming experience.' },
+  { q: 'Can you accommodate dietary needs?', a: 'Yes — let us know about allergies or dietary preferences when you book and we will do our best to tailor your tasting. Reach us at (825) 888-4218 or info@dacecotfood.com.' }
+];
+pages.push(page({
+  slug: 'food-drink-experiences',
+  active: 'food-drink-experiences',
+  title: 'Food & Drink Experiences | Tastings & Wine, Edmonton',
+  description: 'Curated Italian tasting evenings & wine-paired dinners at Da Cecot in Edmonton. Multi-course menus, small bites & seasonal nights. Limited seating — inquire now.',
+  ogImage: IMG.wine,
+  schema: [
+    breadcrumbSchema(trail('Food & Drink Experiences').map((t, i) => i === 2 ? { slug: 'food-drink-experiences', label: t.label } : t)),
+    serviceSchema({ slug: 'food-drink-experiences', name: 'Food & Drink Special Experiences', desc: 'Curated multi-course tasting menus and wine-paired Italian dinners in Edmonton.', image: IMG.wine, priceNote: 'Varies by event — contact for pricing' }),
+    faqSchema(fdFaqs)
+  ],
+  body: `${breadcrumb(trail('Food & Drink Experiences').map((t, i) => i === 2 ? { slug: 'food-drink-experiences', label: t.label } : t))}
+
+${expHero('fd-h1', 'Food &amp; Drink Experiences', 'Curated tasting evenings and wine-paired Italian menus — a special night out, the Da Cecot way.', IMG.wine, true)}
+
+    <section class="section section--cream" aria-labelledby="fd-what-h">
+      <div class="container narrow reveal text-center">
+        <h2 id="fd-what-h">What are Food &amp; Drink Experiences?</h2>
+        <p class="lead">Food &amp; Drink Experiences are Da Cecot's special ticketed evenings in Edmonton — multi-course tasting menus, wine-paired dinners, Cicchetti small-bite nights, and seasonal themed events. Each is a hosted, intimate occasion that goes beyond our everyday pasta bar.</p>
+      </div>
+    </section>
+
+    <section class="section section--brown" aria-labelledby="fd-incl-h">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:14px;"><h2 id="fd-incl-h">What to expect</h2></div>
+        <div class="info-grid reveal">
+          <div><h3>Multi-course menus</h3><p>Thoughtfully built tasting menus that tell a story, course by course.</p></div>
+          <div><h3>Wine &amp; pairings</h3><p>Italian-inspired drink pairings chosen to match each plate.</p></div>
+          <div><h3>Cicchetti small bites</h3><p>Italian small-plate nights perfect for grazing and sharing.</p></div>
+          <div><h3>Hosted &amp; intimate</h3><p>Limited seats and a warm, personal evening with our family.</p></div>
+        </div>
+        <div class="text-center" style="margin-top:30px;">
+          <p class="price-tag">Pricing varies by event · Contact for details</p>
+          <p style="opacity:0.85;">Limited seating · Select dates throughout the year</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--cream" aria-labelledby="fd-how-h">
+      <div class="container text-center narrow reveal">
+        <h2 id="fd-how-h">How to reserve</h2>
+        <p>Seats are limited and these evenings book up. Contact us for upcoming dates, menus, and pricing, and we'll save you a place at the table.</p>
+        ${cta('contact.html', 'Inquire About Dates', 'green')}
+      </div>
+    </section>
+
+    <section class="section section--brown" aria-labelledby="fd-faq-h">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:40px;"><h2 id="fd-faq-h">Food &amp; Drink FAQ</h2></div>
+${faqBlock(fdFaqs)}
+      </div>
+    </section>`
+}));
+
+/* ============================================================
+   4. PRIVATE EVENTS
+   ============================================================ */
+const peFaqs = [
+  { q: 'How many guests can a private event host?', a: 'La Famiglia private events are designed for groups of 10 to 25 guests. Our dining room seats up to 26, so we can host everything from an intimate dinner to a full private gathering.' },
+  { q: 'What is included in a private event?', a: 'Private events include a dedicated space, a custom multi-course Italian menu, wine, and music — typically running 2.5 to 3 hours. We tailor the menu and details to your occasion.' },
+  { q: 'How much does a private event cost?', a: 'Private dinners start from $95 per guest, depending on the menu and inclusions. A 50% deposit confirms your booking.' },
+  { q: 'How do I book a private event?', a: 'Start with an inquiry through our contact page or call (825) 888-4218. We will discuss your date, group size, and menu, then secure your evening with a deposit.' },
+  { q: 'Can you accommodate dietary restrictions?', a: 'Yes. Share any allergies or dietary needs when planning your event and we will build the menu around your group.' }
+];
+pages.push(page({
+  slug: 'private-events',
+  active: 'private-events',
+  title: 'Private Events & Group Dining | Da Cecot, Edmonton',
+  description: 'Host a private La Famiglia dinner at Da Cecot in Edmonton. Multi-course Italian menu, wine & music for 10–25 guests. Starting from $95/guest — inquire today.',
+  ogImage: IMG.dining,
+  schema: [
+    breadcrumbSchema(trail('Private Events').map((t, i) => i === 2 ? { slug: 'private-events', label: t.label } : t)),
+    serviceSchema({ slug: 'private-events', name: 'La Famiglia Private Events', desc: 'Private multi-course Italian dinners for groups of 10–25 in Edmonton, with wine and music.', image: IMG.dining, priceNote: 'Starting from $95 per guest' }),
+    faqSchema(peFaqs)
+  ],
+  body: `${breadcrumb(trail('Private Events').map((t, i) => i === 2 ? { slug: 'private-events', label: t.label } : t))}
+
+${expHero('pe-h1', 'Private Events', 'Gather your people at our family table for a private, multi-course Italian dinner — wine, music, and warmth included.', IMG.dining, true)}
+
+    <section class="section section--cream" aria-labelledby="pe-what-h">
+      <div class="container narrow reveal text-center">
+        <h2 id="pe-what-h">What is a La Famiglia private event?</h2>
+        <p class="lead">A La Famiglia private event is a private group dinner at Da Cecot in Edmonton for 10 to 25 guests. You get a dedicated space and a custom multi-course Italian menu paired with wine and music — an unhurried, intimate evening hosted by our family, ideal for birthdays, celebrations, and team gatherings.</p>
+      </div>
+    </section>
+
+    <section class="section section--brown" aria-labelledby="pe-incl-h">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:14px;"><h2 id="pe-incl-h">What's included</h2></div>
+        <div class="info-grid reveal">
+          <div><h3>Your own space</h3><p>A dedicated dining room for your group, seating up to 26.</p></div>
+          <div><h3>Custom multi-course menu</h3><p>An Italian menu tailored to your occasion and tastes.</p></div>
+          <div><h3>Wine &amp; music</h3><p>Beverages and ambiance to set the tone for the evening.</p></div>
+          <div><h3>2.5–3 hours together</h3><p>A relaxed timeline so no one feels rushed.</p></div>
+        </div>
+        <div class="text-center" style="margin-top:30px;">
+          <p class="price-tag">Starting from $95 per guest</p>
+          <p style="opacity:0.85;">10–25 guests · 50% deposit confirms your booking</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--cream" aria-labelledby="pe-how-h">
+      <div class="container text-center narrow reveal">
+        <h2 id="pe-how-h">How to book a private event</h2>
+        <p>Tell us your date, group size, and what you're celebrating. We'll craft a menu to match and confirm your evening with a 50% deposit. Reach us at <a href="tel:+18258884218">(825) 888-4218</a> or through our contact form.</p>
+        ${cta('contact.html', 'Inquire Now', 'green')}
+      </div>
+    </section>
+
+    <section class="section section--brown" aria-labelledby="pe-faq-h">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:40px;"><h2 id="pe-faq-h">Private events FAQ</h2></div>
+${faqBlock(peFaqs)}
+      </div>
+    </section>`
+}));
+
+/* ============================================================
+   5. CATERING
+   ============================================================ */
+const catFaqs = [
+  { q: 'What does Da Cecot cater?', a: 'We cater fresh Italian comfort food across Edmonton — trays of pasta with our house sauces, baked lasagna, sides, and dessert. Menus suit offices, parties, celebrations, and gatherings, with heat-and-serve options to make hosting easy.' },
+  { q: 'How much does catering cost?', a: 'Catering is budget-friendly and quoted per event based on your menu and headcount. Contact us for a custom quote tailored to your gathering.' },
+  { q: 'How much notice do you need?', a: 'We recommend reaching out as early as possible — especially for larger orders and weekends — so we can confirm availability and prep your menu fresh. Get in touch and we will let you know what is possible for your date.' },
+  { q: 'Do you deliver, and where?', a: 'We serve the Edmonton area, including Millwoods, Terwillegar, Chappelle, and Heritage Valley. Share your location when you inquire and we will confirm delivery details.' },
+  { q: 'Can you handle vegetarian, vegan, or gluten-free needs?', a: 'Yes. We offer egg-based, vegan, and gluten-free pasta options and can build your catering menu around dietary needs. Just let us know when you request a quote.' }
+];
+pages.push(page({
+  slug: 'catering',
+  active: 'catering',
+  title: 'Italian Catering in Edmonton | Da Cecot Food',
+  description: 'Budget-friendly Italian catering in Edmonton from Da Cecot. Fresh pasta, lasagna trays & sauces for offices, parties & events. Heat-and-serve — get a quote.',
+  ogImage: IMG.lasagna,
+  schema: [
+    breadcrumbSchema(trail('Catering').map((t, i) => i === 2 ? { slug: 'catering', label: t.label } : t)),
+    serviceSchema({ slug: 'catering', name: 'Italian Catering', desc: 'Budget-friendly Italian catering in Edmonton: fresh pasta, lasagna trays, and sauces for events and offices.', image: IMG.lasagna, priceNote: 'Custom quote per event' }),
+    faqSchema(catFaqs)
+  ],
+  body: `${breadcrumb(trail('Catering').map((t, i) => i === 2 ? { slug: 'catering', label: t.label } : t))}
+
+${expHero('cat-h1', 'Catering', 'Bring Da Cecot to your table — budget-friendly, handcrafted Italian catering for events across Edmonton.', IMG.lasagna, true)}
+
+    <section class="section section--cream" aria-labelledby="cat-what-h">
+      <div class="container narrow reveal text-center">
+        <h2 id="cat-what-h">What is Da Cecot catering?</h2>
+        <p class="lead">Da Cecot catering brings our fresh Italian comfort food to your event anywhere in Edmonton. We prepare trays of handmade pasta, slow-cooked sauces, baked lasagna, sides, and dessert — designed to heat and serve — so you can host offices, parties, and celebrations without the stress.</p>
+      </div>
+    </section>
+
+    <section class="section section--brown" aria-labelledby="cat-incl-h">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:14px;"><h2 id="cat-incl-h">What we offer</h2></div>
+        <div class="info-grid reveal">
+          <div><h3>Pasta trays</h3><p>Fresh pasta with your choice of our signature house sauces.</p></div>
+          <div><h3>Lasagna</h3><p>Hand-layered lasagna, baked and ready to heat and serve.</p></div>
+          <div><h3>Custom packages</h3><p>Menus scaled to your headcount, budget, and occasion.</p></div>
+          <div><h3>Dietary options</h3><p>Egg-based, vegan, and gluten-free pasta available.</p></div>
+        </div>
+        <div class="text-center" style="margin-top:30px;">
+          <p class="price-tag">Contact for a custom quote</p>
+          <p style="opacity:0.85;">Serving Edmonton &amp; surrounding neighbourhoods</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--cream" aria-labelledby="cat-how-h">
+      <div class="container text-center narrow reveal">
+        <h2 id="cat-how-h">How to order catering</h2>
+        <p>Tell us your date, headcount, and the kind of menu you have in mind, and we'll send a custom quote. Reach us at <a href="tel:+18258884218">(825) 888-4218</a> or <a href="mailto:info@dacecotfood.com">info@dacecotfood.com</a>, or use our contact form.</p>
+        ${cta('contact.html', 'Request a Quote', 'green')}
+      </div>
+    </section>
+
+    <section class="section section--brown" aria-labelledby="cat-faq-h">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:40px;"><h2 id="cat-faq-h">Catering FAQ</h2></div>
+${faqBlock(catFaqs)}
+      </div>
+    </section>`
+}));
+
+/* ============================================================
+   FINAL WRITE: pages, favicon, robots, sitemap, 404, min css
+   ============================================================ */
+const ALL_SLUGS = [
+  'index', 'menu', 'about', 'experiences', 'sunday-pasta-classes', 'pasta-drop-in',
+  'food-drink-experiences', 'private-events', 'catering', 'events', 'reservations',
+  'contact', 'partnerships'
+];
+
+// pages array order matches push order; write each
+pages.forEach((html) => {
+  const m = html.match(/<link rel="canonical" href="([^"]+)">/);
+  let slug = 'index';
+  if (m) {
+    const u = m[1].replace(BASE, '').replace(/^\//, '').replace('.html', '').replace(/\/$/, '');
+    slug = u === '' ? 'index' : u;
+  }
+  fs.writeFileSync(path.join(ROOT, slug + '.html'), html, 'utf8');
+});
+
+/* favicon — terracotta circle with serif "D" monogram */
+const favicon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#4a1e18"/>
+  <circle cx="32" cy="32" r="22" fill="none" stroke="#c4a035" stroke-width="2.5"/>
+  <text x="32" y="43" font-family="Georgia, 'Times New Roman', serif" font-size="34" fill="#f9f7ef" text-anchor="middle" font-style="italic">D</text>
+</svg>`;
+fs.writeFileSync(path.join(ROOT, 'favicon.svg'), favicon, 'utf8');
+
+/* robots.txt */
+const robots = `User-agent: *
+Allow: /
+
+Sitemap: ${BASE}/sitemap.xml
+`;
+fs.writeFileSync(path.join(ROOT, 'robots.txt'), robots, 'utf8');
+
+/* sitemap.xml */
+const today = '2026-05-30';
+const priority = (s) => s === 'index' ? '1.0' : (['menu', 'experiences', 'contact', 'reservations'].includes(s) ? '0.9' : '0.8');
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${ALL_SLUGS.map(s => `  <url>
+    <loc>${BASE}/${s === 'index' ? '' : s + '.html'}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${s === 'index' ? 'weekly' : 'monthly'}</changefreq>
+    <priority>${priority(s)}</priority>
+  </url>`).join('\n')}
+</urlset>
+`;
+fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
+
+/* 404 page */
+const notFound = page({
+  slug: '404',
+  active: '',
+  title: 'Page Not Found | Da Cecot Food, Edmonton',
+  description: "The page you're looking for isn't here. Head back to Da Cecot Food's homepage to explore our Italian menu, experiences, and reservations in Edmonton.",
+  ogImage: IMG.pasta,
+  schema: [],
+  body: `    <section class="section section--brown" style="min-height:60vh; display:flex; align-items:center;">
+      <div class="container text-center narrow reveal">
+        <span class="label">Error 404</span>
+        <h1>This page wandered off.</h1>
+        <p>The page you're looking for can't be found — but there's still plenty of pasta to discover. Let's get you back to the table.</p>
+        <div class="btn-wrap"><a href="index.html" class="btn btn--terra">Back to Home</a></div>
+        <p style="margin-top:30px;"><a href="menu.html" style="color:var(--gold); text-decoration:underline;">View the Menu</a> &nbsp;·&nbsp; <a href="experiences.html" style="color:var(--gold); text-decoration:underline;">Experiences</a> &nbsp;·&nbsp; <a href="contact.html" style="color:var(--gold); text-decoration:underline;">Contact</a></p>
+      </div>
+    </section>`
+});
+fs.writeFileSync(path.join(ROOT, '404.html'), notFound.replace('<meta name="robots" content="index, follow">', '<meta name="robots" content="noindex, follow">'), 'utf8');
+
+/* minify CSS */
+function minifyCss(css) {
+  return css
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/\s*([{}:;,>])\s*/g, '$1')
+    .replace(/;}/g, '}')
+    .trim();
+}
+const srcCss = fs.readFileSync(path.join(ROOT, 'css', 'styles.css'), 'utf8');
+fs.writeFileSync(path.join(ROOT, 'css', 'styles.min.css'), minifyCss(srcCss), 'utf8');
+
+console.log('Built ' + pages.length + ' pages + 404, sitemap, robots, favicon, minified CSS.');
+console.log('Slugs: ' + ALL_SLUGS.join(', '));
