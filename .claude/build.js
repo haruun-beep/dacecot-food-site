@@ -506,7 +506,7 @@ pages.push(page({
         <span class="label">Eat With Us</span>
         <h1 id="menu-h1">Our Menu</h1>
         <p>Fresh handmade pasta, slow-cooked house sauces, and lasagna baked daily. Build your own bowl — dine in or grab it &amp; go.</p>
-        <p class="hero__note">À la carte · Call ahead for dietary questions or large orders</p>
+        <p class="hero__note">À la carte · Call <a href="tel:${NAP.phoneHref}">${NAP.phone}</a> for dietary questions or large orders</p>
       </div>
     </section>
 
@@ -603,8 +603,11 @@ pages.push(page({
       <div class="container text-center narrow reveal">
         <span class="label" style="color:var(--terracotta);">Save Your Spot</span>
         <h2 id="menu-cta-h">Come hungry. Leave family.</h2>
-        <p>Seating is limited for our weekend specials — reserve ahead so we can save you a place at the table.</p>
-        ${cta('reservations.html', 'Reserve a Table', 'green')}
+        <p>Seating is limited for our weekend specials — reserve ahead so we can save you a place at the table. Questions about the menu or a large order? Call us at <a href="tel:${NAP.phoneHref}">${NAP.phone}</a>.</p>
+        <div class="btn-group" style="justify-content:center;">
+          <a href="reservations.html" class="btn btn--green">Reserve a Table</a>
+          <a href="tel:${NAP.phoneHref}" class="btn btn--outline">Call ${NAP.phone}</a>
+        </div>
       </div>
     </section>`
 }));
@@ -856,23 +859,27 @@ pages.push(page({
         <div class="text-center narrow reveal" style="margin-bottom:54px;">
           <span class="label" style="color:var(--terracotta);">The Shop Menu</span>
           <h2 id="shop-h">Made today, cooked at yours.</h2>
-          <p>Handmade in our kitchen and crafted fresh to order. Call <a href="tel:${NAP.phoneHref}">${NAP.phone}</a> to reserve your dishes for pickup — availability rotates with the season.</p>
+          <p>Handmade in our kitchen and crafted fresh to order — please allow about 2 hours. Call <a href="tel:${NAP.phoneHref}">${NAP.phone}</a> to reserve your dishes for pickup; availability rotates with the season.</p>
         </div>
         <div class="offer-grid reveal" data-stagger>
           <article class="offer-card">
             <div class="offer-card__img zoom">${img(IMG.food, 'Handmade gnocchi with Plasé tomato sauce from da Cecot, Edmonton')}</div>
             <div class="offer-card__body">
               <h3>Gnocchi di Pomodoro Plasé</h3>
-              <p>Soft, pillowy gnocchi crafted fresh by hand, served with our signature Plasé tomato sauce — rich, comforting flavour in every bite. Served hot for lunch. Add creamy stracciatella di mozzarella for an extra touch of indulgence.</p>
-              <span class="offer-card__price">$12</span>
+              <p>Soft, pillowy gnocchi crafted fresh by hand, served with our signature Plasé tomato sauce — rich, comforting flavour in every bite. Served hot for lunch.</p>
+              <span class="offer-card__price">$12 <small>Individual · 250 g</small></span>
+              <p class="offer-card__opts">Family size (450 g) — $24 · Add stracciatella +$5 · Italian salad +$4</p>
+              <p class="offer-card__allergens">Contains: dairy, egg, gluten</p>
             </div>
           </article>
           <article class="offer-card">
             <div class="offer-card__img zoom">${img(IMG.product, 'Handmade potato and sausage ravioli with butter and sage from da Cecot, Edmonton')}</div>
             <div class="offer-card__body">
               <h3>Potato &amp; Sausage Ravioli</h3>
-              <p>Handmade ravioli generously filled with tender potato and savoury sausage. Each delicate pocket is crafted fresh and paired with our handmade butter &amp; sage sauce to finish at home.</p>
-              <span class="offer-card__price">$18</span>
+              <p>Handmade ravioli generously filled with tender potato and savoury sausage, paired with our handmade butter &amp; sage sauce to finish at home.</p>
+              <span class="offer-card__price">$18 <small>Individual · 250 g</small></span>
+              <p class="offer-card__opts">Family size (450 g) — $30</p>
+              <p class="offer-card__allergens">Contains: egg, gluten, dairy</p>
             </div>
           </article>
           <article class="offer-card">
@@ -880,7 +887,9 @@ pages.push(page({
             <div class="offer-card__body">
               <h3>Tortelloni Verdi</h3>
               <p>Delicate hand-closed spinach pasta parcels filled with a creamy blend of fine cheeses, served in a luxurious, velvety mushroom sauce. An elegant taste of Italian comfort.</p>
-              <span class="offer-card__price">$18</span>
+              <span class="offer-card__price">$18 <small>Individual · 250 g</small></span>
+              <p class="offer-card__opts">Family size available — call for pricing</p>
+              <p class="offer-card__allergens">Contains: gluten, dairy, egg, soy</p>
             </div>
           </article>
           <article class="offer-card">
@@ -889,17 +898,19 @@ pages.push(page({
               <h3>Sfoglia Lasagna Bianca</h3>
               <p>A delicate white-sauce lasagna of thin handmade pasta sheets, layered with seasoned beef, creamy béchamel, and mozzarella. A lighter alternative to red-sauce lasagna — still hearty and satisfying.</p>
               <span class="offer-card__price">$18</span>
+              <p class="offer-card__opts">Made fresh to order</p>
+              <p class="offer-card__allergens">Contains: dairy, egg, gluten, soy</p>
             </div>
           </article>
           <article class="offer-card offer-card--cta">
             <div class="offer-card__body">
               <h3>Reserve Your Pasta</h3>
-              <p>Every dish is made fresh to order. Call ahead and we'll have it ready for pickup on Whyte Avenue — large orders welcome.</p>
+              <p>Every dish is made fresh to order (about 2 hours' notice). Call ahead and we'll have it ready for pickup on Whyte Avenue — large orders welcome.</p>
               <a href="tel:${NAP.phoneHref}" class="btn btn--terra" style="margin-top:6px;">Call ${NAP.phone}</a>
             </div>
           </article>
         </div>
-        <p class="text-center reveal" style="margin-top:36px; opacity:0.75; font-size:0.95rem;">Menu and availability change with the season. Call <a href="tel:${NAP.phoneHref}" style="color:var(--terracotta);">${NAP.phone}</a> or email <a href="mailto:${NAP.email}" style="color:var(--terracotta);">${NAP.email}</a> for today's selection and large orders.</p>
+        <p class="text-center reveal" style="margin-top:36px; opacity:0.75; font-size:0.95rem;">Menu, sizes, and availability change with the season. Call <a href="tel:${NAP.phoneHref}" style="color:var(--terracotta);">${NAP.phone}</a> or email <a href="mailto:${NAP.email}" style="color:var(--terracotta);">${NAP.email}</a> for today's selection, family sizes, and large orders.</p>
       </div>
     </section>
 

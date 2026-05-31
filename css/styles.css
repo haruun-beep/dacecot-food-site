@@ -53,7 +53,12 @@ h1, h2, h3, h4 {
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.3px;
+  text-wrap: balance;   /* even multi-line headings, no lone trailing word */
 }
+
+/* avoid orphans / lopsided wrapping in body and centered copy */
+p { text-wrap: pretty; }
+.text-center p, .hero p, .hero__tag, .lead, .narrow p, .fullbleed__quote, .label { text-wrap: balance; }
 
 h1 { font-size: clamp(2.7rem, 6.2vw, 3.875rem); font-weight: 600; line-height: 1.12; }  /* up to 62px */
 h2 { font-size: clamp(2rem, 4.6vw, 2.75rem); }                       /* up to 44px */
@@ -340,9 +345,12 @@ h1 + p, h2 + p, h3 + p { margin-top: 20px; }
   font-family: var(--serif);
   font-style: italic;
   font-weight: 500;
-  font-size: clamp(3.6rem, 13vw, 8.5rem);
-  line-height: 0.95;
+  font-size: clamp(2.6rem, 7vw, 4.6rem);
+  line-height: 1.04;
   margin-bottom: 20px;
+  max-width: 16ch;
+  margin-left: auto;
+  margin-right: auto;
   text-shadow: 0 4px 40px rgba(0,0,0,0.35);
 }
 .hero__tag {
@@ -918,12 +926,37 @@ h1 + p, h2 + p, h3 + p { margin-top: 20px; }
 .offer-card__link::after { content: ' →'; transition: margin 0.2s ease; }
 .offer-card:hover .offer-card__link::after { margin-left: 5px; }
 .offer-card__price {
-  margin-top: auto;
+  display: block;
   font-family: var(--serif);
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--terracotta);
-  padding-top: 8px;
+  padding-top: 10px;
+}
+.offer-card__price small {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--brown);
+  opacity: 0.65;
+  margin-left: 6px;
+}
+.offer-card__opts {
+  font-size: 0.86rem;
+  opacity: 0.82;
+  margin: 6px 0 0;
+  line-height: 1.5;
+}
+.offer-card__allergens {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(74,46,34,0.1);
+  font-size: 0.74rem;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  opacity: 0.6;
 }
 .offer-card--cta { background: var(--linen); justify-content: center; }
 .offer-card--cta:hover { transform: none; box-shadow: 0 14px 40px rgba(0,0,0,0.1); }
