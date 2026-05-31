@@ -103,10 +103,65 @@
     </section>
 
     <section class="section section--cream" aria-labelledby="cat-how-h">
-      <div class="container text-center narrow reveal">
-        <h2 id="cat-how-h">How to order catering</h2>
-        <p>Tell us your date, headcount, and the kind of menu you have in mind, and we'll send a custom quote. Reach us at <a href="tel:+18258884218">(825) 888-4218</a> or <a href="mailto:info@dacecotfood.com">info@dacecotfood.com</a>, or use our contact form.</p>
-        <div class="btn-wrap"><a href="visit-us.html" class="btn btn--green">Request a Quote</a></div>
+      <div class="container narrow reveal">
+        <div class="text-center">
+          <h2 id="cat-how-h">Request a catering quote</h2>
+          <p>Tell us your event details and we'll send a custom quote. Or reach us directly at <a href="tel:+18258884218">(825) 888-4218</a> or <a href="mailto:info@dacecotfood.com">info@dacecotfood.com</a>.</p>
+        </div>
+        <div class="booking">
+          <form data-mock aria-label="Catering quote request">
+            <div class="form-row">
+              <div class="field">
+                <label for="cat-type">Event type</label>
+                <select id="cat-type" name="event_type">
+                  <option>Office lunch / team meal</option>
+                  <option>Birthday party</option>
+                  <option>Wedding</option>
+                  <option>Graduation</option>
+                  <option>Holiday party</option>
+                  <option>Other celebration</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="cat-date">Event date</label>
+                <input type="date" id="cat-date" name="event_date" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="cat-count">Headcount</label>
+                <select id="cat-count" name="headcount">
+                  <option>Under 10</option>
+                  <option>10–25</option>
+                  <option>26–50</option>
+                  <option>51–100</option>
+                  <option>100+</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="cat-area">Delivery neighbourhood</label>
+                <select id="cat-area" name="delivery_area">
+                  <option>Whyte Ave / Central Edmonton</option>
+                  <option>Millwoods</option>
+                  <option>Terwillegar</option>
+                  <option>Chappelle / Heritage Valley</option>
+                  <option>Other Edmonton area</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label for="cat-name">Name</label><input type="text" id="cat-name" name="name" required></div>
+              <div class="field"><label for="cat-phone">Phone</label><input type="tel" id="cat-phone" name="phone" required></div>
+            </div>
+            <div class="field"><label for="cat-email">Email</label><input type="email" id="cat-email" name="email" required></div>
+            <div class="field">
+              <label for="cat-notes">Menu preferences &amp; dietary needs <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
+              <textarea id="cat-notes" name="notes" placeholder="Pasta preferences, allergies, gluten-free / vegan needs, or any other details…"></textarea>
+            </div>
+            <button type="submit" class="btn btn--green" style="width:100%;">Request a Quote</button>
+            <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Grazie! We've received your catering request and will send a custom quote shortly.</div>
+          </form>
+        </div>
       </div>
     </section>
 

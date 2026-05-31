@@ -103,10 +103,51 @@
     </section>
 
     <section class="section section--cream" aria-labelledby="pe-how-h">
-      <div class="container text-center narrow reveal">
-        <h2 id="pe-how-h">How to book a private event</h2>
-        <p>Tell us your date, group size, and what you're celebrating. We'll craft a menu to match and confirm your evening with a 50% deposit. Reach us at <a href="tel:+18258884218">(825) 888-4218</a> or through our contact form.</p>
-        <div class="btn-wrap"><a href="visit-us.html" class="btn btn--green">Inquire Now</a></div>
+      <div class="container narrow reveal">
+        <div class="text-center">
+          <h2 id="pe-how-h">Book your private event</h2>
+          <p>Tell us your date, group size, and what you're celebrating — we'll craft a menu to match and confirm your evening with a 50% deposit.</p>
+        </div>
+        <div class="booking">
+          <form data-mock aria-label="Private event booking inquiry">
+            <div class="form-row">
+              <div class="field">
+                <label for="pe-occasion">Occasion</label>
+                <select id="pe-occasion" name="occasion">
+                  <option>Birthday</option>
+                  <option>Anniversary</option>
+                  <option>Corporate dinner</option>
+                  <option>Graduation</option>
+                  <option>Celebration</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="pe-date">Event date</label>
+                <input type="date" id="pe-date" name="event_date" required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="pe-guests">Guest count</label>
+              <select id="pe-guests" name="guest_count">
+                <option>10–15 guests</option>
+                <option>16–20 guests</option>
+                <option>21–25 guests</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <div class="field"><label for="pe-name">Name</label><input type="text" id="pe-name" name="name" required></div>
+              <div class="field"><label for="pe-phone">Phone</label><input type="tel" id="pe-phone" name="phone" required></div>
+            </div>
+            <div class="field"><label for="pe-email">Email</label><input type="email" id="pe-email" name="email" required></div>
+            <div class="field">
+              <label for="pe-notes">Dietary needs &amp; notes <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
+              <textarea id="pe-notes" name="notes" placeholder="Allergies, menu preferences, or anything else that will help us plan your evening…"></textarea>
+            </div>
+            <button type="submit" class="btn btn--green" style="width:100%;">Send Your Inquiry</button>
+            <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Grazie! We've received your event inquiry and will be in touch within 24 hours.</div>
+          </form>
+        </div>
       </div>
     </section>
 

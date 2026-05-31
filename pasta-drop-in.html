@@ -103,10 +103,40 @@
     </section>
 
     <section class="section section--cream" aria-labelledby="drop-how-h">
-      <div class="container text-center narrow reveal">
-        <h2 id="drop-how-h">How to join</h2>
-        <p>Just show up on Thursday between 4 PM and 8 PM — no booking required. Bringing a bigger group? Give us a call at <a href="tel:+18258884218">(825) 888-4218</a> so we can save room for everyone.</p>
-        <div class="btn-wrap"><a href="visit-us.html" class="btn btn--green">Call Ahead for Groups</a></div>
+      <div class="container narrow reveal">
+        <div class="text-center">
+          <h2 id="drop-how-h">How to join</h2>
+          <p>No reservation needed — just walk in on Thursday between 4 PM and 8 PM. Bringing a group of 5 or more? Let us know below so we can have seats ready for you.</p>
+        </div>
+        <div class="booking">
+          <form data-mock aria-label="Drop-in group notification">
+            <div class="form-row">
+              <div class="field">
+                <label for="drop-size">Group size</label>
+                <select id="drop-size" name="group_size">
+                  <option>5–8 guests</option>
+                  <option>9–12 guests</option>
+                  <option>13–16 guests</option>
+                  <option>17+ guests</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="drop-date">Thursday date</label>
+                <input type="date" id="drop-date" name="visit_date" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label for="drop-name">Name</label><input type="text" id="drop-name" name="name" required></div>
+              <div class="field"><label for="drop-phone">Phone</label><input type="tel" id="drop-phone" name="phone" required></div>
+            </div>
+            <div class="field">
+              <label for="drop-notes">Any notes? <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
+              <textarea id="drop-notes" name="notes" placeholder="Dietary needs, arrival time, or anything else…"></textarea>
+            </div>
+            <button type="submit" class="btn btn--green" style="width:100%;">Let Us Know You're Coming</button>
+            <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Perfect! We'll have space ready for your group — see you Thursday.</div>
+          </form>
+        </div>
       </div>
     </section>
 

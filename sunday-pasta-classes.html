@@ -103,10 +103,46 @@
     </section>
 
     <section class="section section--cream" aria-labelledby="spc-book-h">
-      <div class="container text-center narrow reveal">
-        <h2 id="spc-book-h">How to book a class</h2>
-        <p>Classes are small and fill quickly. Reserve your spot online, or contact us at <a href="tel:+18258884218">(825) 888-4218</a> or <a href="mailto:info@dacecotfood.com">info@dacecotfood.com</a> for the next available Sunday dates and group bookings.</p>
-        <div class="btn-wrap"><a href="reservations.html" class="btn btn--green">Book Your Spot</a></div>
+      <div class="container narrow reveal">
+        <div class="text-center">
+          <h2 id="spc-book-h">Reserve your class spot</h2>
+          <p>Classes fill quickly — spots are limited to 15 guests. Fill in the form below and we'll confirm your seat, or call us at <a href="tel:+18258884218">(825) 888-4218</a>.</p>
+        </div>
+        <div class="booking">
+          <form data-mock aria-label="Sunday Pasta Class booking request">
+            <div class="form-row">
+              <div class="field">
+                <label for="spc-type">Booking type</label>
+                <select id="spc-type" name="booking_type">
+                  <option>Solo — $95/person</option>
+                  <option>Couple — $185</option>
+                  <option>Group (3+)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="spc-guests">Number of guests</label>
+                <select id="spc-guests" name="guests">
+                  <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6+</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="spc-date">Preferred Sunday date</label>
+              <input type="date" id="spc-date" name="preferred_date" required>
+            </div>
+            <div class="form-row">
+              <div class="field"><label for="spc-name">Name</label><input type="text" id="spc-name" name="name" required></div>
+              <div class="field"><label for="spc-phone">Phone</label><input type="tel" id="spc-phone" name="phone" required></div>
+            </div>
+            <div class="field"><label for="spc-email">Email</label><input type="email" id="spc-email" name="email" required></div>
+            <div class="field">
+              <label for="spc-notes">Dietary needs or notes <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
+              <textarea id="spc-notes" name="notes" placeholder="Allergies, dietary restrictions, or anything else we should know…"></textarea>
+            </div>
+            <button type="submit" class="btn btn--green" style="width:100%;">Request a Class Spot</button>
+            <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Grazie! We've received your class request and will confirm your spot within 24 hours.</div>
+          </form>
+        </div>
       </div>
     </section>
 
