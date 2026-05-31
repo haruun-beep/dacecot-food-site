@@ -841,12 +841,12 @@ pages.push(page({
 
     <section class="hero hero--page hero--dark hero--parallax" style="background-image:url('${IMG.product}');" aria-labelledby="shop-h1">
       <div class="hero__inner reveal">
-        <span class="label">Take Home</span>
+        <span class="label">From Our Kitchen, With Purpose</span>
         <h1 id="shop-h1">Fresh Pasta for Home</h1>
-        <p>The same handmade pasta we serve, ready for your own kitchen. Pre-order ahead or grab it &amp; go on Whyte Ave.</p>
+        <p>The same handmade pasta we serve, ready for your own kitchen. Each dish is made fresh to order — call ahead to reserve yours for pickup on Whyte Ave.</p>
         <div class="btn-group">
-          <a href="https://www.cookin.com/cooks/dacecotfoodinc" target="_blank" rel="noopener" class="btn btn--terra">Order on Cookin</a>
-          <a href="tel:${NAP.phoneHref}" class="btn btn--outline">Call to Pre-Order</a>
+          <a href="tel:${NAP.phoneHref}" class="btn btn--terra">Call to Order</a>
+          <a href="reservations.html" class="btn btn--outline">Reserve a Table</a>
         </div>
       </div>
     </section>
@@ -854,39 +854,52 @@ pages.push(page({
     <section class="section section--cream" aria-labelledby="shop-h">
       <div class="container">
         <div class="text-center narrow reveal" style="margin-bottom:54px;">
-          <span class="label" style="color:var(--terracotta);">The Shop</span>
+          <span class="label" style="color:var(--terracotta);">The Shop Menu</span>
           <h2 id="shop-h">Made today, cooked at yours.</h2>
-          <p>Everything is made fresh in our kitchen. Availability rotates daily — call ahead for large orders.</p>
+          <p>Handmade in our kitchen and crafted fresh to order. Call <a href="tel:${NAP.phoneHref}">${NAP.phone}</a> to reserve your dishes for pickup — availability rotates with the season.</p>
         </div>
         <div class="offer-grid reveal" data-stagger>
           <article class="offer-card">
-            <div class="offer-card__img zoom">${img(IMG.pasta, 'Fresh handmade pasta to take home from da Cecot, Edmonton')}</div>
-            <div class="offer-card__body"><h3>Fresh Pasta</h3><p>Tagliatelle, rigatoni, and rotating shapes — sold raw by weight to cook at home.</p><span class="offer-card__link">À la carte</span></div>
+            <div class="offer-card__img zoom">${img(IMG.food, 'Handmade gnocchi with Plasé tomato sauce from da Cecot, Edmonton')}</div>
+            <div class="offer-card__body">
+              <h3>Gnocchi di Pomodoro Plasé</h3>
+              <p>Soft, pillowy gnocchi crafted fresh by hand, served with our signature Plasé tomato sauce — rich, comforting flavour in every bite. Served hot for lunch. Add creamy stracciatella di mozzarella for an extra touch of indulgence.</p>
+              <span class="offer-card__price">$12</span>
+            </div>
           </article>
           <article class="offer-card">
-            <div class="offer-card__img zoom">${img(IMG.sauce, 'House-made Italian sauces to take home from da Cecot, Edmonton')}</div>
-            <div class="offer-card__body"><h3>Sauces</h3><p>Pomodoro, ragù, and pesto in take-home jars — slow-cooked, ready to heat.</p><span class="offer-card__link">By the jar</span></div>
+            <div class="offer-card__img zoom">${img(IMG.product, 'Handmade potato and sausage ravioli with butter and sage from da Cecot, Edmonton')}</div>
+            <div class="offer-card__body">
+              <h3>Potato &amp; Sausage Ravioli</h3>
+              <p>Handmade ravioli generously filled with tender potato and savoury sausage. Each delicate pocket is crafted fresh and paired with our handmade butter &amp; sage sauce to finish at home.</p>
+              <span class="offer-card__price">$18</span>
+            </div>
           </article>
           <article class="offer-card">
-            <div class="offer-card__img zoom">${img(IMG.product, 'Fresh hand-filled ravioli to take home from da Cecot, Edmonton')}</div>
-            <div class="offer-card__body"><h3>Ravioli</h3><p>Hand-filled with seasonal fillings, boxed fresh and ready for the pot.</p><span class="offer-card__link">By the dozen</span></div>
+            <div class="offer-card__img zoom">${img(IMG.greenpasta, 'Green spinach tortelloni filled with cheese in mushroom sauce from da Cecot, Edmonton')}</div>
+            <div class="offer-card__body">
+              <h3>Tortelloni Verdi</h3>
+              <p>Delicate hand-closed spinach pasta parcels filled with a creamy blend of fine cheeses, served in a luxurious, velvety mushroom sauce. An elegant taste of Italian comfort.</p>
+              <span class="offer-card__price">$18</span>
+            </div>
           </article>
           <article class="offer-card">
-            <div class="offer-card__img zoom">${img(IMG.lasagna, 'Heat-and-serve lasagna trays from da Cecot, Edmonton')}</div>
-            <div class="offer-card__body"><h3>Lasagna Trays</h3><p>Hand-layered and oven-ready — heat and serve for an easy night in.</p><span class="offer-card__link">By the tray</span></div>
-          </article>
-          <article class="offer-card">
-            <div class="offer-card__img zoom">${img(IMG.greenpasta, 'Weekly pasta specials from da Cecot, Edmonton')}</div>
-            <div class="offer-card__body"><h3>Weekly Specials</h3><p>Seasonal pastas and chef's features that change every week — follow along on Instagram.</p><span class="offer-card__link">This week</span></div>
+            <div class="offer-card__img zoom">${img(IMG.lasagna, 'Sfoglia lasagna bianca with beef and mozzarella from da Cecot, Edmonton')}</div>
+            <div class="offer-card__body">
+              <h3>Sfoglia Lasagna Bianca</h3>
+              <p>A delicate white-sauce lasagna of thin handmade pasta sheets, layered with seasoned beef, creamy béchamel, and mozzarella. A lighter alternative to red-sauce lasagna — still hearty and satisfying.</p>
+              <span class="offer-card__price">$18</span>
+            </div>
           </article>
           <article class="offer-card offer-card--cta">
             <div class="offer-card__body">
-              <h3>Order Ahead</h3>
-              <p>Pre-order for pickup so your pasta is ready when you are. Order online, or call us for larger orders.</p>
-              <a href="https://www.cookin.com/cooks/dacecotfoodinc" target="_blank" rel="noopener" class="btn btn--terra" style="margin-top:6px;">Order on Cookin</a>
+              <h3>Reserve Your Pasta</h3>
+              <p>Every dish is made fresh to order. Call ahead and we'll have it ready for pickup on Whyte Avenue — large orders welcome.</p>
+              <a href="tel:${NAP.phoneHref}" class="btn btn--terra" style="margin-top:6px;">Call ${NAP.phone}</a>
             </div>
           </article>
         </div>
+        <p class="text-center reveal" style="margin-top:36px; opacity:0.75; font-size:0.95rem;">Menu and availability change with the season. Call <a href="tel:${NAP.phoneHref}" style="color:var(--terracotta);">${NAP.phone}</a> or email <a href="mailto:${NAP.email}" style="color:var(--terracotta);">${NAP.email}</a> for today's selection and large orders.</p>
       </div>
     </section>
 

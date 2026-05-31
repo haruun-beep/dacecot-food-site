@@ -917,6 +917,14 @@ h1 + p, h2 + p, h3 + p { margin-top: 20px; }
 }
 .offer-card__link::after { content: ' →'; transition: margin 0.2s ease; }
 .offer-card:hover .offer-card__link::after { margin-left: 5px; }
+.offer-card__price {
+  margin-top: auto;
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--terracotta);
+  padding-top: 8px;
+}
 .offer-card--cta { background: var(--linen); justify-content: center; }
 .offer-card--cta:hover { transform: none; box-shadow: 0 14px 40px rgba(0,0,0,0.1); }
 .offer-card--cta .offer-card__body { text-align: center; align-items: center; }
