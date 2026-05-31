@@ -121,7 +121,7 @@ function footer() {
   const ig = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.3-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.3 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1C2.6 9.9 2.6 10.3 2.6 12s0 2.1.1 3.3c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-3.3s0-2.1-.1-3.3c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8zm0 8.1a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.2-8.3a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0z"/></svg>`;
   const fb = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5h2.5V5.2C16 5.1 14.9 5 13.7 5 11.1 5 9.3 6.6 9.3 9.5v2.3H6.5V15h2.8v8h3.4v-8h2.7l.4-3.2h-3.1V9.8c0-.9.3-1.3 1.3-1.3z"/></svg>`;
   return `  <footer class="footer">
-    <div class="footer__top container">
+    <div class="footer__top">
       <div class="footer__brand">
         <div class="footer__logo">da Cecot</div>
         <p class="footer__tag">Fresh handmade pasta &amp; Italian comfort food, made by hand on Whyte Avenue in Edmonton.</p>
@@ -174,9 +174,9 @@ function footer() {
       </div>
     </div>
     <div class="footer__bottom">
-      <div class="container footer__bottom-inner">
+      <div class="footer__bottom-inner">
         <p>© 2025 da Cecot Food Inc. · Made by hand on Whyte Avenue, Edmonton.</p>
-        <p class="footer__bottom-links"><a href="partnerships.html">Wholesale &amp; Retail</a> · <a href="reservations.html">Book a Table</a></p>
+        <p class="footer__credit">Built by <a href="https://bespokeautomations.ca" target="_blank" rel="noopener">Bespoke Automations</a> &amp; <a href="https://www.unconventionalgroup.ca" target="_blank" rel="noopener">Unconventional Group</a></p>
       </div>
     </div>
   </footer>
@@ -731,26 +731,21 @@ pages.push(page({
           <h2 id="featured-h">Catch us in action.</h2>
           <p>From handmade pasta to community nights, here's da Cecot out in the world. Tap to watch.</p>
         </div>
-        <div class="featured-grid reveal" data-stagger>
-          <a class="featured-card" href="https://www.instagram.com/reels/DR3nWvPDfmW/" target="_blank" rel="noopener">
-            <span class="featured-card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.3-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.3 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.6a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-10.4a1.45 1.45 0 1 1-2.9 0 1.45 1.45 0 0 1 2.9 0z"/></svg></span>
-            <span class="featured-card__plat">Instagram Reel</span>
-            <span class="featured-card__cta">Watch on Instagram →</span>
-          </a>
-          <a class="featured-card" href="https://www.instagram.com/reels/DO1IW-qkY38/" target="_blank" rel="noopener">
-            <span class="featured-card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.3-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.3 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.6a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-10.4a1.45 1.45 0 1 1-2.9 0 1.45 1.45 0 0 1 2.9 0z"/></svg></span>
-            <span class="featured-card__plat">Instagram Reel</span>
-            <span class="featured-card__cta">Watch on Instagram →</span>
-          </a>
-          <a class="featured-card" href="https://www.tiktok.com/@maybasmunchies/video/7556833403992116488" target="_blank" rel="noopener">
-            <span class="featured-card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.7 2h-3.1v13.1a2.5 2.5 0 1 1-2-2.45V9.5a5.6 5.6 0 1 0 5.1 5.57V8.3a7.6 7.6 0 0 0 4.3 1.33V6.5a4.4 4.4 0 0 1-4.3-4.5z"/></svg></span>
-            <span class="featured-card__plat">Featured on TikTok</span>
-            <span class="featured-card__sub">@maybasmunchies</span>
-            <span class="featured-card__cta">Watch on TikTok →</span>
-          </a>
+        <div class="featured-embeds reveal">
+          <div class="featured-embed">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DR3nWvPDfmW/" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DR3nWvPDfmW/" target="_blank" rel="noopener">Watch this reel on Instagram</a></blockquote>
+          </div>
+          <div class="featured-embed">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DO1IW-qkY38/" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DO1IW-qkY38/" target="_blank" rel="noopener">Watch this reel on Instagram</a></blockquote>
+          </div>
+          <div class="featured-embed">
+            <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@maybasmunchies/video/7556833403992116488" data-video-id="7556833403992116488"><section><a href="https://www.tiktok.com/@maybasmunchies/video/7556833403992116488" target="_blank" rel="noopener">Watch @maybasmunchies on TikTok</a></section></blockquote>
+          </div>
         </div>
       </div>
-    </section>`
+    </section>
+    <script async src="https://www.instagram.com/embed.js"></script>
+    <script async src="https://www.tiktok.com/embed.js"></script>`
 }));
 
 /* ---------- RESERVATIONS ---------- */
