@@ -127,8 +127,20 @@
               </div>
             </div>
             <div class="field">
-              <label for="spc-date">Preferred Sunday date</label>
+              <label for="spc-date">Choose a Sunday</label>
               <input type="date" id="spc-date" name="preferred_date" required>
+              <small style="display:block;margin-top:6px;opacity:0.65;font-size:0.82em;">Sundays only — select any upcoming Sunday</small>
+            </div>
+            <div class="field">
+              <label for="spc-time">Afternoon time slot</label>
+              <select id="spc-time" name="start_time" required>
+                <option value="">Select a start time</option>
+                <option>4:00 PM</option>
+                <option>4:30 PM</option>
+                <option>5:00 PM</option>
+                <option>5:30 PM</option>
+              </select>
+              <small style="display:block;margin-top:6px;opacity:0.65;font-size:0.82em;">Classes run approx. 2.5–3 hrs · Last start 5:30 PM · Done by 8 PM</small>
             </div>
             <div class="form-row">
               <div class="field"><label for="spc-name">Name</label><input type="text" id="spc-name" name="name" required></div>
@@ -238,5 +250,24 @@
 
   <button class="back-to-top" aria-label="Back to top">↑</button>
   <script src="js/main.js?v=1780189266181"></script>
+  <script>
+    (function () {
+      var input = document.getElementById('spc-date');
+      if (!input) return;
+      var today = new Date();
+      input.min = today.toISOString().split('T')[0];
+      input.addEventListener('change', function () {
+        if (!this.value) return;
+        var d = new Date(this.value + 'T00:00:00');
+        if (d.getDay() !== 0) {
+          this.setCustomValidity('Please choose a Sunday.');
+          this.reportValidity();
+          this.value = '';
+        } else {
+          this.setCustomValidity('');
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
