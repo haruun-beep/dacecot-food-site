@@ -181,13 +181,15 @@ function footer() {
       <div class="footer__col footer__news">
         <h4>Stay in the Loop</h4>
         <p>Fresh pasta drops, classes, and seasonal menus — straight to your inbox.</p>
-        <form class="newsletter" data-mock aria-label="Newsletter signup">
+        <form class="newsletter" data-formsubmit data-subject="Newsletter Signup — da Cecot" aria-label="Newsletter signup">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
           <label for="nl-email" class="sr-only">Email address</label>
           <div class="newsletter__row">
             <input type="email" id="nl-email" name="email" placeholder="Your email" required>
             <button type="submit" class="btn btn--terra">Subscribe</button>
           </div>
-          <div class="form-success">Grazie! You're on the list — check your inbox soon.</div>
+          <div class="form-success">Grazie! You're on the list — we'll be in touch soon.</div>
+          <div class="form-error">Something went wrong — please email us at info@dacecotfood.com.</div>
         </form>
       </div>
     </div>
@@ -782,29 +784,8 @@ pages.push(page({
         <h1 id="res-h1">Make a Reservation</h1>
         <p class="lead" style="margin-top:18px;">Select your details below to reserve your table at da Cecot in Edmonton. Booking for the weekend? Be sure to ask about our <strong>"At Our Family Table"</strong> experience — an intimate, fixed-menu evening you won't forget.</p>
       </div>
-      <div class="booking reveal">
-        <form data-mock aria-label="Reservation request">
-          <div class="form-row">
-            <div class="field">
-              <label for="party">Party Size</label>
-              <select id="party" name="party">
-                <option>1 guest</option><option selected>2 guests</option><option>3 guests</option><option>4 guests</option><option>5 guests</option><option>6 guests</option><option>7+ guests</option>
-              </select>
-            </div>
-            <div class="field"><label for="date">Date</label><input type="date" id="date" name="date" required></div>
-          </div>
-          <div class="field">
-            <label for="time">Time</label>
-            <select id="time" name="time" required>
-              <option value="">Select a time</option>
-              <option>11:30 AM</option><option>12:00 PM</option><option>12:30 PM</option><option>1:00 PM</option><option>4:00 PM</option><option>5:00 PM</option><option>6:00 PM</option><option>7:00 PM</option><option>8:00 PM</option>
-            </select>
-          </div>
-          <div class="field"><label for="rname">Name</label><input type="text" id="rname" name="name" required></div>
-          <div class="field"><label for="rphone">Phone</label><input type="tel" id="rphone" name="phone" required></div>
-          <button type="submit" class="btn btn--green" style="width:100%;">Request Reservation</button>
-          <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Thanks! Your reservation request has been received — we'll confirm with you shortly.</div>
-        </form>
+      <div class="container" style="max-width:760px; margin:0 auto; padding-bottom:60px;">
+        <!-- Start Square Appointments Embed Code --><script src='https://square.site/appointments/buyer/widget/cj1toniazzz1ms/LYPSZAFKKPK8Z.js'></script><!-- End Square Appointments Embed Code -->
       </div>
     </section>`
 }));
@@ -872,7 +853,8 @@ pages.push(page({
           <h2 id="msg-h">Send us a message.</h2>
           <p>Questions about the menu, dietary options, wholesale, or private events? We'd love to hear from you.</p>
         </div>
-        <form class="form reveal" data-mock aria-label="Contact form" style="max-width:680px;">
+        <form class="form reveal" data-formsubmit data-subject="New Message — da Cecot Website" aria-label="Contact form" style="max-width:680px;">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
           <div class="form-row">
             <div class="field"><label for="fname">First Name *</label><input type="text" id="fname" name="firstName" required></div>
             <div class="field"><label for="lname">Last Name *</label><input type="text" id="lname" name="lastName" required></div>
@@ -884,6 +866,7 @@ pages.push(page({
           <div class="field"><label for="message">Message *</label><textarea id="message" name="message" placeholder="What are you inquiring about?" required></textarea></div>
           <div class="text-center"><button type="submit" class="btn btn--terra">Send Message</button></div>
           <div class="form-success">Thanks for reaching out! We will get back to you as soon as possible.</div>
+          <div class="form-error">Something went wrong — please email us directly at info@dacecotfood.com.</div>
         </form>
       </div>
     </section>`
