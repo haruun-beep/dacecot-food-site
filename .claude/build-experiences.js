@@ -151,18 +151,18 @@ const classFaqs = [
   { q: 'Do I need any cooking experience?', a: 'Not at all. Our Sunday pasta classes are beginner-friendly and fully guided. Whether you have never touched a rolling pin or you cook every night, our team walks you through every step from dough to plate.' },
   { q: 'What is included in a pasta class?', a: 'Your spot includes hands-on instruction, all ingredients and equipment, an apron to use, the pasta you make to enjoy together at the end, and the recipes to take home so you can recreate them.' },
   { q: 'How long is a class and how many people can attend?', a: 'Classes run about 2.5 to 3 hours and are capped at 15 guests so everyone gets personal attention. They run on select Sundays — contact us for the next available dates.' },
-  { q: 'Can I come on my own or book for a couple?', a: 'Both work beautifully. Pricing starts from $95 per person, with a couples option from $185. Solo guests are always welcome and often leave with new friends.' },
+  { q: 'Can I come on my own or book for a couple?', a: 'Both work beautifully. Classes are $105 per person. Solo guests are always welcome and often leave with new friends.' },
   { q: 'Can I buy a pasta class as a gift?', a: 'Yes — a pasta class makes a memorable gift. Reach out at (825) 888-4218 or info@dacecotfood.com and we will help you arrange it.' }
 ];
 pages.push(page({
   slug: 'sunday-pasta-classes',
   active: 'sunday-pasta-classes',
   title: 'Sunday Pasta Classes in Edmonton | da Cecot Food',
-  description: 'Learn to make fresh pasta by hand at da Cecot in Edmonton. Beginner-friendly Sunday classes, small groups, all included. Starting from $95 — book your spot.',
+  description: 'Learn to make fresh pasta by hand at da Cecot in Edmonton. Beginner-friendly Sunday classes, small groups, all included. $105 per person — book your spot.',
   ogImage: IMG.pastawine,
   schema: [
     breadcrumbSchema(trail('Sunday Pasta Classes').map((t, i) => i === 2 ? { slug: 'sunday-pasta-classes', label: t.label } : t)),
-    eventSchema({ slug: 'sunday-pasta-classes', name: 'Sunday Pasta Class', desc: 'Hands-on Italian pasta-making class in Edmonton, from dough to plate, ending with a shared meal.', image: IMG.pastawine, byDay: 'https://schema.org/Sunday', startTime: '12:00', price: '95' }),
+    eventSchema({ slug: 'sunday-pasta-classes', name: 'Sunday Pasta Class', desc: 'Hands-on Italian pasta-making class in Edmonton, from dough to plate, ending with a shared meal.', image: IMG.pastawine, byDay: 'https://schema.org/Sunday', startTime: '12:00', price: '105' }),
     faqSchema(classFaqs)
   ],
   body: `${breadcrumb(trail('Sunday Pasta Classes').map((t, i) => i === 2 ? { slug: 'sunday-pasta-classes', label: t.label } : t))}
@@ -186,88 +186,22 @@ ${expHero('spc-h1', 'Sunday Pasta Classes', 'Roll up your sleeves and learn to m
           <div><h3>Recipes to take home</h3><p>Leave with the techniques and recipes to recreate it all.</p></div>
         </div>
         <div class="text-center" style="margin-top:30px;">
-          <p class="price-tag">Starting from $95 per person · $185 per couple</p>
+          <p class="price-tag">$105 per person</p>
           <p style="opacity:0.85;">About 2.5–3 hours · Maximum 15 guests · Select Sundays</p>
         </div>
       </div>
     </section>
 
     <section class="section section--cream" aria-labelledby="spc-book-h">
-      <div class="container narrow reveal">
-        <div class="text-center">
-          <h2 id="spc-book-h">Reserve your class spot</h2>
-          <p>Classes fill quickly — spots are limited to 15 guests. Pick a Sunday below and we'll confirm your seat, or call us at <a href="tel:+18258884218">(825) 888-4218</a>.</p>
-        </div>
-        <div class="booking">
-          <form data-formsubmit data-subject="Pasta Class Booking — da Cecot" aria-label="Sunday Pasta Class booking request">
-            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-            <div class="form-row">
-              <div class="field">
-                <label for="spc-type">Booking type</label>
-                <select id="spc-type" name="booking_type">
-                  <option>Solo — $95/person</option>
-                  <option>Couple — $185</option>
-                  <option>Group (3+)</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="spc-guests">Number of guests</label>
-                <select id="spc-guests" name="guests">
-                  <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6+</option>
-                </select>
-              </div>
-            </div>
-            <div class="field">
-              <label for="spc-date">Choose a Sunday</label>
-              <input type="date" id="spc-date" name="preferred_date" required>
-              <small style="display:block;margin-top:6px;opacity:0.65;font-size:0.82em;">Sundays only — select any upcoming Sunday</small>
-            </div>
-            <div class="field">
-              <label for="spc-time">Afternoon time slot</label>
-              <select id="spc-time" name="start_time" required>
-                <option value="">Select a start time</option>
-                <option>4:00 PM</option>
-                <option>4:30 PM</option>
-                <option>5:00 PM</option>
-                <option>5:30 PM</option>
-              </select>
-              <small style="display:block;margin-top:6px;opacity:0.65;font-size:0.82em;">Classes run approx. 2.5–3 hrs · Last start 5:30 PM · Done by 8 PM</small>
-            </div>
-            <div class="form-row">
-              <div class="field"><label for="spc-name">Name</label><input type="text" id="spc-name" name="name" required></div>
-              <div class="field"><label for="spc-phone">Phone</label><input type="tel" id="spc-phone" name="phone" required></div>
-            </div>
-            <div class="field"><label for="spc-email">Email</label><input type="email" id="spc-email" name="email" required></div>
-            <div class="field">
-              <label for="spc-notes">Dietary needs or notes <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
-              <textarea id="spc-notes" name="notes" placeholder="Allergies, dietary restrictions, or anything else we should know…"></textarea>
-            </div>
-            <button type="submit" class="btn btn--green" style="width:100%;">Request a Class Spot</button>
-            <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Grazie! We've received your class request and will confirm your spot within 24 hours.</div>
-            <div class="form-error" style="color:var(--brown);">Something went wrong — please call us at (825) 888-4218 or email info@dacecotfood.com.</div>
-          </form>
-        </div>
+      <div class="container text-center narrow reveal">
+        <h2 id="spc-book-h">Reserve your class spot</h2>
+        <p>Classes fill quickly — spots are limited to 15 guests. Book and pay securely below through Square. First class: <strong>Sunday, June 28th</strong>. Dates through September coming soon.</p>
+        <p style="margin-top:8px; opacity:0.75; font-size:0.9rem;">Questions? Call us at <a href="tel:+18258884218">(825) 888-4218</a> or email <a href="mailto:info@dacecotfood.com">info@dacecotfood.com</a>.</p>
+      </div>
+      <div class="container" style="max-width:760px; margin:0 auto; padding-bottom:60px;">
+        <!-- Start Square Appointments Embed Code --><!-- TODO: Paste Square Appointments embed <script> for Sunday Pasta Classes here --><!-- End Square Appointments Embed Code -->
       </div>
     </section>
-    <script>
-    (function () {
-      var input = document.getElementById('spc-date');
-      if (!input) return;
-      var today = new Date();
-      input.min = today.toISOString().split('T')[0];
-      input.addEventListener('change', function () {
-        if (!this.value) return;
-        var d = new Date(this.value + 'T00:00:00');
-        if (d.getDay() !== 0) {
-          this.setCustomValidity('Please choose a Sunday.');
-          this.reportValidity();
-          this.value = '';
-        } else {
-          this.setCustomValidity('');
-        }
-      });
-    })();
-    </script>
 
     <section class="section section--brown" aria-labelledby="spc-faq-h">
       <div class="container">
@@ -281,8 +215,8 @@ ${faqBlock(classFaqs)}
    2. PUBLIC PASTA DROP-IN
    ============================================================ */
 const dropFaqs = [
-  { q: 'Do I need a reservation for the pasta drop-in?', a: 'No reservation is required. The Public Pasta Drop-In is a casual, walk-in night — just show up on Thursday between 4 PM and 8 PM and grab a seat. For larger groups, a quick call ahead helps us be ready for you.' },
-  { q: 'When is the pasta drop-in?', a: 'Our Public Pasta Drop-In runs every Thursday from 4 PM to 8 PM on Whyte Avenue (82 Ave) at 104 Street in Edmonton. It is our weekly community pasta night.' },
+  { q: 'Do I need a reservation for the pasta drop-in?', a: 'Yes — the Thursday Pasta Drop-In is a ticketed session. Two time slots are available each week: 6–7 PM and 7–8 PM. Book your spot in advance through Square Appointments on this page. $45 per person.' },
+  { q: 'When is the pasta drop-in?', a: 'The Public Pasta Drop-In runs every Thursday evening on Whyte Avenue (82 Ave) at 104 Street in Edmonton. Two sessions are available each week: 6–7 PM and 7–8 PM. Book your slot to secure your seat.' },
   { q: 'What can I order at the drop-in?', a: 'Choose from our pasta bar — a rotating selection of fresh pasta shapes and house sauces, including our signature Caserecce — plus tiramisu and drinks. Everything is available to dine in or take to go.' },
   { q: 'Is the drop-in family-friendly?', a: 'Absolutely. The drop-in is relaxed and welcoming for all ages, families, and solo diners alike — exactly the kind of easy weeknight meal we love to share.' }
 ];
@@ -290,21 +224,21 @@ pages.push(page({
   slug: 'pasta-drop-in',
   active: 'pasta-drop-in',
   title: 'Public Pasta Drop-In (Thursdays) | da Cecot, Edmonton',
-  description: 'da Cecot’s casual Thursday pasta night in Edmonton. Walk in 4–8 PM, no reservation needed — fresh pasta, house sauces & good company. Dine in or take out.',
+  description: 'da Cecot\'s Thursday pasta sessions in Edmonton. Book a 6–7 PM or 7–8 PM slot, enjoy fresh handmade pasta & good company. $45 per person — reserve your spot.',
   ogImage: IMG.greenpasta,
   schema: [
     breadcrumbSchema(trail('Public Pasta Drop-In').map((t, i) => i === 2 ? { slug: 'pasta-drop-in', label: t.label } : t)),
-    eventSchema({ slug: 'pasta-drop-in', name: 'Public Pasta Drop-In', desc: 'Casual weekly walk-in pasta night at da Cecot in Edmonton, every Thursday evening.', image: IMG.greenpasta, byDay: 'https://schema.org/Thursday', startTime: '16:00', price: '0' }),
+    eventSchema({ slug: 'pasta-drop-in', name: 'Public Pasta Drop-In', desc: 'Ticketed Thursday pasta sessions at da Cecot in Edmonton — two time slots, 6–7 PM and 7–8 PM, every week.', image: IMG.greenpasta, byDay: 'https://schema.org/Thursday', startTime: '18:00', price: '45' }),
     faqSchema(dropFaqs)
   ],
   body: `${breadcrumb(trail('Public Pasta Drop-In').map((t, i) => i === 2 ? { slug: 'pasta-drop-in', label: t.label } : t))}
 
-${expHero('drop-h1', 'Public Pasta Drop-In', 'Our casual Thursday community pasta night in Edmonton. No reservation, no fuss — just pull up a chair.', IMG.greenpasta, true)}
+${expHero('drop-h1', 'Public Pasta Drop-In', 'Our Thursday community pasta sessions in Edmonton. Choose the 6–7 PM or 7–8 PM slot and reserve your seat.', IMG.greenpasta, true)}
 
     <section class="section section--cream" aria-labelledby="drop-what-h">
       <div class="container narrow reveal text-center">
         <h2 id="drop-what-h">What is the Public Pasta Drop-In?</h2>
-        <p class="lead">The Public Pasta Drop-In is da Cecot's weekly walk-in pasta night, held every Thursday from 4 PM to 8 PM in Edmonton. There's nothing to book — simply drop by, choose your pasta and sauce from the bar, and enjoy fresh Italian comfort food in a relaxed, neighbourly setting.</p>
+        <p class="lead">The Public Pasta Drop-In is da Cecot's weekly Thursday pasta session in Edmonton. Two time slots are available — 6–7 PM and 7–8 PM — with space for a small, intimate group each session. Book your spot in advance through Square, then come enjoy fresh handmade pasta in a relaxed, community setting. $45 per person.</p>
       </div>
     </section>
 
@@ -312,52 +246,26 @@ ${expHero('drop-h1', 'Public Pasta Drop-In', 'Our casual Thursday community past
       <div class="container">
         <div class="text-center reveal" style="margin-bottom:14px;"><h2 id="drop-expect-h">What to expect</h2></div>
         <div class="info-grid reveal">
-          <div><h3>Walk-in welcome</h3><p>No reservation needed — seating is first come, first served.</p></div>
+          <div><h3>Book your session</h3><p>Reserve the 6–7 PM or 7–8 PM Thursday slot online through Square.</p></div>
           <div><h3>Build your bowl</h3><p>Pick a fresh pasta shape and a house sauce, including our signature Caserecce.</p></div>
           <div><h3>Dine in or take out</h3><p>Stay and relax, or grab it &amp; go on your way home.</p></div>
           <div><h3>Community vibe</h3><p>A friendly weeknight table for families, friends, and solo diners.</p></div>
         </div>
         <div class="text-center" style="margin-top:30px;">
-          <p class="price-tag">À la carte · Contact for current pricing</p>
-          <p style="opacity:0.85;">Every Thursday · 4 PM – 8 PM · Whyte Ave &amp; 104 Street, Edmonton</p>
+          <p class="price-tag">$45 per person</p>
+          <p style="opacity:0.85;">Every Thursday · 6–7 PM or 7–8 PM · Whyte Ave &amp; 104 Street, Edmonton</p>
         </div>
       </div>
     </section>
 
     <section class="section section--cream" aria-labelledby="drop-how-h">
-      <div class="container narrow reveal">
-        <div class="text-center">
-          <h2 id="drop-how-h">How to join</h2>
-          <p>No reservation needed — just walk in on Thursday between 4 PM and 8 PM. Bringing a group of 5 or more? Let us know below so we can have seats ready for you.</p>
-        </div>
-        <div class="booking">
-          <form data-formsubmit data-subject="Drop-In Group Notification — da Cecot" aria-label="Drop-in group notification">
-            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-            <div class="form-row">
-              <div class="field">
-                <label for="drop-size">Group size</label>
-                <select id="drop-size" name="group_size">
-                  <option>5–8 guests</option><option>9–12 guests</option><option>13–16 guests</option><option>17+ guests</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="drop-date">Thursday date</label>
-                <input type="date" id="drop-date" name="visit_date" required>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="field"><label for="drop-name">Name</label><input type="text" id="drop-name" name="name" required></div>
-              <div class="field"><label for="drop-phone">Phone</label><input type="tel" id="drop-phone" name="phone" required></div>
-            </div>
-            <div class="field">
-              <label for="drop-notes">Any notes? <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
-              <textarea id="drop-notes" name="notes" placeholder="Dietary needs, arrival time, or anything else…"></textarea>
-            </div>
-            <button type="submit" class="btn btn--green" style="width:100%;">Let Us Know You're Coming</button>
-            <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Perfect! We'll have space ready for your group — see you Thursday.</div>
-            <div class="form-error" style="color:var(--brown);">Something went wrong — please call us at (825) 888-4218.</div>
-          </form>
-        </div>
+      <div class="container text-center narrow reveal">
+        <h2 id="drop-how-h">Book your spot</h2>
+        <p>Select your preferred Thursday and time slot below and book through Square. Sessions fill up — reserve early to secure your seat.</p>
+        <p style="margin-top:8px; opacity:0.75; font-size:0.9rem;">Questions? Call us at <a href="tel:+18258884218">(825) 888-4218</a>.</p>
+      </div>
+      <div class="container" style="max-width:760px; margin:0 auto; padding-bottom:60px;">
+        <!-- Start Square Appointments Embed Code --><!-- TODO: Paste Square Appointments embed <script> for Public Pasta Drop-In here --><!-- End Square Appointments Embed Code -->
       </div>
     </section>
 
@@ -373,7 +281,7 @@ ${faqBlock(dropFaqs)}
    3. FOOD & DRINK SPECIAL EXPERIENCES
    ============================================================ */
 const fdFaqs = [
-  { q: 'What are Food & Drink Experiences?', a: 'Food & Drink Experiences are da Cecot’s special ticketed evenings in Edmonton — multi-course tasting menus, wine-paired Italian dinners, Cicchetti small-bite nights, and seasonal themed events. Each is a hosted, curated occasion beyond our everyday pasta bar.' },
+  { q: 'What are Food & Drink Experiences?', a: 'Food & Drink Experiences are da Cecot\'s special ticketed evenings in Edmonton — multi-course tasting menus, wine-paired Italian dinners, Cicchetti small-bite nights, and seasonal themed events. Each is a hosted, curated occasion beyond our everyday pasta bar.' },
   { q: 'What is included?', a: 'Depending on the evening, your ticket includes a multi-course menu, curated wine or beverage pairings, and a hosted experience guided by our family. Each event page or inquiry will outline exactly what is served.' },
   { q: 'How much do these experiences cost?', a: 'Pricing varies by event and what is included. Contact us for current dates and pricing, and we will share the details for each upcoming experience.' },
   { q: 'Can you accommodate dietary needs?', a: 'Yes — let us know about allergies or dietary preferences when you book and we will do our best to tailor your tasting. Reach us at (825) 888-4218 or info@dacecotfood.com.' }
@@ -407,6 +315,7 @@ ${expHero('fd-h1', 'Food &amp; Drink Experiences', 'Curated tasting evenings and
           <div><h3>Multi-course menus</h3><p>Thoughtfully built tasting menus that tell a story, course by course.</p></div>
           <div><h3>Wine &amp; pairings</h3><p>Italian-inspired drink pairings chosen to match each plate.</p></div>
           <div><h3>Cicchetti small bites</h3><p>Italian small-plate nights perfect for grazing and sharing.</p></div>
+          <div><h3>Tomato Workshop</h3><p>A hands-on exploration of Italian tomatoes — from fresh sauce to preserved — guided by our family.</p></div>
           <div><h3>Hosted &amp; intimate</h3><p>Limited seats and a warm, personal evening with our family.</p></div>
         </div>
         <div class="text-center" style="margin-top:30px;">
@@ -468,19 +377,19 @@ ${faqBlock(fdFaqs)}
 const peFaqs = [
   { q: 'How many guests can a private event host?', a: 'La Famiglia private events are designed for groups of 10 to 25 guests. Our dining room seats up to 26, so we can host everything from an intimate dinner to a full private gathering.' },
   { q: 'What is included in a private event?', a: 'Private events include a dedicated space, a custom multi-course Italian menu, wine, and music — typically running 2.5 to 3 hours. We tailor the menu and details to your occasion.' },
-  { q: 'How much does a private event cost?', a: 'Private dinners start from $95 per guest, depending on the menu and inclusions. A 50% deposit confirms your booking.' },
-  { q: 'How do I book a private event?', a: 'Start with an inquiry through our contact page or call (825) 888-4218. We will discuss your date, group size, and menu, then secure your evening with a deposit.' },
+  { q: 'How do we confirm the pricing for a private event?', a: 'Pricing is tailored to your group, menu, and occasion. Reach out through the inquiry form or call (825) 888-4218 and we will put together a custom proposal for you.' },
+  { q: 'How do I book a private event?', a: 'Start with an inquiry through our contact page or call (825) 888-4218. We will discuss your date, group size, and menu and get everything in place for your evening.' },
   { q: 'Can you accommodate dietary restrictions?', a: 'Yes. Share any allergies or dietary needs when planning your event and we will build the menu around your group.' }
 ];
 pages.push(page({
   slug: 'private-events',
   active: 'private-events',
   title: 'Private Events & Group Dining | da Cecot, Edmonton',
-  description: 'Host a private La Famiglia dinner at da Cecot in Edmonton. Multi-course Italian menu, wine & music for 10–25 guests. Starting from $95/guest — inquire today.',
+  description: 'Host a private La Famiglia dinner at da Cecot in Edmonton. Multi-course Italian menu, wine & music for 10–25 guests. Custom pricing — inquire today.',
   ogImage: IMG.dining,
   schema: [
     breadcrumbSchema(trail('Private Events').map((t, i) => i === 2 ? { slug: 'private-events', label: t.label } : t)),
-    serviceSchema({ slug: 'private-events', name: 'La Famiglia Private Events', desc: 'Private multi-course Italian dinners for groups of 10–25 in Edmonton, with wine and music.', image: IMG.dining, priceNote: 'Starting from $95 per guest' }),
+    serviceSchema({ slug: 'private-events', name: 'La Famiglia Private Events', desc: 'Private multi-course Italian dinners for groups of 10–25 in Edmonton, with wine and music.', image: IMG.dining, priceNote: 'Custom pricing — contact for a proposal' }),
     faqSchema(peFaqs)
   ],
   body: `${breadcrumb(trail('Private Events').map((t, i) => i === 2 ? { slug: 'private-events', label: t.label } : t))}
@@ -504,8 +413,7 @@ ${expHero('pe-h1', 'Private Events', 'Gather your people at our family table for
           <div><h3>2.5–3 hours together</h3><p>A relaxed timeline so no one feels rushed.</p></div>
         </div>
         <div class="text-center" style="margin-top:30px;">
-          <p class="price-tag">Starting from $95 per guest</p>
-          <p style="opacity:0.85;">10–25 guests · 50% deposit confirms your booking</p>
+          <p style="opacity:0.85;">10–25 guests · Contact us for custom pricing</p>
         </div>
       </div>
     </section>
@@ -514,7 +422,7 @@ ${expHero('pe-h1', 'Private Events', 'Gather your people at our family table for
       <div class="container narrow reveal">
         <div class="text-center">
           <h2 id="pe-how-h">Book your private event</h2>
-          <p>Tell us your date, group size, and what you're celebrating — we'll craft a menu to match and confirm your evening with a 50% deposit.</p>
+          <p>Tell us your date, group size, and what you're celebrating — we'll craft a menu to match and be in touch with everything you need to plan your evening.</p>
         </div>
         <div class="booking">
           <form data-formsubmit data-subject="Private Event Inquiry — da Cecot" aria-label="Private event booking inquiry">
