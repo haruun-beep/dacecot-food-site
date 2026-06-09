@@ -31,17 +31,17 @@ const IMG = {
   pasta:      'images/food/ravioli-butter-sage.jpg',
   food:       'images/food/cicchetti.jpg',
   greenpasta: 'images/raw-pasta/raw-pasta.jpg',
-  family:     'images/food/hero.jpg',
-  about2:     'images/food/hero-resized.jpg',
-  aboutHero:  'images/food/hero-resized.jpg',
+  family:     'images/general/cut-img-2360.jpg',
+  about2:     'images/general/whatsapp-1.jpg',
+  aboutHero:  'images/general/whatsapp-2.jpg',
   product:    'images/food/fresh-ravioli.jpg',
-  pastawine:  'images/food/plase.jpg',
+  pastawine:  'images/general/misc-photo.jpg',
   wine:       'images/sauces/salsa-al-baffo.jpg',
-  dining:     'images/food/cacio-e-pepe.jpg',
+  dining:     'images/general/photo-6.png',
   freshpasta: 'images/raw-pasta/caserecce.jpg',
   sauce:      'images/food/ragu.jpg',
   lasagna:    'images/food/bosco-romagno.jpg',
-  partnerbg:  'images/food/hero.jpg',
+  partnerbg:  'images/general/photo-5.png',
   icon:       'images/logos/circle-logo.png',
   logo:       'images/logos/new-logo.png'
 };
@@ -774,6 +774,22 @@ pages.push(page({
           <p>We believe food is a right, not a luxury. We keep our menu affordable and welcoming, create meaningful work for our team, and open our space for classes, gatherings, and pop-ups. When you walk through our doors, you're not just a customer — you're family.</p>
         </div>
       </div></div>
+    </section>
+
+    <section class="section section--linen" aria-labelledby="behind-h">
+      <div class="container">
+        <div class="text-center narrow reveal" style="margin-bottom:48px;">
+          <span class="label" style="color:var(--terracotta);">Behind the Scenes</span>
+          <h2 id="behind-h">Days at da Cecot.</h2>
+          <p>A glimpse into the people and moments that make up our kitchen on Whyte Avenue.</p>
+        </div>
+        <div class="gallery gallery--4 reveal">
+          <figure class="zoom"><img src="images/general/whatsapp-1.jpg" alt="Behind the scenes at da Cecot Food, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/whatsapp-2.jpg" alt="The da Cecot team at work in Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/cut-img-2360.jpg" alt="The Cecot family at da Cecot Food, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/misc-photo.jpg" alt="A moment at da Cecot on Whyte Avenue, Edmonton" loading="lazy" decoding="async"></figure>
+        </div>
+      </div>
     </section>
 
     <section class="section section--cream" aria-labelledby="join-h">
