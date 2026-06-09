@@ -447,34 +447,6 @@ pages.push(page({
       </div>
     </section>
 
-    <section class="section section--linen" aria-labelledby="awards-h">
-      <div class="container">
-        <div class="text-center narrow reveal" style="margin-bottom:48px;">
-          <span class="label" style="color:var(--terracotta);">Proudly Recognized</span>
-          <h2 id="awards-h">Awards &amp; recognition.</h2>
-          <p>We are grateful to the guests, families, and community members who have supported da Cecot since our journey began.</p>
-        </div>
-        <div class="info-grid reveal" data-stagger style="text-align:center;">
-          <div>
-            <h3 style="color:var(--terracotta);">Canadian Choice Award 2026</h3>
-            <p>Winner — Italian Restaurant Category</p>
-          </div>
-          <div>
-            <h3 style="color:var(--terracotta);">Tomato Magazine</h3>
-            <p>Top 100 Restaurants in Edmonton — recognized for our Cacio e Pepe.</p>
-          </div>
-          <div>
-            <h3 style="color:var(--terracotta);">Restaurantji</h3>
-            <p>Recommended Restaurant on Whyte Avenue, Edmonton.</p>
-          </div>
-          <div>
-            <h3 style="color:var(--terracotta);">Google Rating</h3>
-            <p>4.8+ stars from the Edmonton community.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="section section--brown" aria-labelledby="catwhole-h">
       <div class="container">
         <div class="two-col reveal">
@@ -521,30 +493,6 @@ pages.push(page({
           </figure>
         </div>
         <div class="btn-wrap text-center"><a href="https://www.google.com/maps?q=da+Cecot+Food,+Edmonton" target="_blank" rel="noopener" class="btn btn--green">Read More on Google</a></div>
-      </div>
-    </section>
-
-    <section class="section section--linen" aria-labelledby="food-gallery-h">
-      <div class="container">
-        <div class="text-center narrow reveal" style="margin-bottom:54px;">
-          <span class="label" style="color:var(--terracotta);">From Our Kitchen</span>
-          <h2 id="food-gallery-h">Every plate, shaped by hand.</h2>
-          <p>A glimpse of what we make fresh each day — from silky ravioli to slow-cooked ragù.</p>
-        </div>
-        <div class="gallery gallery--4 reveal">
-          <figure class="zoom"><img src="images/food/cacio-e-pepe.jpg" alt="Cacio e Pepé pasta at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/food/ragu.jpg" alt="Ragù alla Bolognese at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/food/cicchetti.jpg" alt="Cicchetti Italian small bites at da Cecot" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/food/plase.jpg" alt="Plasé pomodoro sauce pasta at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/food/ravioli-butter-sage.jpg" alt="Ravioli with butter and sage at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/food/ravioli-salsa-al-baffo.jpg" alt="Ravioli with salsa al baffo at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/food/bosco-romagno.jpg" alt="Bosco Romagno pasta dish at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/food/fresh-ravioli.jpg" alt="Fresh filled ravioli at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1380.jpg" alt="A plated da Cecot dish — fresh pasta with roasted vegetables, served with red wine" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1374.jpg" alt="A finished da Cecot plate at the family table, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1385.jpg" alt="A served da Cecot pasta dish at a private dinner, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1398.jpg" alt="A da Cecot meal shared at the table on Whyte Avenue, Edmonton" loading="lazy" decoding="async"></figure>
-        </div>
       </div>
     </section>
 
