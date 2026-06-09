@@ -400,7 +400,7 @@ pages.push(page({
     <section class="section section--cream" aria-labelledby="exp-h">
       <div class="container">
         <div class="two-col menu-row reveal">
-          <figure class="menu-photo zoom">${img('images/class/instagram-1.jpg', 'Guests making fresh pasta at a da Cecot class, Edmonton')}</figure>
+          <figure class="menu-photo zoom">${img('images/general/misc-photo.jpg', 'Guests making fresh pasta at a da Cecot class, Edmonton')}</figure>
           <div class="menu-copy">
             <span class="label" style="color:var(--terracotta);">Experiences</span>
             <h2 id="exp-h">More than a meal.</h2>
