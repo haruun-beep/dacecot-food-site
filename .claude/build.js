@@ -34,6 +34,7 @@ const IMG = {
   family:     'images/general/cecot-family.jpg',
   about2:     'images/general/whatsapp-1.jpg',
   aboutHero:  'images/general/whatsapp-2.jpg',
+  storefront: 'images/general/storefront-evening.jpg',
   product:    'images/food/fresh-ravioli.jpg',
   pastawine:  'images/general/misc-photo.jpg',
   wine:       'images/sauces/salsa-al-baffo.jpg',
@@ -577,100 +578,76 @@ pages.push(page({
               <a href="${MAPS_LINK}" target="_blank" rel="noopener" class="btn btn--ghost">Get Directions</a>
             </div>
           </div>
-          <div class="visit__map">
-            <iframe src="${MAPS_EMBED}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map showing da Cecot Food on Whyte Avenue at 104 Street, Edmonton, AB"></iframe>
-          </div>
+          <figure class="visit__map zoom" style="margin:0;">
+            <img src="${IMG.storefront}" alt="The da Cecot storefront on Whyte Avenue at night — warm lights, guests dining inside" loading="lazy" decoding="async" style="width:100%; height:100%; object-fit:cover; border-radius:10px;">
+          </figure>
         </div>
       </div>
     </section>`
 }));
 
-/* ---------- MENU ---------- */
+/* ---------- MENU (hub: buttons open PDFs — replace files in /menus to update) ---------- */
 const menuFaqs = [
-  { q: 'How does the da Cecot pasta bar work?', a: 'Build your own bowl in three steps: choose a fresh handmade pasta (Tagliatelle, Rigatoni, or Ravioli), pick a house sauce (Pomodoro, Ragù, Cacio e Pepe, or Pesto), and add any extras. We also bake lasagna fresh daily and serve Italian coffee and soft drinks.' },
-  { q: 'Do you offer takeout pasta?', a: 'Yes. Every dish is built for dine-in or takeout, and you can buy our fresh pasta raw from the Pasta Shop to cook at home exactly how you like it.' },
-  { q: 'Can you accommodate dietary restrictions?', a: 'We can help with many dietary needs, including vegan and gluten-free pasta. Call us ahead at (825) 888-4218 with any questions about ingredients, allergens, or to place a large order in advance.' }
+  { q: 'Where can I see the current da Cecot menus?', a: 'Right on our menu page — choose Lunch, Dinner, Drinks & Dessert, Kids, or Gluten-Free and the latest menu opens instantly. Menus change with the seasons and our handmade production.' },
+  { q: 'What is the Ravioli Atelier?', a: 'Each week we prepare a small selection of handmade ravioli inspired by regional Italian traditions, seasonal ingredients, and the creativity of our kitchen — available Friday and Saturday evenings in limited quantities. Reservations recommended.' },
+  { q: 'Can you accommodate dietary restrictions?', a: 'Yes — we offer a dedicated gluten-free menu and vegan pasta options. Call us ahead at (825) 888-4218 with any questions about ingredients, allergens, or to place a large order in advance.' }
+];
+const menuCards = [
+  { name: 'Lunch Menu', file: 'menus/lunch-menu.pdf', d: 'Fresh pasta, quick lunches, and comforting Italian dishes served during lunch hours.' },
+  { name: 'Dinner Menu', file: 'menus/dinner-menu.pdf', d: 'Antipasti, handmade pasta, Ravioli Atelier, secondi, desserts, and evening specials.' },
+  { name: 'Drinks &amp; Dessert', file: 'menus/drinks-dessert-menu.pdf', d: 'Espresso, moka coffee, Italian drinks, desserts, gelato, and affogato.' },
+  { name: 'Kids Menu', file: 'menus/kids-menu.pdf', d: 'Simple, comforting pasta options made for younger guests.' },
+  { name: 'Gluten-Free Menu', file: 'menus/gluten-free-menu.pdf', d: 'Available gluten-free pasta options and dishes prepared with care.' }
 ];
 pages.push(page({
   slug: 'menu',
   active: 'menu',
-  title: 'Menu | da Cecot Pasta Bar, Edmonton',
-  description: 'Explore the da Cecot pasta bar: fresh pasta shapes, slow-cooked Italian sauces, daily lasagna, coffee & housemade tiramisu. Dine in or grab it & go.',
-  ogImage: IMG.greenpasta,
+  title: 'Menu | da Cecot, Edmonton — Lunch, Dinner, Kids & Gluten-Free',
+  description: 'View da Cecot menus: lunch, dinner, drinks & dessert, kids, and gluten-free — plus the Ravioli Atelier, Friday & Saturday evenings on Whyte Avenue.',
+  ogImage: IMG.pasta,
   schema: [
-    breadcrumbSchema([{ slug: 'index', label: 'Home' }, { slug: 'menu', label: 'Menu' }])
+    breadcrumbSchema([{ slug: 'index', label: 'Home' }, { slug: 'menu', label: 'Menu' }]),
+    faqSchema(menuFaqs)
   ],
   body: `${breadcrumb([{ slug: 'index', label: 'Home' }, { slug: 'menu', label: 'Menu' }])}
 
-    <section class="hero hero--page hero--dark hero--parallax" style="background-image:url('${IMG.food}');" aria-labelledby="menu-h1">
+    <section class="hero hero--page hero--dark hero--parallax" style="background-image:url('${IMG.pasta}');" aria-labelledby="menu-h1">
       <div class="hero__inner reveal">
         <span class="label">Eat With Us</span>
         <h1 id="menu-h1">Our Menu</h1>
-        <p>Fresh handmade pasta, slow-cooked house sauces, and lasagna baked daily. Build your own bowl — dine in or grab it &amp; go.</p>
-        <p class="hero__note">À la carte · Call <a href="tel:${NAP.phoneHref}">${NAP.phone}</a> for dietary questions or large orders</p>
+        <p>Fresh pasta, handmade ravioli, Italian comfort food, espresso, desserts, and family-style dining on Whyte Avenue.</p>
       </div>
     </section>
 
-    <section class="section section--cream" aria-labelledby="build-h">
+    <section class="section section--cream" aria-labelledby="choose-menu-h">
       <div class="container">
-        <div class="text-center narrow reveal" style="margin-bottom:50px;">
-          <span class="label" style="color:var(--terracotta);">How It Works</span>
-          <h2 id="build-h">Build Your Pasta</h2>
-          <p>Three simple steps to your perfect bowl.</p>
+        <div class="text-center narrow reveal" style="margin-bottom:48px;">
+          <span class="label" style="color:var(--terracotta);">Choose a Menu</span>
+          <h2 id="choose-menu-h">Choose a menu.</h2>
+          <p>Our menus change with the seasons, our handmade production, and the ingredients available in our kitchen. View the latest menu below.</p>
         </div>
-        <div class="steps reveal" data-stagger>
-          <div class="step"><span class="step__num">1</span><h3>Choose Pasta</h3><p>Pick your shape — Caserecce, Rigatoni, Tagliatelle, Ravioli, and rotating specials, all made fresh daily.</p></div>
-          <div class="step"><span class="step__num">2</span><h3>Choose Sauce</h3><p>Pair it with a house sauce: Ragù Bolognese, Plasé, Cacio e Pepé, Salsa al Baffo, or Butter &amp; Sage.</p></div>
-          <div class="step"><span class="step__num">3</span><h3>Add Extras</h3><p>Finish with cheese, fresh herbs, and the little touches that make it yours.</p></div>
+        <div class="info-grid reveal" data-stagger style="text-align:center;">
+${menuCards.map(m => `          <div style="display:flex; flex-direction:column; align-items:center; gap:10px; padding:28px 20px; background:var(--linen, #efe7d8); border-radius:12px;">
+            <h3>${m.name}</h3>
+            <p style="flex:1;">${m.d}</p>
+            <a href="${m.file}" target="_blank" rel="noopener" class="btn btn--terra" style="margin-top:6px;">View ${m.name}</a>
+          </div>`).join('\n')}
         </div>
+        <p class="text-center reveal" style="margin-top:30px; opacity:0.7; font-size:0.9rem;">Menus open in a new tab — pinch or zoom to read comfortably on mobile.</p>
       </div>
     </section>
 
-    <section class="section section--brown" aria-labelledby="pasta-h">
+    <section class="section section--brown" aria-labelledby="atelier-h">
       <div class="container">
         <div class="two-col menu-row reveal">
-          <figure class="menu-photo zoom">${img(IMG.pasta, 'Fresh handmade pasta at the da Cecot pasta bar, Edmonton')}</figure>
+          <figure class="menu-photo zoom">${img(IMG.product, 'Limited handmade Ravioli Atelier ravioli at da Cecot, Edmonton')}</figure>
           <div class="menu-copy">
-            <span class="label">Choose Your Pasta</span>
-            <h2 id="pasta-h">Fresh Pasta</h2>
-            <p style="font-size:0.8em;letter-spacing:0.08em;text-transform:uppercase;opacity:0.6;margin-bottom:8px;font-weight:600;">Always Available</p>
-            <ul class="menu-list">
-              <li>Caserecce <span>Short twisted pasta · our signature shape</span></li>
-              <li>Rigatoni <span>Ridged tubes</span></li>
-              <li>Tagliatelle <span>Egg ribbons</span></li>
-              <li>Traditional Ravioli <span>Hand-filled parcels</span></li>
-            </ul>
-            <p style="font-size:0.8em;letter-spacing:0.08em;text-transform:uppercase;opacity:0.6;margin-top:18px;margin-bottom:8px;font-weight:600;">Rotating — Based on Availability</p>
-            <ul class="menu-list">
-              <li>Radiatori</li>
-              <li>Mafalde</li>
-              <li>Spaghetti</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="fullbleed hero--parallax" style="background-image:url('${IMG.greenpasta}');" aria-label="Italian comfort food plated at da Cecot, Edmonton">
-      <div class="fullbleed__inner reveal">
-        <p class="fullbleed__quote">"Fresh pasta, made by hand, every single day."</p>
-      </div>
-    </section>
-
-    <section class="section section--cream" aria-labelledby="sauces-h">
-      <div class="container">
-        <div class="two-col menu-row menu-row--rev reveal">
-          <figure class="menu-photo zoom">${img(IMG.sauce, 'Slow-cooked Italian sauce at da Cecot, Edmonton')}</figure>
-          <div class="menu-copy">
-            <span class="label" style="color:var(--terracotta);">Choose Your Sauce</span>
-            <h2 id="sauces-h">House Sauces</h2>
-            <ul class="menu-list">
-              <li>Ragù Bolognese <span>Slow-cooked meat sauce</span></li>
-              <li>Plasé <span>Tomato sauce</span></li>
-              <li>Cacio e Pepé <span>Pecorino &amp; black pepper</span></li>
-              <li>Salsa al Baffo <span>Rosé sauce</span></li>
-              <li>Butter &amp; Sage Sauce</li>
-            </ul>
+            <span class="label">Signature</span>
+            <h2 id="atelier-h">Ravioli Atelier</h2>
+            <p style="font-size:0.85em; letter-spacing:0.06em; text-transform:uppercase; opacity:0.75; margin-bottom:12px;">Limited handmade ravioli · Friday &amp; Saturday evenings</p>
+            <p>Each week, we prepare a small selection of handmade ravioli inspired by regional Italian traditions, seasonal ingredients, and the creativity of our kitchen.</p>
+            <p>Available in limited quantities. Reservations recommended.</p>
+            ${cta('reservations.html', 'Reserve a Table', 'terra')}
           </div>
         </div>
       </div>
@@ -679,64 +656,16 @@ pages.push(page({
     <section class="section section--linen" aria-labelledby="dishes-gallery-h">
       <div class="container">
         <div class="text-center narrow reveal" style="margin-bottom:50px;">
-          <span class="label" style="color:var(--terracotta);">The Dishes</span>
-          <h2 id="dishes-gallery-h">Everything on the menu, photographed fresh.</h2>
+          <span class="label" style="color:var(--terracotta);">From Our Kitchen</span>
+          <h2 id="dishes-gallery-h">A taste of what's waiting.</h2>
         </div>
         <div class="gallery reveal">
           <figure class="zoom"><img src="images/food/ravioli-butter-sage.jpg" alt="Ravioli with butter and sage at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/food/ravioli-salsa-al-baffo.jpg" alt="Ravioli with salsa al baffo at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/food/cacio-e-pepe.jpg" alt="Cacio e Pepé pasta at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/food/ragu.jpg" alt="Ragù alla Bolognese at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/food/plase.jpg" alt="Plasé pomodoro pasta at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/food/bosco-romagno.jpg" alt="Bosco Romagno pasta at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/food/cicchetti.jpg" alt="Cicchetti Italian small bites at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/food/fresh-ravioli.jpg" alt="Fresh hand-filled ravioli at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/food/hero.jpg" alt="Signature pasta at da Cecot Food, Edmonton" loading="lazy" decoding="async"></figure>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--brown" aria-labelledby="sig-h">
-      <div class="container">
-        <div class="text-center narrow reveal" style="margin-bottom:50px;">
-          <span class="label">House Favourites</span>
-          <h2 id="sig-h">Signature Dishes</h2>
-        </div>
-        <div class="offer-grid offer-grid--2 reveal" data-stagger>
-          <article class="offer-card">
-            <div class="offer-card__img zoom">${img(IMG.lasagna, 'Hand-layered lasagna baked fresh daily at da Cecot, Edmonton')}</div>
-            <div class="offer-card__body"><h3>Lasagna</h3><p>Layered by hand with slow-cooked ragù, silky béchamel, and Italian cheeses — baked fresh every morning. Always available — baked fresh daily with seasonal ingredients. Available for dine-in and takeout.</p></div>
-          </article>
-          <article class="offer-card">
-            <div class="offer-card__img zoom">${img(IMG.product, 'Fresh hand-filled ravioli at da Cecot, Edmonton')}</div>
-            <div class="offer-card__body"><h3>Ravioli</h3><p>Delicate hand-filled parcels with seasonal fillings, finished simply with butter &amp; sage or our house sauces.</p></div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--cream" aria-labelledby="philosophy-h">
-      <div class="container narrow reveal">
-        <div class="text-center" style="margin-bottom:36px;">
-          <span class="label" style="color:var(--terracotta);">Our Pasta Philosophy</span>
-          <h2 id="philosophy-h">Made fresh. Best enjoyed now.</h2>
-        </div>
-        <p>Not every pasta shape holds up well once it leaves our kitchen. Fresh egg-based pastas, filled pastas like ravioli, or delicate hand-folded shapes can lose their texture and integrity during transport. They are best enjoyed immediately, in-house.</p>
-        <p style="margin-top:16px;">For this reason, we've chosen Caserecce as our signature takeout/delivery pasta. It maintains its bite, holds sauce beautifully, and delivers the same quality experience at home as it does at the table.</p>
-        <p style="margin-top:16px;">That said, you can still enjoy our other pasta varieties through delivery or pickup — perfect to surprise loved ones or to bring a wholesome, freshly prepared meal to your family. By bringing home our raw fresh pasta, you can have a healthy, authentic Italian meal cooked in just five minutes. At Da Cecot, we produce pasta fresh every day, so whether you dine in, take out, or cook at home, you'll always taste the difference.</p>
-      </div>
-    </section>
-
-    <section class="section section--linen" aria-labelledby="drinks-h">
-      <div class="container">
-        <div class="text-center narrow reveal" style="margin-bottom:50px;">
-          <span class="label" style="color:var(--terracotta);">To Finish</span>
-          <h2 id="drinks-h">Drinks &amp; Dessert</h2>
-        </div>
-        <div class="three-col reveal" data-stagger>
-          <article class="menu-card menu-card--light"><h3>Coffee</h3><p>Fresh Italian Moka, brewed the traditional way.</p></article>
-          <article class="menu-card menu-card--light"><h3>Soft Drinks</h3><ul class="menu-list"><li>Coke</li><li>Sanpellegrino</li><li>Fanta</li><li>Iced Tea</li></ul></article>
-          <article class="menu-card menu-card--light"><h3>Tiramisu</h3><p>Our housemade recipe — espresso-soaked, light, and made in-house.</p></article>
         </div>
       </div>
     </section>
@@ -745,10 +674,10 @@ pages.push(page({
       <div class="container text-center narrow reveal">
         <span class="label" style="color:var(--terracotta);">Save Your Spot</span>
         <h2 id="menu-cta-h">Come hungry. Leave family.</h2>
-        <p>Seating is limited for our weekend specials — reserve ahead so we can save you a place at the table. Questions about the menu or a large order? Call us at <a href="tel:${NAP.phoneHref}">${NAP.phone}</a>.</p>
+        <p>Join us for handmade pasta, warm hospitality, and a table that feels like home.</p>
         <div class="btn-group" style="justify-content:center;">
           <a href="reservations.html" class="btn btn--green">Reserve a Table</a>
-          <a href="tel:${NAP.phoneHref}" class="btn btn--outline">Call ${NAP.phone}</a>
+          <a href="visit-us.html" class="btn btn--outline">Visit Us</a>
         </div>
       </div>
     </section>`
@@ -962,7 +891,7 @@ pages.push(page({
   ],
   body: `${breadcrumb([{ slug: 'index', label: 'Home' }, { slug: 'visit-us', label: 'Visit Us' }])}
 
-    <section class="hero hero--page hero--dark hero--parallax" style="background-image:url('${IMG.dining}');" aria-labelledby="visit-h1">
+    <section class="hero hero--page hero--dark hero--parallax" style="background-image:url('${IMG.storefront}');" aria-labelledby="visit-h1">
       <div class="hero__inner reveal">
         <span class="label">Find Us</span>
         <h1 id="visit-h1">Visit our family kitchen on Whyte Avenue.</h1>
@@ -1088,8 +1017,8 @@ pages.push(page({
 pages.push(page({
   slug: 'pasta-shop',
   active: 'pasta-shop',
-  title: 'Pasta Shop | Fresh Pasta for Home — da Cecot, Edmonton',
-  description: 'Take da Cecot home. Fresh handmade pasta, house sauces, ravioli, lasagna trays & weekly specials from our Whyte Ave shop in Edmonton. Pre-order or grab & go.',
+  title: 'Pasta Shop | Fresh Pasta, Ravioli & Sauces — da Cecot, Edmonton',
+  description: 'Fresh pasta made in Edmonton with traditional Italian methods. 450g from $9.95, ravioli, house sauces & the Family Bundle. Order for pickup on Whyte Ave.',
   ogImage: IMG.product,
   schema: [
     breadcrumbSchema([{ slug: 'index', label: 'Home' }, { slug: 'pasta-shop', label: 'Pasta Shop' }])
@@ -1098,73 +1027,96 @@ pages.push(page({
 
     <section class="hero hero--page hero--dark hero--parallax" style="background-image:url('${IMG.product}');" aria-labelledby="shop-h1">
       <div class="hero__inner reveal">
-        <span class="label">From Our Kitchen, With Purpose</span>
+        <span class="label">Our Pastificio</span>
         <h1 id="shop-h1">Fresh Pasta for Home</h1>
-        <p>The same handmade pasta we serve, ready for your own kitchen. Each dish is made fresh to order — call ahead to reserve yours for pickup on Whyte Ave.</p>
+        <p>Fresh pasta made in Edmonton using traditional Italian methods. Prepared fresh for pickup, freezer-friendly, and ready in minutes — perfect for busy families, pasta lovers, and anyone keeping authentic Italian meals ready at home.</p>
         <div class="btn-group">
           <a href="tel:${NAP.phoneHref}" class="btn btn--terra">Call to Order</a>
-          <a href="reservations.html" class="btn btn--outline">Reserve a Table</a>
+          <a href="#bundle-h" class="btn btn--outline">Family Bundle — $39.99</a>
         </div>
       </div>
     </section>
 
-    <section class="section section--cream" aria-labelledby="shop-h">
+    <section class="section section--cream" aria-labelledby="fresh-pasta-h">
       <div class="container">
-        <div class="text-center narrow reveal" style="margin-bottom:54px;">
-          <span class="label" style="color:var(--terracotta);">The Shop Menu</span>
-          <h2 id="shop-h">Made today, cooked at yours.</h2>
-          <p>Handmade in our kitchen and crafted fresh to order — please allow about 2 hours. Call <a href="tel:${NAP.phoneHref}">${NAP.phone}</a> to reserve your dishes for pickup; availability rotates with the season.</p>
+        <div class="text-center narrow reveal" style="margin-bottom:48px;">
+          <span class="label" style="color:var(--terracotta);">Available Daily</span>
+          <h2 id="fresh-pasta-h">Fresh pasta.</h2>
+          <p class="price-tag" style="margin-top:12px;">450 g — $9.95 &nbsp;·&nbsp; 1 kg — $15.00</p>
         </div>
-        <div class="offer-grid reveal" data-stagger>
-          <article class="offer-card">
-            <div class="offer-card__img zoom">${img(IMG.food, 'Handmade gnocchi with Plasé tomato sauce from da Cecot, Edmonton')}</div>
-            <div class="offer-card__body">
-              <h3>Gnocchi di Pomodoro Plasé</h3>
-              <p>Soft, pillowy gnocchi crafted fresh by hand, served with our signature Plasé tomato sauce — rich, comforting flavour in every bite. Served hot for lunch.</p>
-              <span class="offer-card__price">$12 <small>Individual · 250 g</small></span>
-              <p class="offer-card__opts">Family size (450 g) — $24 · Add stracciatella +$5 · Italian salad +$4</p>
-              <p class="offer-card__allergens">Contains: dairy, egg, gluten</p>
-            </div>
-          </article>
-          <article class="offer-card">
-            <div class="offer-card__img zoom">${img(IMG.product, 'Handmade potato and sausage ravioli with butter and sage from da Cecot, Edmonton')}</div>
-            <div class="offer-card__body">
-              <h3>Potato &amp; Sausage Ravioli</h3>
-              <p>Handmade ravioli generously filled with tender potato and savoury sausage, paired with our handmade butter &amp; sage sauce to finish at home.</p>
-              <span class="offer-card__price">$18 <small>Individual · 250 g</small></span>
-              <p class="offer-card__opts">Family size (450 g) — $30</p>
-              <p class="offer-card__allergens">Contains: egg, gluten, dairy</p>
-            </div>
-          </article>
-          <article class="offer-card">
-            <div class="offer-card__img zoom">${img(IMG.greenpasta, 'Green spinach tortelloni filled with cheese in mushroom sauce from da Cecot, Edmonton')}</div>
-            <div class="offer-card__body">
-              <h3>Tortelloni Verdi</h3>
-              <p>Delicate hand-closed spinach pasta parcels filled with a creamy blend of fine cheeses, served in a luxurious, velvety mushroom sauce. An elegant taste of Italian comfort.</p>
-              <span class="offer-card__price">$18 <small>Individual · 250 g</small></span>
-              <p class="offer-card__opts">Family size available — call for pricing</p>
-              <p class="offer-card__allergens">Contains: gluten, dairy, egg, soy</p>
-            </div>
-          </article>
-          <article class="offer-card">
-            <div class="offer-card__img zoom">${img(IMG.lasagna, 'Sfoglia lasagna bianca with beef and mozzarella from da Cecot, Edmonton')}</div>
-            <div class="offer-card__body">
-              <h3>Sfoglia Lasagna Bianca</h3>
-              <p>A delicate white-sauce lasagna of thin handmade pasta sheets, layered with seasoned beef, creamy béchamel, and mozzarella. A lighter alternative to red-sauce lasagna — still hearty and satisfying.</p>
-              <span class="offer-card__price">$18</span>
-              <p class="offer-card__opts">Made fresh to order</p>
-              <p class="offer-card__allergens">Contains: dairy, egg, gluten, soy</p>
-            </div>
-          </article>
-          <article class="offer-card offer-card--cta">
-            <div class="offer-card__body">
-              <h3>Reserve Your Pasta</h3>
-              <p>Every dish is made fresh to order (about 2 hours' notice). Call ahead and we'll have it ready for pickup on Whyte Avenue — large orders welcome.</p>
-              <a href="tel:${NAP.phoneHref}" class="btn btn--terra" style="margin-top:6px;">Call ${NAP.phone}</a>
-            </div>
-          </article>
+        <div class="two-col reveal" style="align-items:start;">
+          <div>
+            <h3 style="color:var(--terracotta);">Vegan Pasta <span style="font-weight:400; font-size:0.85em; opacity:0.75;">(semolina &amp; water)</span></h3>
+            <ul class="detail-list" style="margin-top:14px;">
+              <li><strong>Always available:</strong> Caserecce · Radiatori · Mafalde</li>
+              <li><strong>Seasonal rotations:</strong> Orecchiette · Cavatelli · Fusilloni</li>
+            </ul>
+          </div>
+          <div>
+            <h3 style="color:var(--terracotta);">Egg Pasta</h3>
+            <ul class="detail-list" style="margin-top:14px;">
+              <li><strong>Always available:</strong> Tagliatelle · Spaghetti · Rigatoni · Lasagna Sheets</li>
+              <li><strong>Seasonal rotations:</strong> Garganelli &amp; other regional specialties</li>
+            </ul>
+          </div>
         </div>
-        <p class="text-center reveal" style="margin-top:36px; opacity:0.75; font-size:0.95rem;">Menu, sizes, and availability change with the season. Call <a href="tel:${NAP.phoneHref}" style="color:var(--terracotta);">${NAP.phone}</a> or email <a href="mailto:${NAP.email}" style="color:var(--terracotta);">${NAP.email}</a> for today's selection, family sizes, and large orders.</p>
+      </div>
+    </section>
+
+    <section class="section section--brown" aria-labelledby="ravioli-h">
+      <div class="container"><div class="two-col menu-row reveal">
+        <figure class="menu-photo zoom">${img(IMG.product, 'Handmade ricotta and spinach ravioli from da Cecot, Edmonton')}</figure>
+        <div class="menu-copy">
+          <span class="label">Handmade in Small Batches</span>
+          <h2 id="ravioli-h">Ravioli &amp; filled pasta.</h2>
+          <p>Available for preorder and pickup.</p>
+          <ul class="detail-list">
+            <li><strong>Ricotta &amp; Spinach Ravioli</strong> — 350 g · $18.00</li>
+            <li><strong>Seasonal Ravioli</strong> — rotating flavours throughout the year</li>
+            <li><strong>Cannelloni</strong> — available by preorder</li>
+            <li><strong>Custom options</strong> for vegan &amp; gluten-free customers</li>
+          </ul>
+          <a href="tel:${NAP.phoneHref}" class="btn btn--terra" style="margin-top:18px;">Preorder by Phone</a>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="section section--linen" aria-labelledby="sauces-h">
+      <div class="container"><div class="two-col menu-row menu-row--rev reveal">
+        <figure class="menu-photo zoom">${img(IMG.sauce, 'House sauces in 12 oz jars from da Cecot, Edmonton')}</figure>
+        <div class="menu-copy">
+          <span class="label" style="color:var(--terracotta);">12 oz Jars</span>
+          <h2 id="sauces-h">House sauces.</h2>
+          <p>Designed to pair perfectly with our fresh pasta — and they freeze beautifully.</p>
+          <ul class="detail-list">
+            <li><strong>Salsa Amatriciana</strong> — $12.99</li>
+            <li><strong>Salsa Plasé</strong> <span style="opacity:0.75;">(our signature sauce)</span> — $12.99</li>
+            <li><strong>Ragù Bolognese</strong> — $14.55</li>
+          </ul>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="section section--brown" aria-labelledby="bundle-h">
+      <div class="container text-center narrow reveal">
+        <span class="label">Mix &amp; Match</span>
+        <h2 id="bundle-h">Family Pasta Bundle — $39.99</h2>
+        <p>1 kg of fresh pasta (choose up to 2 shapes) + two 12 oz house sauces. Mix and match your favourites — perfect for freezer stocking and quick weeknight dinners.</p>
+        <a href="tel:${NAP.phoneHref}" class="btn btn--terra" style="margin-top:18px;">Order Your Bundle</a>
+      </div>
+    </section>
+
+    <section class="section section--cream" aria-labelledby="how-h">
+      <div class="container">
+        <div class="text-center narrow reveal" style="margin-bottom:40px;">
+          <h2 id="how-h">How it works.</h2>
+        </div>
+        <div class="info-grid reveal" data-stagger style="text-align:center;">
+          <div><h3>1 · Choose</h3><p>Pick your pasta shapes, ravioli, sauces, or bundle.</p></div>
+          <div><h3>2 · Order</h3><p>Call <a href="tel:${NAP.phoneHref}">${NAP.phone}</a> or order online.</p></div>
+          <div><h3>3 · Pick up</h3><p>Collect from da Cecot on Whyte Avenue.</p></div>
+          <div><h3>4 · Enjoy</h3><p>Cook in minutes — fresh or straight from your freezer.</p></div>
+        </div>
       </div>
     </section>
 
@@ -1204,6 +1156,55 @@ pages.push(page({
           <figure class="zoom"><img src="images/sauces/salsa-al-baffo.jpg" alt="Salsa al baffo from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/sauces/sauce-salsa-al-baffo.jpg" alt="Salsa al baffo sauce from da Cecot Pasta Shop, Edmonton" loading="lazy" decoding="async"></figure>
         </div>
+      </div>
+    </section>
+
+    <section class="section section--olive" aria-labelledby="shop-wholesale-h">
+      <div class="container">
+        <div class="text-center narrow reveal" style="margin-bottom:40px;">
+          <span class="label">For Professional Kitchens</span>
+          <h2 id="shop-wholesale-h">Wholesale &amp; restaurant supply.</h2>
+          <p>Fresh pasta made for professional kitchens — fresh pasta, ravioli, cannelloni, lasagna sheets, and seasonal or custom filled pasta. Available for restaurants, cafés, caterers, and hospitality businesses throughout Edmonton.</p>
+        </div>
+        <form class="form reveal" data-formsubmit data-subject="Wholesale Inquiry — da Cecot Pasta Shop" aria-label="Wholesale information request" style="max-width:680px; margin:0 auto;">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+          <div class="form-row">
+            <div class="field"><label for="ws-business">Business Name *</label><input type="text" id="ws-business" name="business_name" required></div>
+            <div class="field"><label for="ws-contact">Contact Name *</label><input type="text" id="ws-contact" name="contact_name" required></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label for="ws-email">Email *</label><input type="email" id="ws-email" name="email" required></div>
+            <div class="field"><label for="ws-phone">Phone Number *</label><input type="tel" id="ws-phone" name="phone" required></div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="ws-interest">Product Interest *</label>
+              <select id="ws-interest" name="product_interest" required>
+                <option value="">Select a product…</option>
+                <option>Fresh Pasta</option>
+                <option>Ravioli</option>
+                <option>Cannelloni</option>
+                <option>Lasagna Sheets</option>
+                <option>Seasonal / Custom Filled Pasta</option>
+                <option>Multiple Products</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="ws-volume">Estimated Weekly Volume *</label>
+              <select id="ws-volume" name="weekly_volume" required>
+                <option value="">Select a range…</option>
+                <option>Under 10 kg</option>
+                <option>10–25 kg</option>
+                <option>25–50 kg</option>
+                <option>50+ kg</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+          </div>
+          <div class="text-center"><button type="submit" class="btn btn--terra">Request Wholesale Information</button></div>
+          <div class="form-success">Grazie! We'll be in touch within one business day to talk products, volume, and pricing.</div>
+          <div class="form-error">Something went wrong — please email us at info@dacecotfood.com.</div>
+        </form>
       </div>
     </section>
 
