@@ -373,48 +373,20 @@ pages.push(page({
     </section>
 
     <section id="kitchen" class="section section--cream" aria-labelledby="kitchen-h">
-      <div class="container text-center narrow reveal">
-        <span class="label" style="color:var(--terracotta);">Our Italian Kitchen</span>
-        <h2 id="kitchen-h">A warm Italian home, where pasta is made by hand.</h2>
-        <p>da Cecot is an Italian family kitchen built on a love of hospitality, tradition, and good food shared with others. Inspired by our family's roots in Friuli Venezia Giulia, we create handmade pasta, slow-simmered sauces, and seasonal dishes that reflect the way we grew up eating — around a table filled with family, friends, and conversation.</p>
-        <p>From fresh pasta and ravioli to the occasional regional specialty, everything we serve is made with care and meant to be shared.</p>
-        <p><strong>Come as a guest. Leave as family.</strong></p>
-        ${cta('our-story.html', 'Learn Our Story', 'terra')}
-      </div>
-    </section>
-
-    <section class="section section--brown" aria-labelledby="fresh-h">
-      <div class="container">
-        <div class="text-center narrow reveal" style="margin-bottom:56px;">
-          <span class="label">Fresh Pasta Made Daily</span>
-          <h2 id="fresh-h">Hand-shaped, never rushed.</h2>
-        </div>
-        <div class="feature-grid reveal" data-stagger>
-          <article class="feature-card"><div class="zoom">${img(IMG.pasta, 'Hand-shaped fresh pasta at da Cecot, Edmonton')}</div><h3>Handmade Daily</h3><p>Every pasta shape is produced with care and attention, using traditional methods and quality ingredients.</p></article>
-          <article class="feature-card"><div class="zoom">${img('images/general/heritage/notebook-pan-di-spagna.jpg', "Erika's original handwritten recipe notebook, started at age 8")}</div><h3>Family Recipes</h3><p>Many of the recipes we share today trace back to handwritten notes, family traditions, and memories collected over a lifetime.</p><p style="margin-top:8px; opacity:0.7; font-size:0.85em;"><em>Original recipe notebook, started at age 8.</em></p></article>
-          <article class="feature-card"><div class="zoom">${img(IMG.freshpasta, 'Fresh pasta made daily at da Cecot, Edmonton')}</div><h3>Crafted With Care</h3><p>Small-batch production, fresh ingredients, and a commitment to quality in everything we make.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--cream" aria-labelledby="exp-h">
       <div class="container">
         <div class="two-col menu-row reveal">
-          <figure class="menu-photo zoom">${img('images/general/misc-photo.jpg', 'Guests making fresh pasta at a da Cecot class, Edmonton')}</figure>
+          <figure class="menu-photo zoom">${img('images/general/misc-photo.jpg', 'Guests making fresh pasta at a da Cecot pasta class, Edmonton')}</figure>
           <div class="menu-copy">
-            <span class="label" style="color:var(--terracotta);">Experiences</span>
-            <h2 id="exp-h">More than a meal.</h2>
-            <p>Join a pasta class, gather around our family table, celebrate a special occasion, or discover seasonal events inspired by Italian traditions. At da Cecot, food is only the beginning.</p>
-            ${cta('experiences.html', 'Explore Experiences', 'brown')}
+            <span class="label" style="color:var(--terracotta);">Our Italian Kitchen</span>
+            <h2 id="kitchen-h">A warm Italian home, where pasta is made by hand.</h2>
+            <p>da Cecot is an Italian family kitchen built on a love of hospitality, tradition, and good food shared with others. Inspired by our family's roots in Friuli Venezia Giulia, everything we serve is made with care and meant to be shared.</p>
+            <p>Join a pasta class, gather around our family table, or celebrate a special occasion. At da Cecot, food is only the beginning.</p>
+            <div class="btn-group">
+              <a href="our-story.html" class="btn btn--terra">Our Story</a>
+              <a href="experiences.html" class="btn btn--brown">Explore Experiences</a>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="fullbleed hero--parallax" style="background-image:url('${IMG.greenpasta}');" aria-label="Fresh pasta at da Cecot Food, Edmonton">
-      <div class="fullbleed__inner reveal">
-        <p class="fullbleed__quote">"Through every bite, we bring a little joy home."</p>
-        <span class="fullbleed__by">— the Cecot family</span>
       </div>
     </section>
 
@@ -443,23 +415,9 @@ pages.push(page({
             <div class="offer-card__body"><h3>Family Bundle</h3><p>A simple way to keep authentic Italian meals ready at home.</p><span class="offer-card__link">Visit Pasta Shop</span></div>
           </a>
         </div>
-        <div class="btn-wrap text-center"><a href="pasta-shop.html" class="btn btn--terra">Visit Pasta Shop</a></div>
-      </div>
-    </section>
-
-    <section class="section section--brown" aria-labelledby="catwhole-h">
-      <div class="container">
-        <div class="two-col reveal">
-          ${img(IMG.lasagna, 'Catering trays of handmade pasta from da Cecot, Edmonton', 'circle-img')}
-          <div>
-            <span class="label">For Home, Parties &amp; Restaurants</span>
-            <h2 id="catwhole-h">Handmade pasta, made with the same care.</h2>
-            <p>Whether you're feeding your family, planning an event, or sourcing fresh pasta for your restaurant, da Cecot offers handcrafted products made with the same care we serve in-house.</p>
-            <div class="btn-group">
-              <a href="catering.html" class="btn btn--terra">Catering</a>
-              <a href="partnerships.html" class="btn btn--ghost">Wholesale</a>
-            </div>
-          </div>
+        <div class="btn-group" style="justify-content:center; margin-top:32px;">
+          <a href="pasta-shop.html" class="btn btn--terra">Visit Pasta Shop</a>
+          <a href="catering.html" class="btn btn--ghost">Catering &amp; Wholesale</a>
         </div>
       </div>
     </section>
@@ -681,7 +639,7 @@ pages.push(page({
 
     <section class="section section--linen" aria-labelledby="notebook-h">
       <div class="container"><div class="two-col menu-row reveal">
-        <figure class="menu-photo zoom">${img('images/general/heritage/notebook-torta-paradiso.jpg', "Erika's original handwritten recipe notebook — Torta Paradiso recipe page")}</figure>
+        <figure class="menu-photo zoom" style="background:#f9f5ef;"><img src="images/general/heritage/notebook-torta-paradiso.jpg" alt="Erika&#39;s original handwritten recipe notebook — Torta Paradiso recipe page" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;min-height:400px;"></figure>
         <div class="menu-copy">
           <span class="label" style="color:var(--terracotta);">A Notebook Full of Memories</span>
           <h2 id="notebook-h">A notebook full of memories.</h2>
