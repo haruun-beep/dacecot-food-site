@@ -296,6 +296,8 @@ ${expHero('spc-h1', 'La Domenica Da Cecot', 'Pasta · Amore · Condivisione — 
           <figure class="zoom"><img src="images/general/erica/_MG_1192.jpg" alt="Shaping fresh pasta by hand at a da Cecot pasta class, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/general/erica/_MG_1138.jpg" alt="Fresh pasta dough being kneaded at a da Cecot class, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/general/erica/_MG_1198.jpg" alt="Cutting fresh pasta strands at a da Cecot Sunday class, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/erica/_MG_1131.jpg" alt="Guests at work during a hands-on pasta class at da Cecot" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/erica/_MG_1205.jpg" alt="Fresh pasta drying at a da Cecot pasta class, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/food/ravioli-butter-sage.jpg" alt="Ravioli with butter and sage — the dish students take home" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/food/fresh-ravioli.jpg" alt="Fresh hand-filled ravioli — a da Cecot pasta class finish" loading="lazy" decoding="async"></figure>
         </div>
