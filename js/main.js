@@ -122,6 +122,11 @@
 
         if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
+        // Optional Square checkout: open a tab now (within the click gesture) so
+        // it isn't popup-blocked; we point it at the pay URL once the email sends.
+        var payUrl = form.dataset.payUrl || '';
+        var payWin = payUrl ? window.open('', '_blank') : null;
+
         var payload = { _subject: form.dataset.subject || 'New message — da Cecot Food' };
         new FormData(form).forEach(function (v, k) { if (k !== '_honey') payload[k] = v; });
 
@@ -135,11 +140,16 @@
             if (r.success === 'true' || r.success === true) {
               if (successEl) successEl.classList.add('show');
               form.querySelectorAll('input:not([type=hidden]), textarea, select').forEach(function (f) { f.value = ''; });
+              if (payUrl) {
+                if (payWin && !payWin.closed) { payWin.location = payUrl; }
+                else { window.location.href = payUrl; }
+              }
             } else {
               if (errorEl) errorEl.classList.add('show');
+              if (payWin) payWin.close();
             }
           })
-          .catch(function () { if (errorEl) errorEl.classList.add('show'); })
+          .catch(function () { if (errorEl) errorEl.classList.add('show'); if (payWin) payWin.close(); })
           .finally(function () { if (btn) { btn.disabled = false; btn.textContent = label; } });
       });
     });

@@ -53,7 +53,6 @@ function bookingCalendar({ weekday, blockFirst = false, weeks = 8, start, name, 
             <input type="hidden" name="${name}" data-cal-input required>
           </div>`;
 }
-const PAY_NOTE = `<p class="cal__pay-note">Online payment awaiting verification.</p>`;
 
 function eventSchema({ slug, name, desc, image, byDay, startTime, price }) {
   return {
@@ -259,7 +258,7 @@ ${expHero('spc-h1', 'La Domenica Da Cecot', 'Pasta · Amore · Condivisione — 
           <p>Classes are $95 per guest, run every Sunday from 5–8:30 PM, capped at 12 guests, and fill up quickly. Pick a Sunday on the calendar — or call us at <a href="tel:+18258884218">(825) 888-4218</a>.</p>
         </div>
         <div class="booking" style="margin-top:32px;">
-          <form data-formsubmit data-subject="Sunday Pasta Class Booking — da Cecot" aria-label="Sunday pasta class booking request">
+          <form data-formsubmit data-pay-url="https://square.link/u/mTkWSnl5" data-subject="Sunday Pasta Class Booking — da Cecot" aria-label="Sunday pasta class booking request">
             <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
             ${bookingCalendar({ weekday: 0, blockFirst: true, weeks: 8, start: '2026-06-28', name: 'class_date', prompt: 'Pick a Sunday above to reserve your spot.' })}
             <div class="field" style="margin-top:22px;">
@@ -276,8 +275,8 @@ ${expHero('spc-h1', 'La Domenica Da Cecot', 'Pasta · Amore · Condivisione — 
               <textarea id="spc-notes" name="notes" placeholder="Allergies, dietary restrictions, celebrating something special…"></textarea>
             </div>
             <button type="submit" class="btn btn--green" style="width:100%;">Proceed to Payment</button>
-            ${PAY_NOTE}
-            <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Grazie! We've received your class request — we'll confirm your spot and arrange payment ($95 per guest) by phone or email shortly.</div>
+            <p class="cal__pay-note">You'll be taken to our secure Square checkout to pay $95 per guest.</p>
+            <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Grazie! Your class request is in — a secure Square checkout has opened in a new tab to confirm your spot ($95 per guest). If it didn't open, we'll follow up by phone or email.</div>
             <div class="form-error" style="color:var(--brown);">Something went wrong — please call us at (825) 888-4218 or email info@dacecotfood.com.</div>
           </form>
         </div>
@@ -388,8 +387,8 @@ ${expHero('drop-h1', 'Pasta With Erika', 'Thursday public drop-in. Learn. Create
               <label for="drop-notes">Notes <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
               <textarea id="drop-notes" name="notes" placeholder="Roughly what time you'll arrive, dietary needs, anything else…"></textarea>
             </div>
-            <button type="submit" class="btn btn--green" style="width:100%;">Proceed to Payment</button>
-            ${PAY_NOTE}
+            <button type="submit" class="btn btn--green" style="width:100%;">Reserve My Spot</button>
+            <p class="cal__pay-note">No payment needed — just drop in. Pay in person when you arrive.</p>
             <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Grazie! We've saved your Thursday drop-in request — see you in the pasta lab. We'll reach out if anything changes.</div>
             <div class="form-error" style="color:var(--brown);">Something went wrong — please call us at (825) 888-4218 or email info@dacecotfood.com.</div>
           </form>
