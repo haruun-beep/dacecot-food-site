@@ -627,7 +627,7 @@ pages.push(page({
 
     <section class="section section--brown" aria-labelledby="community-h">
       <div class="container"><div class="two-col menu-row reveal">
-        <figure class="menu-photo zoom">${img(IMG.freshpasta, 'Hands making fresh pasta together in the da Cecot kitchen, Edmonton')}</figure>
+        <figure class="menu-photo zoom">${img('images/general/restaurant-interior.jpg', 'Guests gathered inside the da Cecot dining room on Whyte Avenue, Edmonton')}</figure>
         <div class="menu-copy">
           <span class="label">Community</span>
           <h2 id="community-h">A table for everyone.</h2>
@@ -877,7 +877,7 @@ pages.push(page({
   ],
   body: `${breadcrumb([{ slug: 'index', label: 'Home' }, { slug: 'pasta-shop', label: 'Pasta Shop' }])}
 
-    <section class="hero hero--page hero--dark hero--parallax" style="background-image:url('${IMG.product}');" aria-labelledby="shop-h1">
+    <section class="hero hero--page hero--dark hero--parallax" style="background-image:url('images/food/ravioli-making.jpg');" aria-labelledby="shop-h1">
       <div class="hero__inner reveal">
         <span class="label">Our Pastificio</span>
         <h1 id="shop-h1">Fresh Pasta for Home</h1>
@@ -893,8 +893,9 @@ pages.push(page({
       <div class="container">
         <div class="text-center narrow reveal" style="margin-bottom:48px;">
           <span class="label" style="color:var(--terracotta);">Available Daily</span>
-          <h2 id="fresh-pasta-h">Fresh pasta.</h2>
+          <h2 id="fresh-pasta-h">Fresh pasta, made every morning.</h2>
           <p class="price-tag" style="margin-top:12px;">450 g — $9.95 &nbsp;·&nbsp; 1 kg — $15.00</p>
+          <p style="margin-top:14px;">Made fresh daily and ready to take home — just drop it in boiling water and serve in minutes.</p>
         </div>
         <div class="two-col reveal" style="align-items:start;">
           <div>
@@ -911,6 +912,12 @@ pages.push(page({
               <li><strong>Seasonal rotations:</strong> Garganelli &amp; other regional specialties</li>
             </ul>
           </div>
+        </div>
+        <div class="gallery gallery--4 reveal" style="margin-top:48px;">
+          <figure class="zoom"><img src="images/raw-pasta/caserecce.jpg" alt="Fresh caserecce pasta to take home from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/raw-pasta/tagliatelle.jpg" alt="Fresh tagliatelle to take home from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/raw-pasta/rigatoni.jpg" alt="Fresh rigatoni to take home from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/food/lasagna.jpg" alt="Fresh lasagna ready to take home from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
         </div>
       </div>
     </section>
@@ -934,19 +941,27 @@ pages.push(page({
     </section>
 
     <section class="section section--linen" aria-labelledby="sauces-h">
-      <div class="container"><div class="two-col menu-row menu-row--rev reveal">
-        <figure class="menu-photo zoom">${img(IMG.sauce, 'House sauces in 12 oz jars from da Cecot, Edmonton')}</figure>
-        <div class="menu-copy">
-          <span class="label" style="color:var(--terracotta);">12 oz Jars</span>
-          <h2 id="sauces-h">House sauces.</h2>
-          <p>Designed to pair perfectly with our fresh pasta — and they freeze beautifully.</p>
-          <ul class="detail-list">
-            <li><strong>Salsa Amatriciana</strong> — $12.99</li>
-            <li><strong>Salsa Plasé</strong> <span style="opacity:0.75;">(our signature sauce)</span> — $12.99</li>
-            <li><strong>Ragù Bolognese</strong> — $14.55</li>
-          </ul>
+      <div class="container">
+        <div class="two-col menu-row menu-row--rev reveal">
+          <figure class="menu-photo zoom">${img(IMG.sauce, 'House sauces in 12 oz jars from da Cecot, Edmonton')}</figure>
+          <div class="menu-copy">
+            <span class="label" style="color:var(--terracotta);">12 oz Jars</span>
+            <h2 id="sauces-h">House sauces.</h2>
+            <p>Designed to pair perfectly with our fresh pasta — and they freeze beautifully.</p>
+            <ul class="detail-list">
+              <li><strong>Salsa Amatriciana</strong> — $12.99</li>
+              <li><strong>Salsa Plasé</strong> <span style="opacity:0.75;">(our signature sauce)</span> — $12.99</li>
+              <li><strong>Ragù Bolognese</strong> — $14.55</li>
+            </ul>
+          </div>
         </div>
-      </div></div>
+        <div class="gallery gallery--4 reveal" style="margin-top:48px;">
+          <figure class="zoom"><img src="images/sauces/sauce-ragu.jpg" alt="Ragù alla Bolognese house sauce in a 12 oz jar from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/sauces/sauce-plase.jpg" alt="Salsa Plasé house sauce in a 12 oz jar from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/sauces/sauce-bosco-romagno.jpg" alt="Bosco Romagno house sauce in a 12 oz jar from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/sauces/salsa-al-baffo.jpg" alt="Salsa al baffo house sauce in a 12 oz jar from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
+        </div>
+      </div>
     </section>
 
     <section class="section section--brown" aria-labelledby="bundle-h">
@@ -972,44 +987,6 @@ pages.push(page({
       </div>
     </section>
 
-    <section class="section section--linen" aria-labelledby="raw-pasta-gallery-h">
-      <div class="container">
-        <div class="text-center narrow reveal" style="margin-bottom:48px;">
-          <span class="label" style="color:var(--terracotta);">Raw Pasta to Take Home</span>
-          <h2 id="raw-pasta-gallery-h">Made fresh every morning.</h2>
-          <p>Ready to drop in boiling water and serve in minutes. Each bag is made the same day.</p>
-        </div>
-        <div class="gallery reveal">
-          <figure class="zoom"><img src="images/raw-pasta/caserecce.jpg" alt="Fresh caserecce pasta to take home from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/raw-pasta/tagliatelle.jpg" alt="Fresh tagliatelle to take home from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/raw-pasta/rigatoni.jpg" alt="Fresh rigatoni to take home from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/raw-pasta/radiatori.jpg" alt="Fresh radiatori pasta from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/raw-pasta/raw-pasta.jpg" alt="Fresh handmade pasta at da Cecot Pasta Shop, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/food/fresh-ravioli.jpg" alt="Fresh filled ravioli from da Cecot Pasta Shop, Edmonton" loading="lazy" decoding="async"></figure>
-        </div>
-        <div class="btn-wrap text-center reveal" style="margin-top:36px;">
-          <a href="tel:${NAP.phoneHref}" class="btn btn--terra">Call to Reserve Yours</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--cream" aria-labelledby="sauces-gallery-h">
-      <div class="container">
-        <div class="text-center narrow reveal" style="margin-bottom:48px;">
-          <span class="label" style="color:var(--warm-brown);">Sauce to Go</span>
-          <h2 id="sauces-gallery-h">Our house sauces, bottled for you.</h2>
-          <p>The same slow-cooked sauces from our kitchen — available to take home and pair with any pasta you choose.</p>
-        </div>
-        <div class="gallery reveal">
-          <figure class="zoom"><img src="images/sauces/sauce-ragu.jpg" alt="Ragù alla Bolognese sauce to go from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/sauces/sauce-plase.jpg" alt="Plasé pomodoro sauce to go from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/sauces/sauce-bosco-romagno.jpg" alt="Bosco Romagno sauce to go from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/sauces/sauce-to-go.jpg" alt="House sauces to go from da Cecot Pasta Shop, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/sauces/salsa-al-baffo.jpg" alt="Salsa al baffo from da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/sauces/sauce-salsa-al-baffo.jpg" alt="Salsa al baffo sauce from da Cecot Pasta Shop, Edmonton" loading="lazy" decoding="async"></figure>
-        </div>
-      </div>
-    </section>
 
     <section class="section section--olive" aria-labelledby="shop-wholesale-h">
       <div class="container">
