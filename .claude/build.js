@@ -997,6 +997,37 @@ pages.push(page({
       </div>
     </section>
 
+    <section class="section section--linen" aria-labelledby="order-h">
+      <div class="container narrow reveal">
+        <div class="text-center">
+          <span class="label" style="color:var(--terracotta);">Order Online</span>
+          <h2 id="order-h">Order for pickup</h2>
+          <p>Tell us what you'd like and when you'll collect it, and we'll confirm your total by phone or email. Prefer to talk? Call <a href="tel:${NAP.phoneHref}">${NAP.phone}</a>.</p>
+        </div>
+        <div class="booking" style="margin-top:32px;">
+          <form data-formsubmit data-subject="Pasta Shop Pickup Order — da Cecot" aria-label="Pasta shop pickup order">
+            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+            <div class="field">
+              <label for="ord-items">Your order</label>
+              <textarea id="ord-items" name="order" required placeholder="e.g. 1 kg tagliatelle, 2 × Salsa Plasé, 1 Family Bundle…"></textarea>
+              <p style="margin-top:10px;font-size:0.85rem;opacity:0.75;line-height:1.7;">Fresh pasta 450 g $9.95 · 1 kg $15 &nbsp;·&nbsp; Salsa Amatriciana $12.99 · Salsa Plasé $12.99 · Ragù Bolognese $14.55 &nbsp;·&nbsp; Family Pasta Bundle $39.99</p>
+            </div>
+            <div class="form-row">
+              <div class="field"><label for="ord-pickup">Day of pickup</label><input type="date" id="ord-pickup" name="pickup_day" required></div>
+              <div class="field"><label for="ord-allergies">Any allergies?</label><input type="text" id="ord-allergies" name="allergies" placeholder="Gluten, nuts, none…"></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label for="ord-name">Name</label><input type="text" id="ord-name" name="name" required></div>
+              <div class="field"><label for="ord-phone">Phone</label><input type="tel" id="ord-phone" name="phone" required></div>
+            </div>
+            <div class="field"><label for="ord-email">Email</label><input type="email" id="ord-email" name="email" required></div>
+            <button type="submit" class="btn btn--terra" style="width:100%;">Send My Order</button>
+            <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Grazie! We've got your order — we'll confirm your pickup time and total by phone or email shortly.</div>
+            <div class="form-error" style="color:var(--brown);">Something went wrong — please call us at (825) 888-4218 or email info@dacecotfood.com.</div>
+          </form>
+        </div>
+      </div>
+    </section>
 
     <section class="section section--olive" aria-labelledby="shop-wholesale-h">
       <div class="container">

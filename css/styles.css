@@ -333,6 +333,26 @@ h1 + p, h2 + p, h3 + p { margin-top: 20px; }
 .hero p { font-size: 1.15rem; max-width: 640px; margin: 0 auto 14px; }
 .hero--page { min-height: 52vh; }
 
+/* Date picker pills (Sunday classes) */
+.date-picker { border: none; padding: 0; margin: 0; }
+.date-picker__legend { font-family: var(--sans); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--warm-brown); margin-bottom: 14px; padding: 0; }
+.date-picker__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.date-pill {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  padding: 18px 16px;
+  border: 1.5px solid rgba(74,46,34,0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: var(--serif); font-size: 1.1rem; color: var(--brown);
+  text-align: center;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.date-pill input { position: absolute; opacity: 0; width: 0; height: 0; }
+.date-pill:hover { border-color: var(--terracotta); }
+.date-pill:has(input:checked) { background: var(--olive); border-color: var(--olive); color: var(--cream); font-weight: 600; }
+.date-pill:has(input:focus-visible) { outline: 2px solid var(--terracotta); outline-offset: 3px; }
+
 /* Notebook slider (Our Story) */
 .note-slider { position: relative; border-radius: 10px; overflow: hidden; box-shadow: 0 14px 40px rgba(74,46,34,0.14); }
 .note-slider__track {

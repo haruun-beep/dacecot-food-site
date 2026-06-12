@@ -227,7 +227,7 @@ pages.push(page({
   ],
   body: `${breadcrumb(trail('Sunday Pasta Classes').map((t, i) => i === 2 ? { slug: 'sunday-pasta-classes', label: t.label } : t))}
 
-${expHero('spc-h1', 'La Domenica Da Cecot', 'Pasta · Amore · Condivisione — Sunday at our family table.', IMG.pastawine, true)}
+${expHero('spc-h1', 'La Domenica Da Cecot', 'Pasta · Amore · Condivisione — Sunday at our family table.', 'images/general/erica/erika-hero.jpg', true)}
 
     <section class="section section--cream" aria-labelledby="spc-what-h">
       <div class="container narrow reveal text-center">
@@ -255,12 +255,20 @@ ${expHero('spc-h1', 'La Domenica Da Cecot', 'Pasta · Amore · Condivisione — 
       <div class="container narrow reveal">
         <div class="text-center">
           <h2 id="spc-book-h">Book your class spot</h2>
-          <p>Classes are $95 per guest, run every Sunday from 5–8:30 PM, capped at 12 guests, and fill up quickly. Pick a Sunday on the calendar — or call us at <a href="tel:+18258884218">(825) 888-4218</a>.</p>
+          <p>Classes are $95 per guest, run from 5–8:30 PM, and are capped at 12 guests. Choose one of our upcoming class dates below — or call us at <a href="tel:+18258884218">(825) 888-4218</a>.</p>
         </div>
         <div class="booking" style="margin-top:32px;">
           <form data-formsubmit data-pay-url="https://square.link/u/mTkWSnl5" data-subject="Sunday Pasta Class Booking — da Cecot" aria-label="Sunday pasta class booking request">
             <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-            ${bookingCalendar({ weekday: 0, blockFirst: true, weeks: 8, start: '2026-06-28', name: 'class_date', prompt: 'Pick a Sunday above to reserve your spot.' })}
+            <fieldset class="date-picker">
+              <legend class="date-picker__legend">Choose your class date</legend>
+              <div class="date-picker__grid">
+                <label class="date-pill"><input type="radio" name="class_date" value="Sunday, June 28, 2026" required><span>Sun · Jun 28</span></label>
+                <label class="date-pill"><input type="radio" name="class_date" value="Sunday, July 12, 2026"><span>Sun · Jul 12</span></label>
+                <label class="date-pill"><input type="radio" name="class_date" value="Sunday, August 9, 2026"><span>Sun · Aug 9</span></label>
+                <label class="date-pill"><input type="radio" name="class_date" value="Sunday, September 20, 2026"><span>Sun · Sep 20</span></label>
+              </div>
+            </fieldset>
             <div class="field" style="margin-top:22px;">
               <label for="spc-guests">Number of guests</label>
               <select id="spc-guests" name="guests">${guestOptions(12)}</select>
@@ -688,6 +696,18 @@ ${expHero('cat-h1', 'Catering', 'Bring da Cecot to your table — budget-friendl
           </div>
         </div>
       </div>
+    </section>
+
+    <section class="section section--linen" aria-labelledby="cat-anti-h">
+      <div class="container"><div class="two-col menu-row reveal">
+        <figure class="menu-photo zoom">${img('images/food/caprese-canapes.jpg', 'Caprese canapés — toasted baguette with fresh mozzarella and tomato from da Cecot catering, Edmonton')}</figure>
+        <div class="menu-copy">
+          <span class="label" style="color:var(--terracotta);">To Start</span>
+          <h2 id="cat-anti-h">Caprese Canapés</h2>
+          <p>Little bites of fresh mozzarella and ripe tomato on toasted baguette, finished with a drizzle of olive oil — a bright, crowd-pleasing way to open any event. Add cured meats on request.</p>
+          <p style="margin-top:16px;opacity:0.8;font-size:0.9em;">Served by the platter — quantities to your headcount.</p>
+        </div>
+      </div></div>
     </section>
 
     <section class="section section--cream" aria-labelledby="cat-sides-h">
