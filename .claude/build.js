@@ -142,58 +142,25 @@ function footer() {
     <div class="footer__top">
       <div class="footer__brand">
         <div class="footer__logo">da Cecot</div>
-        <p class="footer__tag">Fresh handmade pasta &amp; Italian comfort food, made by hand on Whyte Avenue in Edmonton.</p>
         <div class="footer__social">
           <a href="https://www.instagram.com/cecotkitchen/" target="_blank" rel="noopener" aria-label="da Cecot on Instagram">${ig}</a>
           <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="da Cecot on Facebook">${fb}</a>
         </div>
       </div>
-      <div class="footer__col">
-        <h4>Explore</h4>
-        <nav class="footer__links" aria-label="Footer navigation">
-          <a href="index.html">Home</a>
-          <a href="menu.html">Menu</a>
-          <a href="experiences.html">Experiences</a>
-          <a href="pasta-shop.html">Pasta Shop</a>
-          <a href="our-story.html">Our Story</a>
-          <a href="visit-us.html">Visit Us</a>
-          <a href="partnerships.html">Catering &amp; Wholesale</a>
-          <a href="reservations.html">Reserve a Table</a>
-        </nav>
-      </div>
-      <div class="footer__col">
-        <h4>Find Us</h4>
-        <p class="footer__contact">
-          <a href="${MAPS_LINK}" target="_blank" rel="noopener">Whyte Ave (82 Ave) &amp; 104 Street<br>Edmonton, AB</a>
-        </p>
-        <p class="footer__contact">
-          <a href="tel:${NAP.phoneHref}">${NAP.phone}</a><br>
-          <a href="mailto:${NAP.email}">${NAP.email}</a>
-        </p>
-        <p class="footer__hours">
-          <strong>Hours</strong><br>
-          Mon &amp; Tue 12–3 · 4:30–8<br>
-          Wed Closed · Thu 4–8<br>
-          Fri 11:30–3 · 4–9<br>
-          Sat 12–9 · Sun 11:30–4<br>
-          Sunday Pasta Classes 5–9<br>
-          <em style="opacity:0.75;">First Sunday of every month: closed</em>
-        </p>
-      </div>
-      <div class="footer__col footer__news">
-        <h4>Stay in the Loop</h4>
-        <p>Fresh pasta drops, classes, and seasonal menus — straight to your inbox.</p>
-        <form class="newsletter" data-formsubmit data-subject="Newsletter Signup — da Cecot" aria-label="Newsletter signup">
-          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-          <label for="nl-email" class="sr-only">Email address</label>
-          <div class="newsletter__row">
-            <input type="email" id="nl-email" name="email" placeholder="Your email" required>
-            <button type="submit" class="btn btn--terra">Subscribe</button>
-          </div>
-          <div class="form-success">Grazie! You're on the list — we'll be in touch soon.</div>
-          <div class="form-error">Something went wrong — please email us at info@dacecotfood.com.</div>
-        </form>
-      </div>
+      <nav class="footer__links" aria-label="Footer navigation">
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="experiences.html">Experiences</a>
+        <a href="pasta-shop.html">Pasta Shop</a>
+        <a href="our-story.html">Our Story</a>
+        <a href="visit-us.html">Visit Us</a>
+        <a href="partnerships.html">Catering &amp; Wholesale</a>
+        <a href="reservations.html">Reserve a Table</a>
+      </nav>
+      <p class="footer__contact">
+        <a href="tel:${NAP.phoneHref}">${NAP.phone}</a>
+        <a href="mailto:${NAP.email}">${NAP.email}</a>
+      </p>
     </div>
     <div class="footer__bottom">
       <div class="footer__bottom-inner">
