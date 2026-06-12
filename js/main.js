@@ -154,6 +154,55 @@
       });
     });
 
+    /* ---- Notebook slider (auto-advance + swipe + dots) ---- */
+    document.querySelectorAll('[data-note-slider]').forEach(function (slider) {
+      var track = slider.querySelector('[data-note-track]');
+      var dotsWrap = slider.querySelector('[data-note-dots]');
+      if (!track || !dotsWrap) return;
+      var n = track.children.length;
+      if (n < 2) return;
+      var idx = 0, timer = null, scrollT = null;
+      var dots = [];
+      for (var i = 0; i < n; i++) {
+        (function (i) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.setAttribute('role', 'tab');
+          b.setAttribute('aria-label', 'Notebook page ' + (i + 1));
+          b.addEventListener('click', function () { go(i, true); });
+          dotsWrap.appendChild(b);
+          dots.push(b);
+        })(i);
+      }
+      function setActive(i) {
+        idx = i;
+        for (var k = 0; k < n; k++) dots[k].setAttribute('aria-current', k === i ? 'true' : 'false');
+      }
+      function go(i, user) {
+        i = (i + n) % n;
+        track.scrollTo({ left: track.clientWidth * i, behavior: 'smooth' });
+        setActive(i);
+        if (user) restart();
+      }
+      function start() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        timer = setInterval(function () { go(idx + 1); }, 5000);
+      }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } }
+      function restart() { stop(); start(); }
+      track.addEventListener('scroll', function () {
+        clearTimeout(scrollT);
+        scrollT = setTimeout(function () {
+          var i = Math.round(track.scrollLeft / track.clientWidth);
+          if (i !== idx) setActive(i);
+        }, 120);
+      }, { passive: true });
+      ['mouseenter', 'touchstart', 'pointerdown'].forEach(function (ev) { slider.addEventListener(ev, stop, { passive: true }); });
+      ['mouseleave', 'touchend'].forEach(function (ev) { slider.addEventListener(ev, start, { passive: true }); });
+      setActive(0);
+      start();
+    });
+
     /* ---- Booking calendar ---- */
     var WD_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var MO_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];

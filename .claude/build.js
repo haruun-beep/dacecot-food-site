@@ -610,7 +610,17 @@ pages.push(page({
 
     <section class="section section--linen" aria-labelledby="notebook-h">
       <div class="container"><div class="two-col menu-row reveal">
-        <figure class="menu-photo zoom" style="align-self:start; box-shadow:0 14px 40px rgba(74,46,34,0.14);"><img src="images/general/heritage/notebook-torta-paradiso.jpg" alt="Erika&#39;s original handwritten recipe notebook — Torta Paradiso recipe page" loading="lazy" decoding="async" style="width:100%;height:auto;min-height:0;object-fit:contain;display:block;border-radius:10px;"></figure>
+        <div class="note-slider" data-note-slider style="align-self:start;">
+          <div class="note-slider__track" data-note-track>
+            <figure><img src="images/general/heritage/notebook-recipe-1.jpg" alt="A page from Erika&#39;s handwritten recipe notebook" loading="lazy" decoding="async"></figure>
+            <figure><img src="images/general/heritage/notebook-recipe-2.jpg" alt="A page from Erika&#39;s handwritten recipe notebook" loading="lazy" decoding="async"></figure>
+            <figure><img src="images/general/heritage/notebook-recipe-3.jpg" alt="A page from Erika&#39;s handwritten recipe notebook" loading="lazy" decoding="async"></figure>
+            <figure><img src="images/general/heritage/notebook-pan-di-spagna.jpg" alt="Pan di Spagna recipe in Erika&#39;s notebook" loading="lazy" decoding="async"></figure>
+            <figure><img src="images/general/heritage/notebook-torta-paradiso.jpg" alt="Torta Paradiso recipe in Erika&#39;s notebook" loading="lazy" decoding="async"></figure>
+            <figure><img src="images/general/heritage/notebook-dedication.png" alt="The dedication page of Erika&#39;s recipe notebook" loading="lazy" decoding="async"></figure>
+          </div>
+          <div class="note-slider__dots" data-note-dots role="tablist" aria-label="Notebook pages"></div>
+        </div>
         <div class="menu-copy">
           <span class="label" style="color:var(--terracotta);">A Notebook Full of Memories</span>
           <h2 id="notebook-h">A notebook full of memories.</h2>
@@ -950,8 +960,8 @@ pages.push(page({
             <p>Designed to pair perfectly with our fresh pasta — and they freeze beautifully.</p>
             <ul class="detail-list">
               <li><strong>Salsa Amatriciana</strong> — $12.99</li>
-              <li><strong>Salsa Plasé</strong> <span style="opacity:0.75;">(our signature sauce)</span> — $12.99</li>
-              <li><strong>Ragù Bolognese</strong> — $14.55</li>
+              <li><strong>Salsa Plasé</strong> <span style="opacity:0.75;">(tomato sauce — our signature)</span> — $12.99</li>
+              <li><strong>Ragù Bolognese</strong> <span style="opacity:0.75;">(beef)</span> — $14.55</li>
             </ul>
           </div>
         </div>
