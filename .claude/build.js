@@ -36,7 +36,7 @@ const IMG = {
   aboutHero:  'images/general/whatsapp-2.jpg',
   storefront: 'images/general/storefront-evening.jpg',
   product:    'images/food/fresh-ravioli.jpg',
-  pastawine:  'images/general/misc-photo.jpg',
+  pastawine:  'images/general/erica/_MG_1100.jpg',
   wine:       'images/sauces/salsa-al-baffo.jpg',
   dining:     'images/general/photo-6.png',
   freshpasta: 'images/raw-pasta/caserecce.jpg',
@@ -375,7 +375,7 @@ pages.push(page({
     <section id="kitchen" class="section section--cream" aria-labelledby="kitchen-h">
       <div class="container">
         <div class="two-col menu-row reveal">
-          <figure class="menu-photo zoom">${img('images/general/misc-photo.jpg', 'Guests making fresh pasta at a da Cecot pasta class, Edmonton')}</figure>
+          <figure class="menu-photo zoom">${img('images/food/cacio-e-pepe.jpg', "A bowl of da Cecot's cacio e pepe — fresh handmade pasta made by hand, Edmonton")}</figure>
           <div class="menu-copy">
             <span class="label" style="color:var(--terracotta);">Our Italian Kitchen</span>
             <h2 id="kitchen-h">A warm Italian home, where pasta is made by hand.</h2>
@@ -417,7 +417,7 @@ pages.push(page({
         </div>
         <div class="btn-group" style="justify-content:center; margin-top:32px;">
           <a href="pasta-shop.html" class="btn btn--terra">Visit Pasta Shop</a>
-          <a href="catering.html" class="btn btn--ghost">Catering &amp; Wholesale</a>
+          <a href="catering.html" class="btn btn--brown">Catering &amp; Wholesale</a>
         </div>
       </div>
     </section>
@@ -639,7 +639,7 @@ pages.push(page({
 
     <section class="section section--linen" aria-labelledby="notebook-h">
       <div class="container"><div class="two-col menu-row reveal">
-        <figure class="menu-photo zoom" style="background:#f9f5ef;"><img src="images/general/heritage/notebook-torta-paradiso.jpg" alt="Erika&#39;s original handwritten recipe notebook — Torta Paradiso recipe page" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;min-height:400px;"></figure>
+        <figure class="menu-photo zoom" style="align-self:start; box-shadow:0 14px 40px rgba(74,46,34,0.14);"><img src="images/general/heritage/notebook-torta-paradiso.jpg" alt="Erika&#39;s original handwritten recipe notebook — Torta Paradiso recipe page" loading="lazy" decoding="async" style="width:100%;height:auto;min-height:0;object-fit:contain;display:block;border-radius:10px;"></figure>
         <div class="menu-copy">
           <span class="label" style="color:var(--terracotta);">A Notebook Full of Memories</span>
           <h2 id="notebook-h">A notebook full of memories.</h2>
@@ -704,7 +704,7 @@ pages.push(page({
           <figure class="zoom"><img src="images/general/erica/_MG_1036.jpg" alt="The da Cecot menu on display at the counter, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/general/cut-img-2360.jpg" alt="Friends gathered around the table at a da Cecot class, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/general/erica/_MG_1262.jpg" alt="A shared moment at the da Cecot family table, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/misc-photo.jpg" alt="A moment at da Cecot on Whyte Avenue, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/erica/_MG_1085.jpg" alt="A warm moment around the da Cecot family table, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/general/erica/_MG_1273.jpg" alt="Friends sharing a meal at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/general/erica/_MG_1345.jpg" alt="Wine and pasta at the da Cecot family table, Edmonton" loading="lazy" decoding="async"></figure>
         </div>

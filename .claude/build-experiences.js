@@ -34,6 +34,26 @@ function weeklyDateOptions(startISO, count) {
   return out.join('\n                  ');
 }
 const guestOptions = (max) => Array.from({ length: max }, (_, i) => `<option>${i + 1} guest${i ? 's' : ''}</option>`).join('');
+const WD_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+/* Interactive booking calendar — JS in main.js hydrates it (weekday-only, blocks first weekday of month if set). */
+function bookingCalendar({ weekday, blockFirst = false, weeks = 8, start, name, prompt }) {
+  const dow = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(d => `<span>${d}</span>`).join('');
+  const legend = blockFirst ? `<p class="cal__legend">The first ${WD_NAMES[weekday]} of each month is closed.</p>` : '';
+  return `<div class="cal" data-cal-weekday="${weekday}" data-cal-block-first="${blockFirst ? '1' : '0'}" data-cal-weeks="${weeks}" data-cal-start="${start}">
+            <div class="cal__head">
+              <button type="button" class="cal__nav" data-cal-prev aria-label="Previous month">&lsaquo;</button>
+              <span class="cal__title" data-cal-title></span>
+              <button type="button" class="cal__nav" data-cal-next aria-label="Next month">&rsaquo;</button>
+            </div>
+            <div class="cal__dow" aria-hidden="true">${dow}</div>
+            <div class="cal__grid" data-cal-grid role="grid"></div>
+            <p class="cal__selected" data-cal-selected>${prompt}</p>
+            ${legend}
+            <input type="hidden" name="${name}" data-cal-input required>
+          </div>`;
+}
+const PAY_NOTE = `<p class="cal__pay-note"><strong>Online payment is awaiting verification.</strong> Submit your details to reserve — we'll confirm your spot and arrange payment by phone or email. Your seat is held in the meantime.</p>`;
 
 function eventSchema({ slug, name, desc, image, byDay, startTime, price }) {
   return {
@@ -236,22 +256,15 @@ ${expHero('spc-h1', 'La Domenica Da Cecot', 'Pasta · Amore · Condivisione — 
       <div class="container narrow reveal">
         <div class="text-center">
           <h2 id="spc-book-h">Book your class spot</h2>
-          <p>Classes are $95 per guest, run every Sunday from 5–8:30 PM, capped at 12 guests, and fill up quickly. Pick a Sunday below to request your spot — or call us at <a href="tel:+18258884218">(825) 888-4218</a>.</p>
+          <p>Classes are $95 per guest, run every Sunday from 5–8:30 PM, capped at 12 guests, and fill up quickly. Pick a Sunday on the calendar — or call us at <a href="tel:+18258884218">(825) 888-4218</a>.</p>
         </div>
         <div class="booking" style="margin-top:32px;">
           <form data-formsubmit data-subject="Sunday Pasta Class Booking — da Cecot" aria-label="Sunday pasta class booking request">
             <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-            <div class="form-row">
-              <div class="field">
-                <label for="spc-date">Class date (Sundays)</label>
-                <select id="spc-date" name="class_date" required>
-                  ${weeklyDateOptions('2026-06-28', 5)}
-                </select>
-              </div>
-              <div class="field">
-                <label for="spc-guests">Number of guests</label>
-                <select id="spc-guests" name="guests">${guestOptions(12)}</select>
-              </div>
+            ${bookingCalendar({ weekday: 0, blockFirst: true, weeks: 8, start: '2026-06-28', name: 'class_date', prompt: 'Pick a Sunday above to reserve your spot.' })}
+            <div class="field" style="margin-top:22px;">
+              <label for="spc-guests">Number of guests</label>
+              <select id="spc-guests" name="guests">${guestOptions(12)}</select>
             </div>
             <div class="form-row">
               <div class="field"><label for="spc-name">Name</label><input type="text" id="spc-name" name="name" required></div>
@@ -262,8 +275,9 @@ ${expHero('spc-h1', 'La Domenica Da Cecot', 'Pasta · Amore · Condivisione — 
               <label for="spc-notes">Dietary needs or notes <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
               <textarea id="spc-notes" name="notes" placeholder="Allergies, dietary restrictions, celebrating something special…"></textarea>
             </div>
-            <button type="submit" class="btn btn--green" style="width:100%;">Request a Spot</button>
-            <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Grazie! We've received your class request — we'll confirm your spot and payment ($95 per guest) by phone or email shortly.</div>
+            <button type="submit" class="btn btn--green" style="width:100%;">Proceed to Payment</button>
+            ${PAY_NOTE}
+            <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Grazie! We've received your class request — we'll confirm your spot and arrange payment ($95 per guest) by phone or email shortly.</div>
             <div class="form-error" style="color:var(--brown);">Something went wrong — please call us at (825) 888-4218 or email info@dacecotfood.com.</div>
           </form>
         </div>
@@ -278,22 +292,14 @@ ${expHero('spc-h1', 'La Domenica Da Cecot', 'Pasta · Amore · Condivisione — 
           <p>Every class ends with a shared meal — pasta you shaped yourself, finished with our house sauces, eaten together at the table.</p>
         </div>
         <div class="gallery gallery--4 reveal">
-          <figure class="zoom"><img src="images/general/erica/_MG_1017.jpg" alt="The class table set with mixing bowls, wine glasses, and aprons at a da Cecot pasta class, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/general/erica/_MG_1163.jpg" alt="Hands rolling out fresh pasta dough at a da Cecot Sunday pasta class" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/general/erica/_MG_1192.jpg" alt="Shaping fresh pasta by hand at a da Cecot pasta class, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1131.jpg" alt="Guests at work during a hands-on pasta class at da Cecot" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/general/erica/_MG_1138.jpg" alt="Fresh pasta dough being kneaded at a da Cecot class, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1135.jpg" alt="Guests learning to shape fresh pasta at a da Cecot class" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1182.jpg" alt="Hands-on pasta making with friends at a da Cecot class" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1185.jpg" alt="Fresh pasta dough being worked at a da Cecot class, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/general/erica/_MG_1198.jpg" alt="Cutting fresh pasta strands at a da Cecot Sunday class, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1205.jpg" alt="Fresh pasta drying at a da Cecot pasta class, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1210.jpg" alt="Guests preparing fresh pasta at a da Cecot Sunday class" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1216.jpg" alt="Cicchetti and bruschetta served at a da Cecot pasta class, Edmonton" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/food/ravioli-butter-sage.jpg" alt="Ravioli with butter and sage — the dish students take home" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/raw-pasta/tagliatelle.jpg" alt="Fresh tagliatelle shaped by hand at a da Cecot pasta class" loading="lazy" decoding="async"></figure>
           <figure class="zoom"><img src="images/food/fresh-ravioli.jpg" alt="Fresh hand-filled ravioli — a da Cecot pasta class finish" loading="lazy" decoding="async"></figure>
         </div>
+        <p class="gallery-hint" aria-hidden="true">Swipe to see more →</p>
         <div class="btn-wrap text-center reveal" style="margin-top:36px;">
           <a href="#spc-book-h" class="btn btn--terra">Book a Class</a>
         </div>
@@ -361,22 +367,15 @@ ${expHero('drop-h1', 'Pasta With Erika', 'Thursday public drop-in. Learn. Create
       <div class="container narrow reveal">
         <div class="text-center">
           <h2 id="drop-how-h">Reserve your spot</h2>
-          <p>Drop in any Thursday between 5 PM and 8 PM. Reserve a spot below so we can have a station ready — or just call us at <a href="tel:+18258884218">(825) 888-4218</a>.</p>
+          <p>Drop in any Thursday between 5 PM and 8 PM. Pick a Thursday on the calendar so we can have a station ready — or just call us at <a href="tel:+18258884218">(825) 888-4218</a>.</p>
         </div>
         <div class="booking" style="margin-top:32px;">
           <form data-formsubmit data-subject="Pasta Drop-In Reservation — da Cecot" aria-label="Thursday pasta drop-in reservation request">
             <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-            <div class="form-row">
-              <div class="field">
-                <label for="drop-date">Date (Thursdays)</label>
-                <select id="drop-date" name="drop_in_date" required>
-                  ${weeklyDateOptions('2026-07-02', 5)}
-                </select>
-              </div>
-              <div class="field">
-                <label for="drop-guests">Number of guests</label>
-                <select id="drop-guests" name="guests">${guestOptions(8)}</select>
-              </div>
+            ${bookingCalendar({ weekday: 4, blockFirst: false, weeks: 8, start: '2026-07-02', name: 'drop_in_date', prompt: 'Pick a Thursday above to reserve your spot.' })}
+            <div class="field" style="margin-top:22px;">
+              <label for="drop-guests">Number of guests</label>
+              <select id="drop-guests" name="guests">${guestOptions(8)}</select>
             </div>
             <div class="form-row">
               <div class="field"><label for="drop-name">Name</label><input type="text" id="drop-name" name="name" required></div>
@@ -387,7 +386,8 @@ ${expHero('drop-h1', 'Pasta With Erika', 'Thursday public drop-in. Learn. Create
               <label for="drop-notes">Notes <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
               <textarea id="drop-notes" name="notes" placeholder="Roughly what time you'll arrive, dietary needs, anything else…"></textarea>
             </div>
-            <button type="submit" class="btn btn--green" style="width:100%;">Reserve a Spot</button>
+            <button type="submit" class="btn btn--green" style="width:100%;">Proceed to Payment</button>
+            ${PAY_NOTE}
             <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Grazie! We've saved your Thursday drop-in request — see you in the pasta lab. We'll reach out if anything changes.</div>
             <div class="form-error" style="color:var(--brown);">Something went wrong — please call us at (825) 888-4218 or email info@dacecotfood.com.</div>
           </form>
@@ -450,9 +450,9 @@ ${expHero('fd-h1', 'Food &amp; Drink Experiences', 'Curated tasting evenings and
       </div>
     </section>
 
-    <section class="section section--linen" aria-labelledby="fd-featured-h">
+    <section class="section section--olive" aria-labelledby="fd-featured-h">
       <div class="container narrow reveal text-center">
-        <span class="label" style="color:var(--terracotta);">Next on the calendar</span>
+        <span class="label" style="color:var(--gold);">Next on the calendar</span>
         <h2 id="fd-featured-h">The Tomato Workshop</h2>
         <p class="lead">A hands-on evening with da Cecot built around the tomato — from raw to sauce to plate. Pick, blanch, peel, and finish your own jar of pomodoro alongside our family, then sit down to a tomato-led tasting plate. The next Food &amp; Drink Experience on the calendar.</p>
         <p style="margin-top:24px;">Want a seat the moment a date is announced? Add yourself to the list below — we'll send pricing and dates first.</p>
@@ -574,11 +574,17 @@ ${expHero('pe-h1', 'Private Events', 'Gather your people at our family table for
                 <input type="date" id="pe-date" name="event_date" required>
               </div>
             </div>
-            <div class="field">
-              <label for="pe-guests">Guest count</label>
-              <select id="pe-guests" name="guest_count">
-                <option>10–15 guests</option><option>16–20 guests</option><option>21–25 guests</option>
-              </select>
+            <div class="form-row">
+              <div class="field">
+                <label for="pe-guests">Guest count</label>
+                <select id="pe-guests" name="guest_count">
+                  <option>10–15 guests</option><option>16–20 guests</option><option>21–25 guests</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="pe-time">Preferred start time <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
+                <input type="time" id="pe-time" name="event_time">
+              </div>
             </div>
             <div class="form-row">
               <div class="field"><label for="pe-name">Name</label><input type="text" id="pe-name" name="name" required></div>
@@ -587,7 +593,7 @@ ${expHero('pe-h1', 'Private Events', 'Gather your people at our family table for
             <div class="field"><label for="pe-email">Email</label><input type="email" id="pe-email" name="email" required></div>
             <div class="field">
               <label for="pe-notes">Dietary needs &amp; notes <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
-              <textarea id="pe-notes" name="notes" placeholder="Allergies, menu preferences, or anything else that will help us plan your evening…"></textarea>
+              <textarea id="pe-notes" name="notes" placeholder="Allergies, dietary restrictions, menu preferences, or anything else that will help us plan your evening…"></textarea>
             </div>
             <button type="submit" class="btn btn--green" style="width:100%;">Send Your Inquiry</button>
             <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Grazie! We've received your event inquiry and will be in touch within 24 hours.</div>
@@ -771,15 +777,43 @@ ${expHero('cat-h1', 'Catering', 'Bring da Cecot to your table — budget-friendl
                 <input type="date" id="cat-date" name="event_date" required>
               </div>
             </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="cat-menu">Menu interest</label>
+                <select id="cat-menu" name="menu_interest">
+                  <option>Pasta trays only</option>
+                  <option>Lasagna only</option>
+                  <option>Pasta trays + lasagna</option>
+                  <option>Full spread (pasta + lasagna + sides + dessert)</option>
+                  <option>Not sure — please suggest</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="cat-occasion">Occasion <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
+                <select id="cat-occasion" name="occasion">
+                  <option value="">Select…</option>
+                  <option>Office / Corporate</option><option>Birthday</option><option>Wedding</option>
+                  <option>Anniversary</option><option>Holiday party</option><option>Graduation</option><option>Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="cat-time">Event time <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
+                <input type="time" id="cat-time" name="event_time">
+              </div>
+              <div class="field">
+                <label for="cat-service">Service style <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
+                <select id="cat-service" name="service_style">
+                  <option value="">Select…</option>
+                  <option>Heat-and-serve delivery</option><option>Drop-off delivery</option>
+                  <option>On-site serving</option><option>Pickup</option>
+                </select>
+              </div>
+            </div>
             <div class="field">
-              <label for="cat-menu">Menu interest</label>
-              <select id="cat-menu" name="menu_interest">
-                <option>Pasta trays only</option>
-                <option>Lasagna only</option>
-                <option>Pasta trays + lasagna</option>
-                <option>Full spread (pasta + lasagna + sides + dessert)</option>
-                <option>Not sure — please suggest</option>
-              </select>
+              <label for="cat-venue">Venue / delivery address <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
+              <input type="text" id="cat-venue" name="venue_address" placeholder="Where should we deliver or serve?">
             </div>
             <div class="form-row">
               <div class="field"><label for="cat-name">Name</label><input type="text" id="cat-name" name="name" required></div>
@@ -787,8 +821,8 @@ ${expHero('cat-h1', 'Catering', 'Bring da Cecot to your table — budget-friendl
             </div>
             <div class="field"><label for="cat-email">Email</label><input type="email" id="cat-email" name="email" required></div>
             <div class="field">
-              <label for="cat-notes">Event details &amp; dietary needs <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
-              <textarea id="cat-notes" name="notes" placeholder="Occasion, location, dietary restrictions, delivery address, or anything else that helps us quote accurately…"></textarea>
+              <label for="cat-notes">Dietary needs &amp; other details <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
+              <textarea id="cat-notes" name="notes" placeholder="Allergies, dietary restrictions (vegan, gluten-free counts), or anything else that helps us quote accurately…"></textarea>
             </div>
             <button type="submit" class="btn btn--green" style="width:100%;">Request a Quote</button>
             <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Grazie! We've received your catering request and will send a custom quote within 24 hours.</div>

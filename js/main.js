@@ -143,5 +143,95 @@
           .finally(function () { if (btn) { btn.disabled = false; btn.textContent = label; } });
       });
     });
+
+    /* ---- Booking calendar ---- */
+    var WD_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var MO_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    function calIso(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+    function isFirstWeekdayOfMonth(d) { return d.getDate() <= 7; }
+
+    document.querySelectorAll('.cal').forEach(function (cal) {
+      var weekday = parseInt(cal.dataset.calWeekday, 10);
+      var blockFirst = cal.dataset.calBlockFirst === '1';
+      var count = parseInt(cal.dataset.calWeeks, 10) || 8;
+      var startISO = cal.dataset.calStart;
+      var input = cal.querySelector('input[data-cal-input]');
+      var titleEl = cal.querySelector('[data-cal-title]');
+      var gridEl = cal.querySelector('[data-cal-grid]');
+      var selEl = cal.querySelector('[data-cal-selected]');
+      var defaultPrompt = selEl ? selEl.innerHTML : '';
+      var prevBtn = cal.querySelector('[data-cal-prev]');
+      var nextBtn = cal.querySelector('[data-cal-next]');
+      if (!input || !gridEl) return;
+
+      var today = new Date(); today.setHours(0, 0, 0, 0);
+      var begin = today;
+      if (startISO) { var p = startISO.split('-'); var s = new Date(+p[0], +p[1] - 1, +p[2]); if (s > begin) begin = new Date(s); }
+      var cur = new Date(begin);
+      while (cur.getDay() !== weekday) cur.setDate(cur.getDate() + 1);
+      var allowed = [], guard = 0;
+      while (allowed.length < count && guard < 400) {
+        guard++;
+        if (!(blockFirst && isFirstWeekdayOfMonth(cur))) allowed.push(calIso(cur));
+        cur.setDate(cur.getDate() + 7);
+      }
+      if (!allowed.length) return;
+      var allowedSet = {}; allowed.forEach(function (a) { allowedSet[a] = 1; });
+      function ymd(str) { return new Date(+str.slice(0, 4), +str.slice(5, 7) - 1, +str.slice(8, 10)); }
+      var firstD = ymd(allowed[0]), lastD = ymd(allowed[allowed.length - 1]);
+      var view = new Date(firstD.getFullYear(), firstD.getMonth(), 1);
+      var minView = new Date(firstD.getFullYear(), firstD.getMonth(), 1);
+      var maxView = new Date(lastD.getFullYear(), lastD.getMonth(), 1);
+
+      function select(key, d) {
+        input.value = key;
+        if (selEl) selEl.innerHTML = 'Selected: <strong>' + WD_LONG[d.getDay()] + ', ' + MO_LONG[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear() + '</strong>';
+        render();
+      }
+      function render() {
+        if (titleEl) titleEl.textContent = MO_LONG[view.getMonth()] + ' ' + view.getFullYear();
+        if (prevBtn) prevBtn.disabled = view <= minView;
+        if (nextBtn) nextBtn.disabled = view >= maxView;
+        gridEl.innerHTML = '';
+        var firstDay = new Date(view.getFullYear(), view.getMonth(), 1).getDay();
+        var daysInMonth = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+        var i;
+        for (i = 0; i < firstDay; i++) { var e = document.createElement('div'); e.className = 'cal__cell cal__cell--empty'; gridEl.appendChild(e); }
+        for (var day = 1; day <= daysInMonth; day++) {
+          var d = new Date(view.getFullYear(), view.getMonth(), day);
+          var key = calIso(d), cell;
+          if (allowedSet[key]) {
+            cell = document.createElement('button');
+            cell.type = 'button';
+            cell.className = 'cal__cell cal__cell--open' + (input.value === key ? ' cal__cell--selected' : '');
+            cell.addEventListener('click', (function (k, dt) { return function () { select(k, dt); }; })(key, d));
+          } else if (blockFirst && d.getDay() === weekday && isFirstWeekdayOfMonth(d) && d >= today) {
+            cell = document.createElement('div');
+            cell.className = 'cal__cell cal__cell--blocked';
+            cell.title = 'Closed — first ' + WD_LONG[weekday] + ' of the month';
+          } else {
+            cell = document.createElement('div');
+            cell.className = 'cal__cell cal__cell--muted';
+          }
+          cell.textContent = day;
+          gridEl.appendChild(cell);
+        }
+      }
+      if (prevBtn) prevBtn.addEventListener('click', function () { if (view > minView) { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); render(); } });
+      if (nextBtn) nextBtn.addEventListener('click', function () { if (view < maxView) { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); render(); } });
+      render();
+
+      var form = cal.closest('form');
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          if (!input.value) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            if (selEl) selEl.innerHTML = '<strong style="color:var(--terracotta);">Please pick a date above before continuing.</strong>';
+            cal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, true);
+      }
+    });
   });
 })();
