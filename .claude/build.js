@@ -466,11 +466,12 @@ const menuFaqs = [
   { q: 'Can you accommodate dietary restrictions?', a: 'Yes — we offer a dedicated gluten-free menu and vegan pasta options. Call us ahead at (825) 888-4218 with any questions about ingredients, allergens, or to place a large order in advance.' }
 ];
 const menuCards = [
-  { name: 'Lunch Menu', file: 'menus/lunch-menu.pdf', d: 'Fresh pasta, quick lunches, and comforting Italian dishes served during lunch hours.' },
-  { name: 'Dinner Menu', file: 'menus/dinner-menu.pdf', d: 'Antipasti, handmade pasta, Ravioli Atelier, secondi, desserts, and evening specials.' },
-  { name: 'Drinks &amp; Dessert', file: 'menus/drinks-dessert-menu.pdf', d: 'Espresso, moka coffee, Italian drinks, desserts, gelato, and affogato.' },
-  { name: 'Kids Menu', file: 'menus/kids-menu.pdf', d: 'Simple, comforting pasta options made for younger guests.' },
-  { name: 'Gluten-Free Menu', file: 'menus/gluten-free-menu.pdf', d: 'Available gluten-free pasta options and dishes prepared with care.' }
+  { name: 'Dinner Menu', file: 'menus/dinner-menu.pdf', d: 'Antipasti, handmade pasta, Ravioli Atelier, secondi, desserts, and evening specials.', ready: true },
+  { name: 'Drink Menu', file: 'menus/drink-menu.pdf', d: 'Espresso, moka coffee, Italian drinks, and more.', ready: true },
+  { name: 'Lunch Menu', d: 'Fresh pasta, quick lunches, and comforting Italian dishes.', ready: false },
+  { name: 'Liquor Menu', d: 'Wine, beer, spirits, and Italian aperitivi.', ready: false },
+  { name: 'Gluten-Free Menu', d: 'Gluten-free pasta options and dishes prepared with care.', ready: false },
+  { name: 'Kids Menu', d: 'Simple, comforting pasta options made for younger guests.', ready: false }
 ];
 pages.push(page({
   slug: 'menu',
@@ -500,10 +501,12 @@ pages.push(page({
           <p>Our menus change with the seasons, our handmade production, and the ingredients available in our kitchen. View the latest menu below.</p>
         </div>
         <div class="info-grid reveal" data-stagger style="text-align:center;">
-${menuCards.map(m => `          <div style="display:flex; flex-direction:column; align-items:center; gap:10px; padding:28px 20px; background:var(--linen, #efe7d8); border-radius:12px;">
+${menuCards.map(m => `          <div style="display:flex; flex-direction:column; align-items:center; gap:10px; padding:28px 20px; background:var(--linen, #efe7d8); border-radius:12px;${m.ready ? '' : ' opacity:0.7;'}">
             <h3>${m.name}</h3>
             <p style="flex:1;">${m.d}</p>
-            <a href="${m.file}" target="_blank" rel="noopener" class="btn btn--terra" style="margin-top:6px;">View ${m.name}</a>
+            ${m.ready
+              ? `<a href="${m.file}" target="_blank" rel="noopener" class="btn btn--terra" style="margin-top:6px;">View ${m.name}</a>`
+              : `<span class="btn btn--outline" style="margin-top:6px; pointer-events:none; opacity:0.85;">Coming soon</span>`}
           </div>`).join('\n')}
         </div>
         <p class="text-center reveal" style="margin-top:30px; opacity:0.7; font-size:0.9rem;">Menus open in a new tab — pinch or zoom to read comfortably on mobile.</p>
