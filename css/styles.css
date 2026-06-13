@@ -333,6 +333,15 @@ h1 + p, h2 + p, h3 + p { margin-top: 20px; }
 .hero p { font-size: 1.15rem; max-width: 640px; margin: 0 auto 14px; }
 .hero--page { min-height: 52vh; }
 
+/* "Our Menu" promo — bike rides across the top of the heading */
+.menu-promo__track { position: relative; width: 100%; max-width: 720px; margin: 0 auto 4px; height: 92px; overflow: hidden; }
+.menu-promo__bike { position: absolute; bottom: 0; left: -110px; width: 90px; height: auto; animation: bikeRide 6.5s linear infinite; }
+@keyframes bikeRide { from { left: -110px; } to { left: 100%; } }
+.menu-promo__title { margin-top: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .menu-promo__bike { animation: none; left: 50%; transform: translateX(-50%); }
+}
+
 /* Order rows — clickable price-list buttons (Pasta Shop sauces) */
 .order-rows { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
 .order-row {

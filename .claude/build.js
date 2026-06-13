@@ -902,6 +902,17 @@ pages.push(page({
       </div>
     </section>
 
+    <section class="section section--linen menu-promo" aria-labelledby="ourmenu-h">
+      <div class="container text-center reveal">
+        <div class="menu-promo__track" aria-hidden="true">
+          <img class="menu-promo__bike" src="images/general/bike-logo.png" alt="" loading="lazy" decoding="async">
+        </div>
+        <h2 id="ourmenu-h" class="menu-promo__title">Our Menu</h2>
+        <p>Fresh pasta, antipasti, secondi, dolci, and Italian drinks — see what's waiting on the table.</p>
+        <div class="btn-wrap"><a href="menu.html" class="btn btn--terra">View Our Menus</a></div>
+      </div>
+    </section>
+
     <section class="section section--cream" aria-labelledby="fresh-pasta-h">
       <div class="container">
         <div class="text-center narrow reveal" style="margin-bottom:48px;">

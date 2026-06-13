@@ -377,12 +377,22 @@ ${expHero('drop-h1', 'Pasta With Erika', 'Thursday public drop-in. Learn. Create
       <div class="container narrow reveal">
         <div class="text-center">
           <h2 id="drop-how-h">Reserve your spot</h2>
-          <p>Drop in any Thursday between 5 PM and 8 PM. Pick a Thursday on the calendar so we can have a station ready — or just call us at <a href="tel:+18258884218">(825) 888-4218</a>.</p>
+          <p>Drop in any Thursday between 5 PM and 8 PM. Pick a Thursday below so we can have a station ready — or just call us at <a href="tel:+18258884218">(825) 888-4218</a>.</p>
         </div>
         <div class="booking" style="margin-top:32px;">
           <form data-formsubmit data-subject="Pasta Drop-In Reservation — da Cecot" aria-label="Thursday pasta drop-in reservation request">
             <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-            ${bookingCalendar({ weekday: 4, blockFirst: false, weeks: 8, start: '2026-07-02', name: 'drop_in_date', prompt: 'Pick a Thursday above to reserve your spot.' })}
+            <fieldset class="date-picker">
+              <legend class="date-picker__legend">Choose your Thursday</legend>
+              <div class="date-picker__grid">
+                <label class="date-pill"><input type="radio" name="drop_in_date" value="Thursday, July 2, 2026" required><span>Thu · Jul 2</span></label>
+                <label class="date-pill"><input type="radio" name="drop_in_date" value="Thursday, July 9, 2026"><span>Thu · Jul 9</span></label>
+                <label class="date-pill"><input type="radio" name="drop_in_date" value="Thursday, July 16, 2026"><span>Thu · Jul 16</span></label>
+                <label class="date-pill"><input type="radio" name="drop_in_date" value="Thursday, July 23, 2026"><span>Thu · Jul 23</span></label>
+                <label class="date-pill"><input type="radio" name="drop_in_date" value="Thursday, July 30, 2026"><span>Thu · Jul 30</span></label>
+                <label class="date-pill"><input type="radio" name="drop_in_date" value="Thursday, August 6, 2026"><span>Thu · Aug 6</span></label>
+              </div>
+            </fieldset>
             <div class="field" style="margin-top:22px;">
               <label for="drop-guests">Number of guests</label>
               <select id="drop-guests" name="guests">${guestOptions(8)}</select>
