@@ -116,7 +116,7 @@ const hubFaqs = [
   { q: 'Where are da Cecot experiences held?', a: 'All experiences take place at our kitchen and dining room on Whyte Avenue (82 Ave) at 104 Street in Edmonton, AB. Pop-up restaurant experiences can also be brought to your venue.' }
 ];
 const hubCards = [
-  { slug: 'sunday-pasta-classes', t: 'Pasta Classes', img: IMG.pastawine, d: 'Learn traditional pasta making, discover regional Italian techniques, and enjoy the joy of creating something with your own hands.' },
+  { slug: 'sunday-pasta-classes', t: 'Pasta Classes', img: 'images/general/erica/erika-class.jpg', d: 'Learn traditional pasta making, discover regional Italian techniques, and enjoy the joy of creating something with your own hands.' },
   { slug: 'food-drink-experiences', t: 'At Our Family Table', img: IMG.dining, d: 'A shared Italian dining experience inspired by the meals we grew up with and the traditions that continue to bring people together.' },
   { slug: 'pasta-drop-in', t: 'Seasonal &amp; Special Events', img: IMG.wine, d: 'Unique gatherings celebrating Italian culture, seasonal ingredients, and community traditions throughout the year.' },
   { slug: 'private-events', t: 'Private Events &amp; Pop-Up Restaurants', img: IMG.dining, d: 'Celebrate your special occasion at da Cecot or bring the da Cecot experience to your venue.' }
@@ -228,7 +228,7 @@ pages.push(page({
   ],
   body: `${breadcrumb(trail('Sunday Pasta Classes').map((t, i) => i === 2 ? { slug: 'sunday-pasta-classes', label: t.label } : t))}
 
-${expHero('spc-h1', 'La Domenica Da Cecot', 'Pasta · Amore · Condivisione — Sunday at our family table.', 'images/general/erica/erika-hero.jpg', true, '30% 22%')}
+${expHero('spc-h1', 'La Domenica Da Cecot', 'Pasta · Amore · Condivisione — Sunday at our family table.', 'images/general/erica/erika-class.jpg', true, 'center 28%')}
 
     <section class="section section--cream" aria-labelledby="spc-what-h">
       <div class="container narrow reveal text-center">
