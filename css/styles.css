@@ -347,6 +347,11 @@ h1 + p, h2 + p, h3 + p { margin-top: 20px; }
 .menu-promo__bike { position: absolute; bottom: 0; left: -110px; width: 90px; height: auto; animation: bikeRide 6.5s linear infinite; }
 @keyframes bikeRide { from { left: -110px; } to { left: 100%; } }
 .menu-promo__title { margin-top: 0; }
+.menu-promo__track--lg { max-width: 900px; height: 130px; }
+.menu-promo__track--lg .menu-promo__bike { width: 132px; left: -150px; }
+@keyframes bikeRideLg { from { left: -150px; } to { left: 100%; } }
+.menu-promo__track--lg .menu-promo__bike { animation-name: bikeRideLg; animation-duration: 8s; }
+.info-grid--compact > div { flex: 1 1 230px !important; max-width: 270px !important; }
 @media (prefers-reduced-motion: reduce) {
   .menu-promo__bike { animation: none; left: 50%; transform: translateX(-50%); }
 }
@@ -1250,8 +1255,8 @@ h1 + p, h2 + p, h3 + p { margin-top: 20px; }
   margin: 0 auto;
 }
 .review-grid > .review-card {
-  flex: 1 1 380px;
-  max-width: 480px;
+  flex: 0 1 300px;
+  max-width: 320px;
 }
 .review-card {
   background: #fff;

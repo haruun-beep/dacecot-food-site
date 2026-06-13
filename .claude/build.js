@@ -356,7 +356,7 @@ pages.push(page({
       </div>
     </section>
 
-    <section class="section section--linen" aria-labelledby="take-h">
+    <section class="section section--olive" aria-labelledby="take-h">
       <div class="container">
         <div class="text-center narrow reveal" style="margin-bottom:54px;">
           <span class="label" style="color:var(--terracotta);">Take Home</span>
@@ -494,13 +494,16 @@ pages.push(page({
 
     <section class="section section--cream" aria-labelledby="choose-menu-h">
       <div class="container">
-        <div class="text-center narrow reveal" style="margin-bottom:48px;">
+        <div class="text-center narrow reveal" style="margin-bottom:16px;">
           <span class="label" style="color:var(--terracotta);">Choose a Menu</span>
           <h2 id="choose-menu-h">Choose a menu.</h2>
           <p>Our menus change with the seasons, our handmade production, and the ingredients available in our kitchen. View the latest menu below.</p>
         </div>
-        <div class="info-grid reveal" data-stagger style="text-align:center;">
-${menuCards.map(m => `          <div style="display:flex; flex-direction:column; align-items:center; gap:10px; padding:28px 20px; background:var(--linen, #efe7d8); border-radius:12px;${m.ready ? '' : ' opacity:0.7;'}">
+        <div class="menu-promo__track menu-promo__track--lg reveal" aria-hidden="true" style="margin-bottom:38px;">
+          <img class="menu-promo__bike" src="images/general/bike-logo.png" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="info-grid info-grid--compact reveal" data-stagger style="text-align:center;">
+${menuCards.map(m => `          <div style="display:flex; flex-direction:column; align-items:center; gap:8px; padding:20px 16px; background:var(--linen, #efe7d8); border-radius:12px;${m.ready ? '' : ' opacity:0.7;'}">
             <h3>${m.name}</h3>
             <p style="flex:1;">${m.d}</p>
             ${m.ready
