@@ -163,15 +163,13 @@ ${hubCards.map(c => `          <article class="xp-card">
           <h2 id="xp-gallery-h">A few nights at da Cecot.</h2>
           <p>Glasses raised, pasta rolled, friends shoulder-to-shoulder — a glimpse of what gathering at da Cecot actually looks like.</p>
         </div>
-        <div class="gallery gallery--4 reveal">
-          <figure class="zoom"><img src="images/general/erica/_MG_1100.jpg" alt="Guests raising glasses at a da Cecot private pasta event, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1357.jpg" alt="Friends toasting with red wine at a da Cecot dinner, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1085.jpg" alt="A warm moment around the da Cecot family table, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1087.jpg" alt="Guests gathered at da Cecot on Whyte Avenue, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1264.jpg" alt="Sharing a fresh salad course at a da Cecot dinner, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1295.jpg" alt="The da Cecot dining room during a private event, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1320.jpg" alt="Atmosphere at a da Cecot pasta-and-wine evening, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1381.jpg" alt="A plated da Cecot dish at a private dinner, Edmonton" loading="lazy" decoding="async"></figure>
+        <div class="gallery reveal">
+          <figure class="zoom"><img src="images/general/erica/nights-1.jpg" alt="An evening gathering at da Cecot on Whyte Avenue, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/erica/nights-2.jpg" alt="Shaping fresh pasta by hand at a da Cecot evening, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/erica/nights-3.jpg" alt="Guests around the table at a da Cecot night, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/erica/nights-4.jpg" alt="A warm moment at a da Cecot pasta evening, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/erica/nights-5.jpg" alt="Hands kneading fresh pasta dough at da Cecot, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/erica/nights-6.jpg" alt="Friends together at a da Cecot evening, Edmonton" loading="lazy" decoding="async"></figure>
         </div>
       </div>
     </section>
