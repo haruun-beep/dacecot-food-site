@@ -51,8 +51,7 @@ const OG_DEFAULT = IMG.pasta;
 /* ---- navigation model ---- */
 const EXPERIENCE_PAGES = [
   { slug: 'experiences',           label: 'Experiences Overview' },
-  { slug: 'sunday-pasta-classes',  label: 'Sunday Pasta Classes' },
-  { slug: 'pasta-drop-in',         label: 'Public Pasta Drop-In' },
+  { slug: 'sunday-pasta-classes',  label: 'Pasta Classes' },
   { slug: 'private-events',        label: 'Private Events' },
 ];
 
@@ -972,10 +971,18 @@ pages.push(page({
         <figure class="menu-photo zoom">${img('images/food/lasagna.jpg', 'Fresh handmade lasagna ready to take home from da Cecot, Edmonton')}</figure>
         <div class="menu-copy">
           <span class="label">Heat &amp; Serve</span>
-          <h2 id="lasagna-shop-h">Lasagna.</h2>
-          <p>Hand-layered with slow-cooked ragù, silky béchamel, and Italian cheeses — made fresh and ready to bake at home.</p>
-          <div class="btn-group" style="margin-top:24px;">
-            <button type="button" class="btn btn--terra" data-order-open data-product="Lasagna" data-price="" data-pay="">Order Lasagna</button>
+          <h2 id="lasagna-shop-h">Lasagna Trays</h2>
+          <p>Hand-layered sfoglia with slow-cooked sauce, silky béchamel, and Italian cheeses — made fresh and ready to bake at home.</p>
+          <p style="margin-top:12px;"><strong>Flavours:</strong> Zucchine &amp; Scamorza <span style="opacity:0.8;">(V)</span> · Prosciutto &amp; Funghi</p>
+          <ul class="detail-list" style="margin-top:14px;">
+            <li><strong>Small</strong> <span style="opacity:0.8;">serves 4</span> — $49</li>
+            <li><strong>Family</strong> <span style="opacity:0.8;">13×7×3", serves 4–6</span> — $59</li>
+            <li><strong>Half Pan</strong> <span style="opacity:0.8;">13×10×3", serves 8–10</span> — $99</li>
+            <li><strong>Full Pan</strong> <span style="opacity:0.8;">21×13×3", serves 16–20</span> — $179</li>
+          </ul>
+          <p style="margin-top:12px; opacity:0.85; font-size:0.9em;">Gluten-free version available (+$10/tray).</p>
+          <div class="btn-group" style="margin-top:22px;">
+            <button type="button" class="btn btn--terra" data-order-open data-product="Lasagna Tray" data-price="" data-pay="">Order Lasagna</button>
           </div>
         </div>
       </div></div>

@@ -116,8 +116,8 @@ const hubFaqs = [
   { q: 'Where are da Cecot experiences held?', a: 'All experiences take place at our kitchen and dining room on Whyte Avenue (82 Ave) at 104 Street in Edmonton, AB. Pop-up restaurant experiences can also be brought to your venue.' }
 ];
 const hubCards = [
-  { slug: 'sunday-pasta-classes', t: 'Pasta Classes', img: 'images/general/erica/erika-class.jpg', d: 'Learn traditional pasta making, discover regional Italian techniques, and enjoy the joy of creating something with your own hands.' },
-  { slug: 'pasta-drop-in', t: 'Seasonal &amp; Special Events', img: IMG.wine, d: 'Unique gatherings celebrating Italian culture, seasonal ingredients, and community traditions throughout the year.' },
+  { slug: 'sunday-pasta-classes', t: 'Pasta Classes', img: 'images/general/erica/erika-class.jpg', d: 'Sunday classes (La Domenica) and Thursday drop-ins (Pasta With Erika) — learn traditional pasta making and the joy of creating something by hand.' },
+  { slug: 'sunday-pasta-classes', href: 'sunday-pasta-classes.html#drop-in', t: 'Public Pasta Drop-In', img: IMG.greenpasta, d: 'A relaxed Thursday pasta lab — drop in any Thursday between 5–8 PM and make, cook, and eat your own pasta at your own pace. No fee, no experience needed.' },
   { slug: 'private-events', t: 'Private Events &amp; Pop-Up Restaurants', img: IMG.dining, d: 'Celebrate your special occasion at da Cecot or bring the da Cecot experience to your venue.' }
 ];
 pages.push(page({
@@ -149,7 +149,7 @@ ${hubCards.map(c => `          <article class="xp-card">
             <div class="xp-card__body">
               <h3>${c.t}</h3>
               <p>${c.d}</p>
-              <a class="xp-card__link" href="${c.slug}.html">Learn more</a>
+              <a class="xp-card__link" href="${c.href || c.slug + '.html'}">Learn more</a>
             </div>
           </article>`).join('\n')}
         </div>
@@ -195,15 +195,15 @@ const classFaqs = [
 pages.push(page({
   slug: 'sunday-pasta-classes',
   active: 'sunday-pasta-classes',
-  title: 'La Domenica Da Cecot — Sunday Pasta Class | da Cecot, Edmonton',
-  description: 'La Domenica Da Cecot — weekly Sunday pasta class on Whyte Avenue. $95 per guest, 5–8:30 PM, up to 12 guests, adults only. Reserve your spot online.',
+  title: 'Pasta Classes | da Cecot, Edmonton — Sunday Classes & Thursday Drop-In',
+  description: 'Pasta classes at da Cecot on Whyte Avenue: La Domenica Sunday classes ($95/guest, 5–8:30 PM) and Pasta With Erika Thursday drop-in (5–8 PM). Reserve online.',
   ogImage: IMG.pastawine,
   schema: [
-    breadcrumbSchema(trail('Sunday Pasta Classes').map((t, i) => i === 2 ? { slug: 'sunday-pasta-classes', label: t.label } : t)),
+    breadcrumbSchema(trail('Pasta Classes').map((t, i) => i === 2 ? { slug: 'sunday-pasta-classes', label: t.label } : t)),
     eventSchema({ slug: 'sunday-pasta-classes', name: 'Sunday Pasta Class', desc: 'Hands-on Italian pasta-making class in Edmonton, from dough to plate, ending with a shared meal.', image: IMG.pastawine, byDay: 'https://schema.org/Sunday', startTime: '12:00', price: '95' }),
     faqSchema(classFaqs)
   ],
-  body: `${breadcrumb(trail('Sunday Pasta Classes').map((t, i) => i === 2 ? { slug: 'sunday-pasta-classes', label: t.label } : t))}
+  body: `${breadcrumb(trail('Pasta Classes').map((t, i) => i === 2 ? { slug: 'sunday-pasta-classes', label: t.label } : t))}
 
 ${expHero('spc-h1', 'La Domenica Da Cecot', 'Pasta · Amore · Condivisione — Sunday at our family table.', 'images/general/erica/erika-class.jpg', true, 'center 28%')}
 
@@ -269,92 +269,12 @@ ${expHero('spc-h1', 'La Domenica Da Cecot', 'Pasta · Amore · Condivisione — 
       </div>
     </section>
 
-    <section class="section section--linen" aria-labelledby="spc-gallery-h">
-      <div class="container">
-        <div class="text-center narrow reveal" style="margin-bottom:48px;">
-          <span class="label" style="color:var(--terracotta);">From Past Classes</span>
-          <h2 id="spc-gallery-h">See what you'll make.</h2>
-          <p>Every class ends with a shared meal — pasta you shaped yourself, finished with our house sauces, eaten together at the table.</p>
-        </div>
-        <div class="gallery gallery--4 reveal">
-          <figure class="zoom"><img src="images/general/erica/_MG_1163.jpg" alt="Hands rolling out fresh pasta dough at a da Cecot Sunday pasta class" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1192.jpg" alt="Shaping fresh pasta by hand at a da Cecot pasta class, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1138.jpg" alt="Fresh pasta dough being kneaded at a da Cecot class, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1198.jpg" alt="Cutting fresh pasta strands at a da Cecot Sunday class, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1131.jpg" alt="Guests at work during a hands-on pasta class at da Cecot" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/general/erica/_MG_1205.jpg" alt="Fresh pasta drying at a da Cecot pasta class, Edmonton" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/food/ravioli-butter-sage.jpg" alt="Ravioli with butter and sage — the dish students take home" loading="lazy" decoding="async"></figure>
-          <figure class="zoom"><img src="images/food/fresh-ravioli.jpg" alt="Fresh hand-filled ravioli — a da Cecot pasta class finish" loading="lazy" decoding="async"></figure>
-        </div>
-        <p class="gallery-hint" aria-hidden="true">Swipe to see more →</p>
-        <div class="btn-wrap text-center reveal" style="margin-top:36px;">
-          <a href="#spc-book-h" class="btn btn--terra">Book a Class</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--brown" aria-labelledby="spc-faq-h">
-      <div class="container">
-        <div class="text-center reveal" style="margin-bottom:40px;"><h2 id="spc-faq-h">Pasta class FAQ</h2></div>
-${faqBlock(classFaqs)}
-      </div>
-    </section>`
-}));
-
-/* ============================================================
-   2. PUBLIC PASTA DROP-IN
-   ============================================================ */
-const dropFaqs = [
-  { q: 'What is Pasta With Erika?', a: 'Pasta With Erika is a relaxed, hands-on Thursday pasta lab where you make, cook, and enjoy your own traditional Italian pasta in an informal and welcoming setting. Guests may arrive anytime between 5 PM and 8 PM and participate at their own pace.' },
-  { q: 'What kinds of pasta do you make on Thursdays?', a: 'On Thursdays we focus on traditional Italian pasta made with semolina or potatoes, celebrating regional shapes — Orecchiette, Cavatelli, Fusilloni, bucatini-style pasta, and Potato Gnocchi. No previous experience required.' },
-  { q: 'Who is it open to?', a: 'Pasta With Erika is open to adults, couples, families, and children. Come with an open heart, an appetite, and a willingness to get your hands a little floury.' },
-  { q: 'Is it family-friendly?', a: 'Absolutely. The Thursday session is relaxed and welcoming for all ages, families, and solo guests alike — exactly the kind of easy weeknight gathering we love to share.' }
-];
-pages.push(page({
-  slug: 'pasta-drop-in',
-  active: 'pasta-drop-in',
-  title: 'Pasta With Erika — Thursday Public Drop-In | da Cecot, Edmonton',
-  description: 'Pasta With Erika — a relaxed Thursday pasta lab on Whyte Avenue. Arrive 5–8 PM, make traditional Italian pasta at your own pace. Adults, couples, families & kids welcome.',
-  ogImage: IMG.greenpasta,
-  schema: [
-    breadcrumbSchema(trail('Pasta With Erika').map((t, i) => i === 2 ? { slug: 'pasta-drop-in', label: t.label } : t)),
-    eventSchema({ slug: 'pasta-drop-in', name: 'Pasta With Erika — Thursday Drop-In', desc: 'Relaxed Thursday pasta lab at da Cecot in Edmonton. Drop in anytime between 5 PM and 8 PM and make traditional Italian pasta at your own pace.', image: IMG.greenpasta, byDay: 'https://schema.org/Thursday', startTime: '17:00', price: '0' }),
-    faqSchema(dropFaqs)
-  ],
-  body: `${breadcrumb(trail('Pasta With Erika').map((t, i) => i === 2 ? { slug: 'pasta-drop-in', label: t.label } : t))}
-
-${expHero('drop-h1', 'Pasta With Erika', 'Thursday public drop-in. Learn. Create. Eat together.', IMG.greenpasta, true)}
-
-    <section class="section section--cream" aria-labelledby="drop-what-h">
-      <div class="container narrow reveal text-center">
-        <h2 id="drop-what-h">Learn. Create. Eat together.</h2>
-        <p class="lead">Join Erika for a relaxed, hands-on pasta lab where you'll make, cook, and enjoy your own traditional Italian pasta in an informal and welcoming setting.</p>
-        <p>Guests may arrive anytime between 5:00 PM and 8:00 PM and participate at their own pace. On Thursdays, we focus on traditional Italian pasta made with semolina or potatoes, celebrating regional shapes such as Orecchiette, Cavatelli, Fusilloni, bucatini-style pasta, and Potato Gnocchi.</p>
-        <p>No previous experience is required.</p>
-        <p style="margin-top:24px; font-style:italic; color:var(--terracotta);">"It all starts with intention and a prayer."</p>
-      </div>
-    </section>
-
-    <section class="section section--brown" aria-labelledby="drop-expect-h">
-      <div class="container">
-        <div class="text-center reveal" style="margin-bottom:14px;"><h2 id="drop-expect-h">Open to everyone</h2></div>
-        <div class="info-grid reveal">
-          <div><h3>Adults</h3><p>Roll up your sleeves after work or come solo and meet the table.</p></div>
-          <div><h3>Couples</h3><p>A low-key, hands-on date — flour, conversation, and a shared meal.</p></div>
-          <div><h3>Families</h3><p>A welcoming weeknight ritual the whole family can join.</p></div>
-          <div><h3>Children</h3><p>Little hands love shaping pasta. Bring them along.</p></div>
-        </div>
-        <div class="text-center" style="margin-top:30px;">
-          <p style="opacity:0.85;">Every Thursday · 5–8 PM · Whyte Ave &amp; 104 Street, Edmonton</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--cream" aria-labelledby="drop-how-h">
+    <section id="drop-in" class="section section--olive" aria-labelledby="drop-how-h">
       <div class="container narrow reveal">
         <div class="text-center">
-          <h2 id="drop-how-h">Reserve your spot</h2>
-          <p>Drop in any Thursday between 5 PM and 8 PM. Pick a Thursday below so we can have a station ready — or just call us at <a href="tel:+18258884218">(825) 888-4218</a>.</p>
+          <span class="label">Also on Thursdays</span>
+          <h2 id="drop-how-h">Pasta With Erika — Thursday Drop-In</h2>
+          <p>A relaxed, hands-on pasta lab with Erika. Drop in any Thursday between 5–8 PM and make, cook, and eat your own traditional Italian pasta at your own pace — no experience needed, no booking fee. Pick a Thursday so we can have a station ready, or call <a href="tel:+18258884218">(825) 888-4218</a>.</p>
         </div>
         <div class="booking" style="margin-top:32px;">
           <form data-formsubmit data-subject="Pasta Drop-In Reservation — da Cecot" aria-label="Thursday pasta drop-in reservation request">
@@ -392,13 +312,38 @@ ${expHero('drop-h1', 'Pasta With Erika', 'Thursday public drop-in. Learn. Create
       </div>
     </section>
 
-    <section class="section section--brown" aria-labelledby="drop-faq-h">
+    <section class="section section--linen" aria-labelledby="spc-gallery-h">
       <div class="container">
-        <div class="text-center reveal" style="margin-bottom:40px;"><h2 id="drop-faq-h">Thursday FAQ</h2></div>
-${faqBlock(dropFaqs)}
+        <div class="text-center narrow reveal" style="margin-bottom:48px;">
+          <span class="label" style="color:var(--terracotta);">From Past Classes</span>
+          <h2 id="spc-gallery-h">See what you'll make.</h2>
+          <p>Every class ends with a shared meal — pasta you shaped yourself, finished with our house sauces, eaten together at the table.</p>
+        </div>
+        <div class="gallery gallery--4 reveal">
+          <figure class="zoom"><img src="images/general/erica/_MG_1163.jpg" alt="Hands rolling out fresh pasta dough at a da Cecot Sunday pasta class" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/erica/_MG_1192.jpg" alt="Shaping fresh pasta by hand at a da Cecot pasta class, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/erica/_MG_1138.jpg" alt="Fresh pasta dough being kneaded at a da Cecot class, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/erica/_MG_1198.jpg" alt="Cutting fresh pasta strands at a da Cecot Sunday class, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/erica/_MG_1131.jpg" alt="Guests at work during a hands-on pasta class at da Cecot" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/general/erica/_MG_1205.jpg" alt="Fresh pasta drying at a da Cecot pasta class, Edmonton" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/food/ravioli-butter-sage.jpg" alt="Ravioli with butter and sage — the dish students take home" loading="lazy" decoding="async"></figure>
+          <figure class="zoom"><img src="images/food/fresh-ravioli.jpg" alt="Fresh hand-filled ravioli — a da Cecot pasta class finish" loading="lazy" decoding="async"></figure>
+        </div>
+        <p class="gallery-hint" aria-hidden="true">Swipe to see more →</p>
+        <div class="btn-wrap text-center reveal" style="margin-top:36px;">
+          <a href="#spc-book-h" class="btn btn--terra">Book a Class</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--brown" aria-labelledby="spc-faq-h">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:40px;"><h2 id="spc-faq-h">Pasta class FAQ</h2></div>
+${faqBlock(classFaqs)}
       </div>
     </section>`
 }));
+
 
 
 /* ============================================================
@@ -752,7 +697,7 @@ ${faqBlock(catFaqs)}
    FINAL WRITE: pages, favicon, robots, sitemap, 404, min css
    ============================================================ */
 const ALL_SLUGS = [
-  'index', 'menu', 'experiences', 'sunday-pasta-classes', 'pasta-drop-in',
+  'index', 'menu', 'experiences', 'sunday-pasta-classes',
   'private-events', 'catering', 'pasta-shop',
   'our-story', 'visit-us', 'reservations', 'partnerships'
 ];
