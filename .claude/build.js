@@ -372,7 +372,7 @@ pages.push(page({
             <div class="offer-card__body"><h3>Ravioli</h3><p>Handmade in small batches with rotating seasonal fillings.</p></div>
           </a>
           <a class="offer-card" href="pasta-shop.html">
-            <div class="offer-card__img zoom">${img(IMG.sauce, 'Small-batch house sauces from da Cecot, Edmonton')}</div>
+            <div class="offer-card__img zoom">${img('images/sauces/sauce-plase.jpg', 'Small-batch house sauce in a 12 oz container from da Cecot, Edmonton')}</div>
             <div class="offer-card__body"><h3>House Sauces</h3><p>Prepared in small batches and ready to pair with your favourite pasta.</p></div>
           </a>
           <a class="offer-card" href="pasta-shop.html">
@@ -614,12 +614,9 @@ pages.push(page({
       <div class="container"><div class="two-col menu-row reveal">
         <div class="note-slider" data-note-slider style="align-self:start;">
           <div class="note-slider__track" data-note-track>
-            <figure><img src="images/general/heritage/notebook-recipe-1.jpg" alt="A page from Erika&#39;s handwritten recipe notebook" loading="lazy" decoding="async"></figure>
             <figure><img src="images/general/heritage/notebook-recipe-2.jpg" alt="A page from Erika&#39;s handwritten recipe notebook" loading="lazy" decoding="async"></figure>
-            <figure><img src="images/general/heritage/notebook-recipe-3.jpg" alt="A page from Erika&#39;s handwritten recipe notebook" loading="lazy" decoding="async"></figure>
             <figure><img src="images/general/heritage/notebook-pan-di-spagna.jpg" alt="Pan di Spagna recipe in Erika&#39;s notebook" loading="lazy" decoding="async"></figure>
             <figure><img src="images/general/heritage/notebook-torta-paradiso.jpg" alt="Torta Paradiso recipe in Erika&#39;s notebook" loading="lazy" decoding="async"></figure>
-            <figure><img src="images/general/heritage/notebook-dedication.png" alt="The dedication page of Erika&#39;s recipe notebook" loading="lazy" decoding="async"></figure>
           </div>
           <div class="note-slider__dots" data-note-dots role="tablist" aria-label="Notebook pages"></div>
         </div>

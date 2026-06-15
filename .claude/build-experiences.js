@@ -475,141 +475,21 @@ pages.push(page({
   ],
   body: `${breadcrumb([{ slug: 'index', label: 'Home' }, { slug: 'menu', label: 'Menu' }, { slug: 'catering', label: 'Catering' }])}
 
-${expHero('cat-h1', 'Catering', 'Bring da Cecot to your table — budget-friendly, handcrafted Italian catering for events across Edmonton.', IMG.lasagna, true)}
+${expHero('cat-h1', 'Catering', 'Handcrafted Italian catering for events, offices, and celebrations across Edmonton.', 'images/food/caprese-canapes.jpg', true)}
 
-    <section class="section section--cream" aria-labelledby="cat-what-h">
+    <section class="section section--cream" aria-labelledby="cat-intro-h">
       <div class="container narrow reveal text-center">
-        <h2 id="cat-what-h">What is da Cecot catering?</h2>
-        <p class="lead">da Cecot catering brings our fresh Italian comfort food to your event anywhere in Edmonton. We prepare trays of handmade pasta, slow-cooked sauces, baked lasagna, sides, and dessert — designed to heat and serve — so you can host offices, parties, and celebrations without the stress.</p>
+        <h2 id="cat-intro-h">Let's make your event special.</h2>
+        <p class="lead">At da Cecot, we take pride in offering a menu that embraces inclusivity, catering to a wide range of dietary preferences and requirements.</p>
+        <p>We are excited about the opportunity to create a unique and memorable team-building event for your company. Please let us know if you'd like to proceed with the proposal as is or discuss any adjustments to better meet your needs. We look forward to working together to make this event truly special!</p>
       </div>
     </section>
 
-    <section class="section section--cream" aria-labelledby="cat-pasta-h">
-      <div class="container">
-        <div class="two-col menu-row reveal">
-          <figure class="menu-photo zoom">${img(IMG.pasta, 'Fresh handmade pasta catering tray at da Cecot, Edmonton')}</figure>
-          <div class="menu-copy">
-            <span class="label" style="color:var(--terracotta);">Fresh Pasta Trays</span>
-            <h2 id="cat-pasta-h">Pasta Trays</h2>
-            <p>Our fresh pasta trays are the centrepiece of any da Cecot catering spread. Each tray feeds 8–10 guests and comes with your choice of pasta and sauce.</p>
-            <p style="font-size:0.8em;letter-spacing:0.08em;text-transform:uppercase;opacity:0.6;margin-top:18px;margin-bottom:8px;font-weight:600;">Choose Your Pasta</p>
-            <ul class="menu-list">
-              <li>Caserecce <span>Our signature shape — best for takeout &amp; catering</span></li>
-              <li>Rigatoni <span>Ridged tubes</span></li>
-              <li>Tagliatelle <span>Egg ribbons</span></li>
-            </ul>
-            <p style="font-size:0.8em;letter-spacing:0.08em;text-transform:uppercase;opacity:0.6;margin-top:18px;margin-bottom:8px;font-weight:600;">Choose Your Sauce</p>
-            <ul class="menu-list">
-              <li>Ragù Bolognese <span>Slow-cooked meat sauce</span></li>
-              <li>Plasé <span>Tomato sauce</span></li>
-              <li>Cacio e Pepé <span>Pecorino &amp; black pepper</span></li>
-              <li>Salsa al Baffo <span>Rosé sauce</span></li>
-              <li>Butter &amp; Sage Sauce</li>
-            </ul>
-            <p style="margin-top:16px;opacity:0.8;font-size:0.9em;">Egg-based, vegan, and gluten-free pasta available on request.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--brown" aria-labelledby="cat-lasagna-h">
-      <div class="container">
-        <div class="two-col menu-row menu-row--rev reveal">
-          <figure class="menu-photo zoom">${img(IMG.lasagna, 'Freshly baked lasagna for catering at da Cecot, Edmonton')}</figure>
-          <div class="menu-copy">
-            <span class="label">Baked Dishes</span>
-            <h2 id="cat-lasagna-h">Lasagna &amp; Baked Dishes</h2>
-            <p>Our hand-layered lasagna is made fresh daily with slow-cooked ragù, silky béchamel, and Italian cheeses — ready to heat and serve at your venue.</p>
-            <ul class="menu-list" style="margin-top:16px;">
-              <li>Classic Lasagna <span>Ragù, béchamel &amp; Italian cheeses</span></li>
-              <li>Vegetarian Lasagna <span>Seasonal vegetables &amp; béchamel — on request</span></li>
-            </ul>
-            <p style="margin-top:16px;opacity:0.8;font-size:0.9em;">Trays serve 8–12 guests. Heat-and-serve delivery available across Edmonton.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--linen" aria-labelledby="cat-anti-h">
-      <div class="container"><div class="two-col menu-row reveal">
-        <figure class="menu-photo zoom">${img('images/food/caprese-canapes.jpg', 'Caprese canapés — toasted baguette with fresh mozzarella and tomato from da Cecot catering, Edmonton')}</figure>
-        <div class="menu-copy">
-          <span class="label" style="color:var(--terracotta);">To Start</span>
-          <h2 id="cat-anti-h">Caprese Canapés</h2>
-          <p>Little bites of fresh mozzarella and ripe tomato on toasted baguette, finished with a drizzle of olive oil — a bright, crowd-pleasing way to open any event. Add cured meats on request.</p>
-          <p style="margin-top:16px;opacity:0.8;font-size:0.9em;">Served by the platter — quantities to your headcount.</p>
-        </div>
-      </div></div>
-    </section>
-
-    <section class="section section--cream" aria-labelledby="cat-sides-h">
-      <div class="container">
-        <div class="text-center narrow reveal" style="margin-bottom:40px;">
-          <span class="label" style="color:var(--terracotta);">Complete Your Spread</span>
-          <h2 id="cat-sides-h">Sides &amp; Dessert</h2>
-        </div>
-        <div class="three-col reveal" data-stagger>
-          <article class="menu-card menu-card--light">
-            <h3>Arugula Salad</h3>
-            <p>Fresh arugula with lemon dressing and shaved Parmigiano — a light, bright start to your catering table.</p>
-          </article>
-          <article class="menu-card menu-card--light">
-            <h3>Garlic Bread</h3>
-            <p>Warm, buttery, and perfect alongside any of our pasta trays or lasagna.</p>
-          </article>
-          <article class="menu-card menu-card--light">
-            <h3>Tiramisu</h3>
-            <p>Our housemade tiramisu — espresso-soaked, light, and made fresh. Available in individual portions or as a full tray for sharing.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--brown" aria-labelledby="cat-pkg-h">
-      <div class="container">
-        <div class="text-center narrow reveal" style="margin-bottom:40px;">
-          <span class="label">Simple Pricing</span>
-          <h2 id="cat-pkg-h">Catering Packages</h2>
-          <p>Every order is quoted to your headcount and menu. Below are our most popular starting points.</p>
-        </div>
-        <div class="offer-grid offer-grid--2 reveal" data-stagger>
-          <article class="offer-card">
-            <div class="offer-card__body">
-              <h3>Office Lunch</h3>
-              <p>One pasta tray, one sauce, and garlic bread. Easy weekday catering for 8–15 guests.</p>
-              <p class="price-tag" style="margin-top:12px;">From $120</p>
-            </div>
-          </article>
-          <article class="offer-card">
-            <div class="offer-card__body">
-              <h3>Family Gathering</h3>
-              <p>Two pasta trays, lasagna, salad, and tiramisu for dessert. A complete meal for 16–25 guests.</p>
-              <p class="price-tag" style="margin-top:12px;">From $280</p>
-            </div>
-          </article>
-          <article class="offer-card">
-            <div class="offer-card__body">
-              <h3>Celebration Package</h3>
-              <p>Full spread — pasta trays, lasagna, sides, dessert, and a custom menu consultation for 25–40 guests.</p>
-              <p class="price-tag" style="margin-top:12px;">From $480</p>
-            </div>
-          </article>
-          <article class="offer-card">
-            <div class="offer-card__body">
-              <h3>Custom Quote</h3>
-              <p>Larger headcount, multiple menu options, or special dietary needs? We'll build a package to fit your event exactly.</p>
-              <p class="price-tag" style="margin-top:12px;">Contact us</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--cream" aria-labelledby="cat-quote-h">
+    <section class="section section--linen" aria-labelledby="cat-quote-h">
       <div class="container narrow reveal">
         <div class="text-center">
-          <h2 id="cat-quote-h">Request a catering quote</h2>
-          <p>Tell us your date, headcount, and the kind of menu you have in mind — we'll get back to you with a custom quote within 24 hours. Or reach us directly at <a href="tel:+18258884218">(825) 888-4218</a>.</p>
+          <h2 id="cat-quote-h">Contact us for pricing &amp; details</h2>
+          <p>Tell us your date, headcount, and what you have in mind — we'll get back to you with pricing and a tailored proposal within 24 hours. Or reach us directly at <a href="tel:+18258884218">(825) 888-4218</a>.</p>
         </div>
         <div class="booking">
           <form data-formsubmit data-subject="Catering Quote Request — da Cecot" aria-label="Catering quote request">
@@ -682,13 +562,6 @@ ${expHero('cat-h1', 'Catering', 'Bring da Cecot to your table — budget-friendl
             <div class="form-error" style="color:var(--brown);">Something went wrong — please call us at (825) 888-4218 or email info@dacecotfood.com.</div>
           </form>
         </div>
-      </div>
-    </section>
-
-    <section class="section section--brown" aria-labelledby="cat-faq-h">
-      <div class="container">
-        <div class="text-center reveal" style="margin-bottom:40px;"><h2 id="cat-faq-h">Catering FAQ</h2></div>
-${faqBlock(catFaqs)}
       </div>
     </section>`
 }));
