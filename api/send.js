@@ -99,11 +99,20 @@ module.exports = async (req, res) => {
     if (!r.ok) {
       const detail = await r.text();
       console.error('Resend error', r.status, detail);
-      return res.status(502).json({ success: false, error: 'Send failed' });
+      // TEMP DIAGNOSTIC: surface Resend's actual rejection reason so we can see
+      // why sends fail in production. Remove once forms are confirmed working.
+      return res.status(502).json({
+        success: false,
+        error: 'Send failed',
+        resendStatus: r.status,
+        resendDetail: detail,
+        attemptedFrom: process.env.RESEND_FROM || 'da Cecot Website <onboarding@resend.dev>',
+        attemptedTo: TO
+      });
     }
     return res.status(200).json({ success: true });
   } catch (err) {
     console.error('Resend exception', err);
-    return res.status(502).json({ success: false, error: 'Send failed' });
+    return res.status(502).json({ success: false, error: 'Send failed', exception: String(err && err.message || err) });
   }
 };
