@@ -10,10 +10,10 @@
 //                    is verified in Resend. Defaults to Resend's test sender.
 
 // Where form notifications are delivered. Overridable via the RESEND_TO env var.
-// Until a domain is verified in Resend, Resend only delivers to the account
-// owner's address (erikaomoregie@gmail.com), so that is the default. Once a
-// domain is verified, set RESEND_TO=info@dacecotfood.com in Vercel.
-const TO = process.env.RESEND_TO || 'erikaomoregie@gmail.com';
+// Delivers to da Cecot's own inbox. Note: the Resend account/key must be able
+// to send to this address — either info@dacecotfood.com is the Resend account's
+// verified address, or the dacecotfood.com domain is verified in Resend.
+const TO = process.env.RESEND_TO || 'info@dacecotfood.com';
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
