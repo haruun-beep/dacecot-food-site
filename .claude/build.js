@@ -174,10 +174,12 @@ function footer() {
 
 /* ---- opening hours for schema ---- */
 const HOURS_SPEC = [
-  { d: ['Monday', 'Tuesday'], o: '12:00', c: '15:00' },
-  { d: ['Monday', 'Tuesday'], o: '16:30', c: '20:00' },
-  { d: ['Thursday'], o: '16:00', c: '20:00' },
-  { d: ['Friday'], o: '11:30', c: '15:00' },
+  { d: ['Monday'], o: '16:30', c: '20:00' },
+  { d: ['Tuesday'], o: '12:00', c: '15:00' },
+  { d: ['Tuesday'], o: '16:30', c: '20:00' },
+  { d: ['Thursday'], o: '12:00', c: '15:00' },
+  { d: ['Thursday'], o: '16:30', c: '20:00' },
+  { d: ['Friday'], o: '12:00', c: '15:00' },
   { d: ['Friday'], o: '16:00', c: '21:00' },
   { d: ['Saturday'], o: '12:00', c: '21:00' },
   { d: ['Sunday'], o: '12:00', c: '16:00' }
@@ -434,10 +436,11 @@ pages.push(page({
             <div class="visit__hours">
               <h3>Hours</h3>
               <table>
-                <tr><th>Mon &amp; Tue</th><td>12 – 3 PM · 4:30 – 8 PM</td></tr>
+                <tr><th>Mon</th><td>4:30 – 8 PM</td></tr>
+                <tr><th>Tue</th><td>12 – 3 PM · 4:30 – 8 PM</td></tr>
                 <tr><th>Wed</th><td>Closed</td></tr>
-                <tr><th>Thu</th><td>4 – 8 PM</td></tr>
-                <tr><th>Fri</th><td>11:30 AM – 3 PM · 4 – 9 PM</td></tr>
+                <tr><th>Thu</th><td>12 – 3 PM · 4:30 – 8 PM</td></tr>
+                <tr><th>Fri</th><td>12 – 3 PM · 4 – 9 PM</td></tr>
                 <tr><th>Sat</th><td>12 – 9 PM</td></tr>
                 <tr><th>Sun</th><td>12 – 4 PM</td></tr>
                 <tr><th>Sunday Pasta Classes</th><td>5 – 9 PM</td></tr>
@@ -785,10 +788,11 @@ pages.push(page({
             <div class="visit__hours">
               <h3>Hours</h3>
               <table>
-                <tr><th>Mon &amp; Tue</th><td>12 – 3 PM · 4:30 – 8 PM</td></tr>
+                <tr><th>Mon</th><td>4:30 – 8 PM</td></tr>
+                <tr><th>Tue</th><td>12 – 3 PM · 4:30 – 8 PM</td></tr>
                 <tr><th>Wed</th><td>Closed</td></tr>
-                <tr><th>Thu</th><td>4 – 8 PM</td></tr>
-                <tr><th>Fri</th><td>11:30 AM – 3 PM · 4 – 9 PM</td></tr>
+                <tr><th>Thu</th><td>12 – 3 PM · 4:30 – 8 PM</td></tr>
+                <tr><th>Fri</th><td>12 – 3 PM · 4 – 9 PM</td></tr>
                 <tr><th>Sat</th><td>12 – 9 PM</td></tr>
                 <tr><th>Sun</th><td>12 – 4 PM</td></tr>
                 <tr><th>Sunday Pasta Classes</th><td>5 – 9 PM</td></tr>
