@@ -26,6 +26,17 @@ const NAP = {
 const MAPS_EMBED = 'https://www.google.com/maps?q=' + encodeURIComponent(NAP.mapsQuery) + '&output=embed';
 const MAPS_LINK = 'https://www.google.com/maps?q=' + encodeURIComponent(NAP.mapsQuery);
 
+/* ---- Reservations online booking (Wix) ----
+   Table reservations are handled by the client's Wix reservation page.
+   Paste the live published URL below. The bare dacecotfood.wixsite.com
+   subdomain 404s — the published page lives at the /my-site path.
+   While this is empty, the Reserve page renders a clearly-marked "booking
+   coming soon" pending state (button is non-clickable) and steers guests to
+   phone/email. Set it and re-run `node .claude/build.js` to go live.
+   NOTE: Sunday pasta classes still book + pay $95/guest via Square checkout
+   on the Experiences page — that is intentionally unchanged. */
+const RESERVATION_BOOKING_URL = 'https://dacecotfood.wixsite.com/my-site';
+
 const IMG = {
   hero:       'images/food/homepage-hero.jpg',
   pasta:      'images/food/ravioli-butter-sage.jpg',
@@ -468,10 +479,10 @@ const menuFaqs = [
 ];
 const menuCards = [
   { name: 'Dinner Menu', file: 'menus/dinner-menu.pdf', d: 'Antipasti, handmade pasta, Ravioli Atelier, secondi, desserts, and evening specials.', ready: true },
+  { name: 'Lunch Menu', file: 'menus/lunch-menu.pdf', d: 'Build-your-own pasta &amp; sauce, signature ravioli, focaccia panini, pizza al taglio, and kids’ plates.', ready: true },
   { name: 'Drink Menu', file: 'menus/drink-menu.pdf', d: 'Espresso, moka coffee, Italian drinks, and more.', ready: true },
-  { name: 'Lunch Menu', d: 'Fresh pasta, quick lunches, and comforting Italian dishes.', ready: false },
+  { name: 'Dessert Menu', file: 'menus/dessert-menu.pdf', d: 'Panna cotta, tiramisù, gelato coppe, sorbetto — plus our hot &amp; cold drinks.', ready: true },
   { name: 'Liquor Menu', d: 'Wine, beer, spirits, and Italian aperitivi.', ready: false },
-  { name: 'Dessert Menu', d: 'Dolci, tiramisu, gelato, and sweet Italian finishes.', ready: false },
   { name: 'Kids Menu', d: 'Simple, comforting pasta options made for younger guests.', ready: false }
 ];
 pages.push(page({
@@ -679,11 +690,21 @@ pages.push(page({
 }));
 
 /* ---------- RESERVATIONS ---------- */
+// Booking is handled by the client's Wix reservation page. When
+// RESERVATION_BOOKING_URL is set we render a live "Book a Table" button (opens
+// the Wix booking page in a new tab); while it's empty we show a clearly-marked
+// pending state so the page never points guests at a dead link.
+const reservationCta = RESERVATION_BOOKING_URL
+  ? `<a href="${RESERVATION_BOOKING_URL}" target="_blank" rel="noopener" class="btn btn--green" style="font-size:1.08rem; padding:16px 46px;">Book a Table &rarr;</a>
+        <p style="margin-top:10px; font-size:0.85rem; opacity:0.7;">Opens our secure online booking page in a new tab.</p>`
+  : `<span class="btn btn--green" role="link" aria-disabled="true" style="font-size:1.08rem; padding:16px 46px; opacity:0.5; cursor:not-allowed; pointer-events:none;">Book a Table &rarr;</span>
+        <p style="margin-top:12px; font-size:0.92rem; color:var(--terracotta); font-weight:600;">Online booking is launching shortly — for now, please call or email to reserve your table.</p>`;
+
 pages.push(page({
   slug: 'reservations',
   active: 'reservations',
   title: 'Reservations | Book a Table at da Cecot, Edmonton',
-  description: 'Reserve a table at da Cecot in Edmonton — lunch, dinner, or Sunday family lunch on Whyte Avenue. For pasta classes & special experiences see the Experiences page.',
+  description: 'Reserve a table at da Cecot in Edmonton — lunch, dinner, or Sunday family lunch on Whyte Avenue. Book online in seconds. For pasta classes & special experiences see the Experiences page.',
   ogImage: IMG.dining,
   schema: [
     breadcrumbSchema([{ slug: 'index', label: 'Home' }, { slug: 'reservations', label: 'Reservations' }]),
@@ -696,51 +717,12 @@ pages.push(page({
         <h1 id="res-h1">Reserve a Table</h1>
         <p class="lead" style="margin-top:18px;">Book your table at da Cecot for lunch, dinner, or Sunday family lunch. For pasta classes, private dinners, and special experiences, please visit our <a href="experiences.html" style="color:var(--terracotta); font-weight:600;">Experiences page</a>.</p>
       </div>
-      <div class="container narrow reveal" style="padding-bottom:20px;">
-        <div class="booking">
-          <form data-formsubmit data-subject="Reservation Request — da Cecot" aria-label="Reservation request">
-            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-            <div class="form-row">
-              <div class="field">
-                <label for="res-date">Date</label>
-                <input type="date" id="res-date" name="date" required>
-              </div>
-              <div class="field">
-                <label for="res-time">Preferred time</label>
-                <select id="res-time" name="time" required data-res-time>
-                  <option value="">Pick a date first</option>
-                </select>
-              </div>
-            </div>
-            <p data-res-msg style="margin:-10px 0 8px; font-size:0.88rem; color:var(--terracotta); min-height:1.2em;"></p>
-            <div class="field">
-              <label for="res-party">Party size</label>
-              <select id="res-party" name="party_size">
-                <option>1 guest</option>
-                <option>2 guests</option>
-                <option>3 guests</option>
-                <option>4 guests</option>
-                <option>5 guests</option>
-                <option>6 guests</option>
-              </select>
-            </div>
-            <div class="form-row">
-              <div class="field"><label for="res-name">Name</label><input type="text" id="res-name" name="name" required></div>
-              <div class="field"><label for="res-phone">Phone</label><input type="tel" id="res-phone" name="phone" required></div>
-            </div>
-            <div class="field"><label for="res-email">Email</label><input type="email" id="res-email" name="email" required></div>
-            <div class="field">
-              <label for="res-notes">Special requests <span style="font-weight:400;opacity:0.7;">(optional)</span></label>
-              <textarea id="res-notes" name="notes" placeholder="Occasion, seating preference, dietary needs, high chair, accessibility…"></textarea>
-            </div>
-            <button type="submit" class="btn btn--green" style="width:100%;">Request Reservation</button>
-            <div class="form-success" style="background:rgba(48,99,30,0.12); color:var(--brown); border-color:var(--deep-green);">Grazie! We've received your reservation request and will confirm by phone or email shortly.</div>
-            <div class="form-error" style="color:var(--brown);">Something went wrong — please call us at (825) 888-4218 or email info@dacecotfood.com.</div>
-          </form>
-        </div>
+      <div class="container narrow text-center reveal" style="padding-top:16px; padding-bottom:26px;">
+        ${reservationCta}
+        <p style="margin-top:26px; opacity:0.85;">Prefer to call? <a href="tel:${NAP.phoneHref}" style="color:var(--terracotta); font-weight:600;">${NAP.phone}</a> &nbsp;&middot;&nbsp; <a href="mailto:${NAP.email}" style="color:var(--terracotta); font-weight:600;">${NAP.email}</a></p>
       </div>
       <div class="container narrow text-center reveal" style="padding-bottom:60px;">
-        <p style="opacity:0.78; font-size:0.95em;"><em>Reservation requests are confirmed by our team — we'll reach out to lock in your table. For groups larger than 6 guests, private events, catering, or pasta classes, please <a href="visit-us.html" style="color:var(--terracotta);">contact us directly</a> or visit the <a href="experiences.html" style="color:var(--terracotta);">Experiences page</a>.</em></p>
+        <p style="opacity:0.78; font-size:0.95em;"><em>For groups larger than 6 guests, private events, catering, or pasta classes, please <a href="visit-us.html" style="color:var(--terracotta);">contact us directly</a> or visit the <a href="experiences.html" style="color:var(--terracotta);">Experiences page</a>.</em></p>
       </div>
     </section>`
 }));
