@@ -725,7 +725,7 @@ pages.push(page({
             <div class="field">
               <label for="res-guests">Party size</label>
               <select id="res-guests" name="party_size" required>${Array.from({ length: 6 }, (_, i) => `<option>${i + 1} guest${i ? 's' : ''}</option>`).join('')}</select>
-              <p class="field__hint" style="margin-top:6px; font-size:0.85em; opacity:0.7;">More than 6 guests? Call us at <a href="tel:${NAP.phoneHref}">${NAP.phone}</a> — we love big tables.</p>
+              <p class="field__hint">More than 6 guests? Call us at <a href="tel:${NAP.phoneHref}">${NAP.phone}</a> — we love big tables.</p>
             </div>
             <div class="field">
               <label for="res-allergies">Allergies or dietary restrictions</label>
@@ -1098,7 +1098,7 @@ pages.push(page({
           <div class="field">
             <label for="om-time">Pickup time</label>
             <select id="om-time" name="pickup_time" required disabled><option value="">Choose a pickup day first…</option></select>
-            <p class="field__hint" data-pickup-note style="margin-top:6px; font-size:0.85em; opacity:0.75;">Pickup times follow our opening hours.</p>
+            <p class="field__hint" data-pickup-note>Pickup times follow our opening hours.</p>
           </div>
           <script id="pickup-hours" type="application/json">${JSON.stringify({ hours: PICKUP_HOURS, firstSundayClosed: FIRST_SUNDAY_CLOSED })}</script>
           <div class="field"><label for="om-allergies">Any allergies?</label><input type="text" id="om-allergies" name="allergies" placeholder="Gluten, nuts, none…"></div>
