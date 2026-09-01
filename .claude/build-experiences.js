@@ -275,12 +275,12 @@ ${expHero('spc-h1', 'La Domenica Da Cecot', 'Pasta · Amore · Condivisione — 
               <div class="date-picker__grid">
                 ${datePills('class_date', CLASS_DATES, true)}
               </div>
-              <p class="date-picker__note" style="margin-top:12px; font-size:0.9em; opacity:0.75;">Closed the first Sunday of each month.</p>
+              <p class="date-picker__note">Closed the first Sunday of each month.</p>
             </fieldset>
             <div class="field" style="margin-top:22px;">
               <label for="spc-guests">Number of guests <span style="font-weight:400;opacity:0.7;">(max ${CLASS_MAX})</span></label>
               <select id="spc-guests" name="guests">${guestOptions(CLASS_MAX)}</select>
-              <p class="field__hint" style="margin-top:6px; font-size:0.85em; opacity:0.7;">Classes are limited to ${CLASS_MAX} guests total.</p>
+              <p class="field__hint">Classes are limited to ${CLASS_MAX} guests total.</p>
             </div>
             <div class="form-row">
               <div class="field"><label for="spc-name">Name</label><input type="text" id="spc-name" name="name" required></div>
