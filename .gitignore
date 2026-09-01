@@ -4,3 +4,6 @@ node_modules/
 *.log
 
 .vercel
+
+# Local orders store (JSON fallback used when DATABASE_URL is unset)
+.data/
