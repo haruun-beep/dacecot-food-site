@@ -256,7 +256,12 @@
 
         // Optional Square checkout: open a tab now (within the click gesture) so
         // it isn't popup-blocked; we point it at the pay URL once the email sends.
-        var payUrl = form.dataset.payUrl || '';
+        /* A delivery order's total includes the zone fee, which the product's
+           fixed Square link cannot take — the server emails a checkout for the
+           exact total instead, so the static link is skipped for delivery. */
+        var fulfil = form.querySelector('[name="fulfillment"]:checked');
+        var isDelivery = !!(fulfil && fulfil.value === 'delivery');
+        var payUrl = isDelivery ? '' : (form.dataset.payUrl || '');
         var payWin = payUrl ? window.open('', '_blank') : null;
 
         var payload = { _subject: form.dataset.subject || 'New message — da Cecot Food' };
@@ -275,7 +280,11 @@
           .then(function (r) { return r.json(); })
           .then(function (r) {
             if (r.success === 'true' || r.success === true) {
-              if (successEl) successEl.classList.add('show');
+              if (successEl) {
+                if (successEl.dataset.generic == null) successEl.dataset.generic = successEl.textContent;
+                successEl.textContent = isDelivery && successEl.dataset.delivery ? successEl.dataset.delivery : successEl.dataset.generic;
+                successEl.classList.add('show');
+              }
               form.querySelectorAll('input:not([type=hidden]), textarea, select').forEach(function (f) { f.value = ''; });
               if (payUrl) {
                 if (payWin && !payWin.closed) { payWin.location = payUrl; }
@@ -362,6 +371,97 @@
         omDay.addEventListener('change', updatePickup);
       }
 
+      /* ---- Pickup or delivery ----
+         Delivery runs one part of the city per day (#delivery-config, from the
+         site manager). The postal code's first three characters pick the zone;
+         only that zone's days are offered, and tomorrow only before the cutoff.
+         The browser's clock is a good-enough guide here — the server re-checks
+         the day, the zone and the fee before anything is recorded. */
+      var DLV = { enabled: false, zones: [] };
+      try { var dcRaw = document.getElementById('delivery-config'); if (dcRaw) DLV = JSON.parse(dcRaw.textContent) || DLV; } catch (e) {}
+      var fulfilBox = orderModal.querySelector('[data-fulfil]');
+      var pickupFields = orderModal.querySelectorAll('[data-pickup-fields]');
+      var deliveryFields = orderModal.querySelector('[data-delivery-fields]');
+      var omPostal = orderModal.querySelector('[name="delivery_postal"]');
+      var omAddress = orderModal.querySelector('[name="delivery_address"]');
+      var omZone = orderModal.querySelector('[data-delivery-zone]');
+      var omDlvNote = orderModal.querySelector('[data-delivery-note]');
+      var omSuccess = omForm.querySelector('.form-success');
+      var DAYN = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      var MONN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      function dlvMode() { var r = omForm.querySelector('[name="fulfillment"]:checked'); return DLV.enabled && r && r.value === 'delivery' ? 'delivery' : 'pickup'; }
+      function dlvKey(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+      function dlvLabel(d) { return DAYN[d.getDay()] + ', ' + MONN[d.getMonth()] + ' ' + d.getDate(); }
+      function dlvShort(d) { return DAYN[d.getDay()].slice(0, 3) + ' ' + MONN[d.getMonth()] + ' ' + d.getDate(); }
+      function dlvHour(h) { var ap = h >= 12 ? 'PM' : 'AM', hh = h % 12 || 12; return hh + ' ' + ap; }
+      function dlvDays(zone) {
+        var out = [], now = new Date();
+        for (var i = 1; i <= 28 && out.length < 3; i++) {
+          var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
+          if (zone.days.indexOf(d.getDay()) < 0) continue;
+          if (i === 1 && now.getHours() >= DLV.cutoffHour) continue;
+          var prev = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 1);
+          out.push({ key: dlvKey(d), label: dlvLabel(d), cutoff: dlvHour(DLV.cutoffHour) + ' on ' + dlvShort(prev) });
+        }
+        return out;
+      }
+      function applyMode() {
+        var mode = dlvMode();
+        var pick = mode === 'pickup';
+        pickupFields.forEach(function (el) { el.hidden = !pick; });
+        if (deliveryFields) deliveryFields.hidden = pick;
+        if (omDay) omDay.required = pick;
+        if (omTime) omTime.required = pick && !omTime.disabled;
+        if (omPostal) omPostal.required = !pick;
+        if (omAddress) omAddress.required = !pick;
+        orderModal.querySelectorAll('.fulfil__opt').forEach(function (l) {
+          var r = l.querySelector('input'); l.classList.toggle('fulfil__opt--on', !!(r && r.checked));
+        });
+        if (omSubmit) {
+          if (!pick) omSubmit.textContent = 'Send My Delivery Order';
+          else omSubmit.textContent = omForm.dataset.payUrl ? 'Proceed to Payment' : 'Send My Order';
+        }
+        if (omNote) omNote.style.display = (pick && omForm.dataset.payUrl) ? '' : 'none';
+        if (!pick) updateZone();
+      }
+      function updateZone() {
+        if (!omZone || !omPostal) return;
+        var raw = omPostal.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        var fsa = raw.slice(0, 3);
+        var zone = null;
+        if (/^[A-Z]\d[A-Z]$/.test(fsa)) DLV.zones.forEach(function (z) { if (!zone && z.fsas.indexOf(fsa) > -1) zone = z; });
+        omZone.querySelectorAll('input[name="delivery_date"]').forEach(function (r) { r.required = false; });
+        if (!zone) {
+          omZone.hidden = true; omZone.innerHTML = '';
+          if (omDlvNote) omDlvNote.textContent = raw.length >= 3
+            ? "We don't deliver to " + fsa + ' yet — pickup on Whyte Ave is always open, or try another postal code.'
+            : "Type your postal code and we'll show the day your part of the city is delivered.";
+          return;
+        }
+        var days = dlvDays(zone);
+        var fee = '$' + (zone.feeCents / 100).toFixed(2);
+        var html = '<p class="zonebox__head"><b>' + zone.name + ' zone</b> · delivered on ' + zone.dayNames.join(' and ') + ', ' + DLV.window + ' · delivery ' + fee + '</p>';
+        if (!days.length) html += '<p class="field__hint">No ' + zone.name.toLowerCase() + ' delivery day is open right now — please choose pickup.</p>';
+        else {
+          html += '<div class="zonebox__days">' + days.map(function (d, i) {
+            return '<label class="zonebox__day' + (i === 0 ? ' zonebox__day--on' : '') + '"><input type="radio" name="delivery_date" value="' + d.key + '"' + (i === 0 ? ' checked' : '') + ' required><span>' + d.label + '</span><small>order by ' + d.cutoff + '</small></label>';
+          }).join('') + '</div>';
+        }
+        omZone.innerHTML = html; omZone.hidden = false;
+        omZone.querySelectorAll('input[name="delivery_date"]').forEach(function (r) {
+          r.addEventListener('change', function () {
+            omZone.querySelectorAll('.zonebox__day').forEach(function (l) { l.classList.toggle('zonebox__day--on', l.querySelector('input').checked); });
+          });
+        });
+        if (omDlvNote) omDlvNote.textContent = 'The ' + fee + ' delivery fee is added to your order; your confirmation email carries the total' + (omForm.dataset.payUrl ? ' and a secure Square link to pay it' : '') + '.';
+      }
+      if (fulfilBox) {
+        fulfilBox.querySelectorAll('input[name="fulfillment"]').forEach(function (r) { r.addEventListener('change', applyMode); });
+        if (omPostal) omPostal.addEventListener('input', updateZone);
+        if (omSuccess) omSuccess.dataset.delivery = "Grazie! Your delivery order is in — we've emailed your confirmation with the delivery day, the total and how to pay. You'll get a tracking link when the driver leaves.";
+        applyMode();
+      }
+
       var openOrder = function (btn) {
         var product = btn.getAttribute('data-product') || 'Order';
         var price = btn.getAttribute('data-price') || '';
@@ -375,6 +475,7 @@
         else { delete omForm.dataset.payUrl; if (omNote) omNote.style.display = 'none'; if (omSubmit) omSubmit.textContent = 'Send My Order'; }
         omForm.querySelectorAll('.form-success, .form-error').forEach(function (e) { e.classList.remove('show'); });
         updatePickup();
+        if (fulfilBox) applyMode();
         orderModal.hidden = false;
         document.body.classList.add('nav-open');
       };

@@ -49,6 +49,33 @@ module.exports = async (req, res) => {
         return res.status(200).json({ ok: true, items, unread, push });
       } catch (e) { return res.status(502).json({ error: 'Could not load notifications: ' + (e && e.message || e) }); }
     }
+    // ?sub=delivery&week=0|-1|1 → the kitchen's delivery week: one zone per day,
+    // orders to pack, the courier run once the driver is called. Everything is
+    // computed here so the admin never re-derives dates or money.
+    if (q.sub === 'delivery') {
+      try {
+        const content = require('../../lib/cms/content');
+        const dz = require('../../lib/delivery/zones');
+        const day = require('../../lib/delivery/day');
+        const uber = require('../../lib/delivery/uber');
+        const R3 = require('../../lib/orders/reservations');
+        const settings = dz.settingsFrom(content);
+        const offset = Math.max(-8, Math.min(4, parseInt(q.week, 10) || 0));
+        const start = R3.addDaysISO(R3.todayISO(), offset * 7);
+        const list = await store.list({ type: 'order' });
+        return res.status(200).json({
+          ok: true,
+          today: R3.todayISO(), weekStart: start, weekOffset: offset,
+          settings: dz.clientConfig(settings),
+          pickup: dz.fmtClock(settings.pickupReady) + ' – ' + dz.fmtClock(settings.pickupDeadline),
+          uber: { configured: uber.configured(), sandbox: uber.sandbox() },
+          days: day.week(list, settings, start)
+        });
+      } catch (e) {
+        return res.status(502).json({ error: 'Could not load the delivery week: ' + (e && e.message || e) });
+      }
+    }
+
     // ?sub=contacts → deduplicated people across every submission type.
     if (q.sub === 'contacts') {
       try {
@@ -211,6 +238,81 @@ module.exports = async (req, res) => {
         });
       } catch (e) {
         return res.status(502).json({ error: 'Could not move the class: ' + (e && e.message || e) });
+      }
+    }
+
+    /* Delivery day actions. A day is a date key; packing is per order, calling
+       the driver and refreshing statuses are per day. Nothing here reaches a
+       customer except the "on its way" email, sent only once a delivery is
+       actually booked on Uber. */
+    if (action === 'delivery_pack' || action === 'delivery_pack_day' || action === 'delivery_dispatch' || action === 'delivery_refresh') {
+      const day = require('../../lib/delivery/day');
+      const dz = require('../../lib/delivery/zones');
+      const uber = require('../../lib/delivery/uber');
+      const content = require('../../lib/cms/content');
+      const R3 = require('../../lib/orders/reservations');
+      const date = R3.parseDate(body.date);
+      try {
+        if (action === 'delivery_pack') {
+          if (!id) return res.status(400).json({ error: 'Missing order id.' });
+          const existing = await store.get(id);
+          if (!existing || !day.isDeliveryOrder(existing)) return res.status(404).json({ error: 'Delivery order not found.' });
+          if (existing.details.uber && existing.details.uber.delivery_id) return res.status(409).json({ error: 'The driver has already been called for this order.' });
+          const packed = body.packed !== false;
+          const details = Object.assign({}, existing.details, { packed, packed_at: packed ? new Date().toISOString() : null });
+          const updated = await store.update(id, { details });
+          return res.status(200).json({ ok: true, order: day.compact(updated) });
+        }
+        if (!date) return res.status(400).json({ error: 'Missing day.' });
+        const list = await store.list({ type: 'order' });
+        const orders = day.ordersForDay(list, date);
+        if (action === 'delivery_pack_day') {
+          const packed = body.packed !== false;
+          let n = 0;
+          for (const o of orders) {
+            if (o.details.uber && o.details.uber.delivery_id) continue;
+            await store.update(o.id, { details: Object.assign({}, o.details, { packed, packed_at: packed ? new Date().toISOString() : null }) });
+            n++;
+          }
+          return res.status(200).json({ ok: true, updated: n, emailed: n + ' order' + (n === 1 ? '' : 's') + (packed ? ' marked packed.' : ' unpacked.') });
+        }
+        if (action === 'delivery_dispatch') {
+          const gate = day.canDispatch(orders);
+          if (!gate.ok) return res.status(409).json({ error: gate.reason });
+          if (!uber.configured()) return res.status(409).json({ error: 'Uber Direct is not connected yet. Add the UBER_DIRECT_CLIENT_ID, UBER_DIRECT_CLIENT_SECRET and UBER_DIRECT_CUSTOMER_ID settings on Vercel first.' });
+          const settings = dz.settingsFrom(content);
+          const booked = [], failed = [];
+          for (const o of orders) {
+            try {
+              const info = await uber.dispatchOrder(o, settings);
+              const updated = await store.update(o.id, { details: Object.assign({}, o.details, { uber: info }) });
+              booked.push(updated);
+            } catch (e) {
+              failed.push({ id: o.id, name: o.name, error: String(e && e.message || e) });
+            }
+          }
+          let emailed = 0;
+          for (const o of booked) {
+            try { const r2 = await mailer.sendDispatched(o); if (r2 && r2.ok) emailed++; } catch (e) { console.error('dispatch email failed', e && e.message); }
+          }
+          const summary = booked.length + ' of ' + orders.length + ' booked on Uber' + (emailed ? ', ' + emailed + ' customer' + (emailed === 1 ? '' : 's') + ' emailed' : '') + (failed.length ? ', ' + failed.length + ' failed' : '') + '.';
+          return res.status(failed.length && !booked.length ? 502 : 200).json({ ok: booked.length > 0, booked: booked.length, failed, emailed: summary, error: booked.length ? undefined : (failed[0] && failed[0].error) });
+        }
+        if (action === 'delivery_refresh') {
+          if (!uber.configured()) return res.status(409).json({ error: 'Uber Direct is not connected.' });
+          let n = 0; const errors = [];
+          for (const o of orders) {
+            if (!(o.details.uber && o.details.uber.delivery_id)) continue;
+            try {
+              const info = await uber.refreshOrder(o.details.uber);
+              await store.update(o.id, { details: Object.assign({}, o.details, { uber: info }) });
+              n++;
+            } catch (e) { errors.push(String(e && e.message || e)); }
+          }
+          return res.status(200).json({ ok: true, refreshed: n, errors, emailed: n + ' stop' + (n === 1 ? '' : 's') + ' refreshed' + (errors.length ? ', ' + errors.length + ' failed' : '') + '.' });
+        }
+      } catch (e) {
+        return res.status(502).json({ error: 'Delivery action failed: ' + (e && e.message || e) });
       }
     }
 
