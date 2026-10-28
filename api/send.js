@@ -24,7 +24,14 @@ const esc = (s) => String(s == null ? '' : s).replace(/[&<>]/g, (c) => ({ '&': '
 const FIELD_LABELS = {
   class_date: 'Class date',
   class_date_2: '2nd choice (backup)',
-  drop_in_date: 'Drop-in date'
+  drop_in_date: 'Drop-in date',
+  fulfillment: 'Order type',
+  delivery_date: 'Delivery day',
+  delivery_window: 'Delivery window',
+  delivery_address: 'Delivery address',
+  delivery_postal: 'Postal code',
+  delivery_zone: 'Delivery zone',
+  delivery_fee: 'Delivery fee'
 };
 const humanize = (k) => FIELD_LABELS[k] ||
   k.replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim().replace(/\b\w/g, (c) => c.toUpperCase());
@@ -298,8 +305,46 @@ module.exports = async (req, res) => {
     } catch (e) { console.error('class capacity check failed (allowing through)', e && e.message); }
   }
 
+  /* Pasta-shop DELIVERY orders (Uber Direct, one zone per day). The page offers
+     only the zone's days before the cutoff, but the page is built ahead of time
+     and the browser's clock is not Edmonton's — so the server decides: is the
+     postal code in a zone, is the day still open, and what is the fee. The fee
+     the browser sent, if any, is replaced; the order record stores ours. */
+  if (String(data.fulfillment || '').toLowerCase() === 'delivery') {
+    try {
+      const content = require('../lib/cms/content');
+      const dz = require('../lib/delivery/zones');
+      const settings = dz.settingsFrom(content);
+      const v = dz.validateOrder(data, settings, Date.now());
+      if (!v.ok) return res.status(v.status || 409).json({ success: false, error: v.error });
+      const { parsePriceCents } = require('../lib/orders/submission');
+      const unit = parsePriceCents(String(data.price || '')) || parsePriceCents(String(data.item || ''));
+      const qty = parseInt(String(data.quantity || '1').replace(/[^\d]/g, ''), 10) || 1;
+      if (settings.minOrderCents > 0 && unit != null && unit * qty < settings.minOrderCents) {
+        return res.status(409).json({ success: false, error: 'Delivery orders start at $' + (settings.minOrderCents / 100).toFixed(2) + ' of food — add a little more, or choose pickup.' });
+      }
+      data.fulfillment = 'delivery';
+      data.delivery_postal = v.postal;
+      data.delivery_address = v.address;
+      data.delivery_date = v.dateKey;
+      data.delivery_zone = v.zone.name;
+      data.delivery_window = v.window;
+      data.delivery_fee_cents = v.feeCents;
+      data.delivery_fee = '$' + (v.feeCents / 100).toFixed(2);
+      // A delivery order has no pickup slot; drop anything the form carried.
+      delete data.pickup_day; delete data.pickup_time;
+    } catch (e) {
+      console.error('delivery check failed', e && e.message);
+      return res.status(500).json({ success: false, error: 'We could not check your delivery address just now — please try again or choose pickup.' });
+    }
+  } else if (data.fulfillment != null) {
+    data.fulfillment = 'pickup';
+    ['delivery_postal', 'delivery_address', 'delivery_date', 'delivery_zone', 'delivery_window', 'delivery_fee_cents', 'delivery_fee'].forEach((k) => { delete data[k]; });
+  }
+
   // Capture the submission to the orders store (best-effort, never blocks email).
   let submissionId = null;
+  let deliveryPayLink = null;
   try {
     const ordersStore = require('../lib/orders/store');
     const { normalize } = require('../lib/orders/submission');
@@ -308,7 +353,32 @@ module.exports = async (req, res) => {
     submissionId = rec && rec.id;
     // Raise a notification for Erika's bell (+ push, when enabled). Best-effort.
     try { await notifyNewSubmission(rec); } catch (e) { console.error('notify failed (non-blocking)', e && e.message); }
+    /* A delivery order's total includes the fee, so the product's fixed Square
+       link cannot take the payment. When Square is connected, a checkout for
+       the exact total is created and goes in the confirmation email; otherwise
+       Erika settles it the way she does pickup orders today. Best-effort. */
+    /* Only when the food price is known: a lasagna tray ordered by size has no
+       fixed price on the page, and a checkout for the fee alone would be wrong. */
+    if (rec && data.fulfillment === 'delivery' && rec.amount_cents > Number(data.delivery_fee_cents || 0)) {
+      try {
+        const square = require('../lib/orders/square');
+        if (square.configured()) {
+          const link = await square.createPaymentLink({
+            amountCents: rec.amount_cents,
+            name: 'da Cecot — ' + String(data.item || 'pasta shop order').slice(0, 120) + ' × ' + (data.quantity || 1) + ' + delivery',
+            referenceId: rec.id,
+            buyerEmail: rec.email || undefined
+          });
+          if (link && link.url) {
+            await ordersStore.update(rec.id, { payment_link_url: link.url, square_order_id: link.squareOrderId || null, payment_status: 'pending' });
+            deliveryPayLink = link.url;
+          }
+        }
+      } catch (e) { console.error('delivery payment link failed (non-blocking)', e && e.message); }
+    }
   } catch (e) { console.error('order capture failed (non-blocking)', e && e.message); }
+  if (deliveryPayLink) data.pay_link = deliveryPayLink;
+  delete data.delivery_fee_cents;
 
   const subject = String(data._subject || 'New message — da Cecot Food').slice(0, 200);
   const formName = subject.replace(/\s*[—–-]\s*da Cecot.*$/i, '').trim() || 'website enquiry';
@@ -383,7 +453,7 @@ module.exports = async (req, res) => {
     const showClassDates = isClass && !!classFirst && !data.drop_in_date;
 
     // Detail rows shown back to the customer — order, booking AND reservation fields.
-    const detailKeys = ['item', 'quantity', 'class_date', 'class_date_2', 'drop_in_date', 'reservation_date', 'reservation_time', 'party_size', 'guests', 'pickup_day', 'pickup_time', 'allergies', 'notes'];
+    const detailKeys = ['item', 'quantity', 'class_date', 'class_date_2', 'drop_in_date', 'reservation_date', 'reservation_time', 'party_size', 'guests', 'pickup_day', 'pickup_time', 'delivery_date', 'delivery_window', 'delivery_address', 'delivery_postal', 'delivery_fee', 'allergies', 'notes'];
     const detailRows = detailKeys
       .filter((k) => !(showClassDates && (k === 'class_date' || k === 'class_date_2')))
       .filter((k) => String(data[k] == null ? '' : data[k]).trim() !== '')
@@ -443,6 +513,11 @@ module.exports = async (req, res) => {
           : ' — the details are below.') +
         ' We look forward to making pasta with you!';
       closing = (payLink ? 'Please complete your payment securely with the button above (Square) to confirm your spot. ' : 'We\'ll confirm your spot by phone or email shortly. ') + 'Questions? Just reply to this email or call us at (825) 888-4218.';
+    } else if (isOrder && data.fulfillment === 'delivery') {
+      const dz = require('../lib/delivery/zones');
+      subjectLine = 'Your delivery — ' + dz.formatDay(data.delivery_date) + ' | da Cecot Food';
+      intro = 'Grazie, ' + esc(firstName) + '! Your order is in the kitchen for delivery on <strong>' + esc(dz.formatDay(data.delivery_date)) + '</strong>, between ' + esc(data.delivery_window) + '. When the driver leaves Whyte Ave you\'ll get an email with a live tracking link.';
+      closing = (payLink ? 'Please complete your payment securely with the button above (Square); your total includes the delivery fee. ' : 'We\'ll confirm your total by phone or email shortly. ') + 'Questions? Just reply to this email or call us at (825) 888-4218.';
     } else if (isOrder) {
       subjectLine = 'We\'ve received your order — da Cecot Food';
       intro = 'Grazie, ' + esc(firstName) + '! We\'ve received your pasta-shop order and the kitchen has it. We\'ll confirm your pickup time and total by phone or email shortly.';

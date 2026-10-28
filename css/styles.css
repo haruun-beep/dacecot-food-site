@@ -1812,3 +1812,22 @@ body.nav-open { overflow: hidden; }
   .gift-grid, .gift-steps { grid-template-columns: 1fr; }
   .gift-card__btn { align-self: stretch; text-align: center; }
 }
+
+/* ---- Pasta shop: pickup or delivery ---- */
+.fulfil { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 16px; }
+.fulfil[hidden] { display: none; }
+.fulfil__opt { display: flex; align-items: center; gap: 10px; border: 1px solid rgba(74,30,24,0.25); border-radius: 10px; padding: 10px 12px; cursor: pointer; background: #fff; }
+.fulfil__opt input { accent-color: var(--terracotta); margin: 0; width: 16px; height: 16px; }
+.fulfil__opt span { display: flex; flex-direction: column; line-height: 1.2; }
+.fulfil__opt b { color: var(--brown); font-size: 0.95rem; }
+.fulfil__opt small { color: rgba(74,30,24,0.7); font-size: 0.78rem; }
+.fulfil__opt--on { border-color: var(--terracotta); background: rgba(173,82,23,0.08); }
+[data-pickup-fields][hidden], [data-delivery-fields][hidden], .zonebox[hidden] { display: none; }
+.zonebox { border: 1px solid rgba(74,30,24,0.2); border-radius: 10px; padding: 10px 12px; background: var(--cream, #f9f7ef); margin: 0 0 10px; }
+.zonebox__head { margin: 0 0 8px; font-size: 0.92rem; color: var(--brown); }
+.zonebox__days { display: flex; flex-direction: column; gap: 6px; }
+.zonebox__day { display: flex; align-items: center; gap: 8px; border: 1px solid rgba(74,30,24,0.25); border-radius: 8px; padding: 8px 10px; background: #fff; cursor: pointer; font-size: 0.92rem; }
+.zonebox__day input { accent-color: var(--terracotta); margin: 0; }
+.zonebox__day small { margin-left: auto; color: rgba(74,30,24,0.65); font-size: 0.78rem; white-space: nowrap; }
+.zonebox__day--on { border-color: var(--terracotta); background: rgba(173,82,23,0.08); }
+@media (max-width: 560px) { .fulfil { grid-template-columns: 1fr; } .zonebox__day small { white-space: normal; } }

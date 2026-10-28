@@ -221,6 +221,10 @@ ${rows}
    Derived from the CMS hours — edit them in /admin, not here. Consumed
    client-side by the Pasta Shop order modal and the reservation time picker. */
 const PICKUP_HOURS = hours.windows(content);
+/* Pasta-shop delivery by zone and day (lib/delivery/zones.js). Embedded in the
+   order modal so the browser can show the customer's zone and days; the server
+   re-checks every delivery order against the same settings. */
+const DELIVERY_CFG = require('../lib/delivery/zones').clientConfig(require('../lib/delivery/zones').settingsFrom(content));
 /* Dates the restaurant is shut outright (lib/cms/hours.js). Embedded in the
    reservation and pickup pickers below so both refuse the day; api/send.js
    re-checks on submit, because a page left open overnight still carries
@@ -1172,22 +1176,35 @@ pages.push(page({
       <div class="order-modal__backdrop" data-order-close></div>
       <div class="order-modal__panel" role="dialog" aria-modal="true" aria-labelledby="order-modal-title">
         <button type="button" class="order-modal__close" data-order-close aria-label="Close">&times;</button>
-        <span class="label" style="color:var(--terracotta);">Order for Pickup</span>
+        <span class="label" style="color:var(--terracotta);">${DELIVERY_CFG.enabled ? 'Order for Pickup or Delivery' : 'Order for Pickup'}</span>
         <h3 id="order-modal-title" data-order-title>Your order</h3>
         <p class="order-modal__price" data-order-price></p>
         <form data-formsubmit aria-label="Pasta shop order">
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
           <input type="hidden" name="item" data-order-product>
+          <div class="fulfil" data-fulfil${DELIVERY_CFG.enabled ? '' : ' hidden'} role="radiogroup" aria-label="Pickup or delivery">
+            <label class="fulfil__opt fulfil__opt--on"><input type="radio" name="fulfillment" value="pickup" checked><span><b>Pickup</b><small>Whyte Ave &amp; 104 St</small></span></label>
+            <label class="fulfil__opt"><input type="radio" name="fulfillment" value="delivery"><span><b>Delivery</b><small>Edmonton, by zone</small></span></label>
+          </div>
           <div class="form-row">
             <div class="field"><label for="om-qty">Quantity</label><input type="number" id="om-qty" name="quantity" min="1" value="1" required></div>
-            <div class="field"><label for="om-pickup">Day of pickup</label><input type="date" id="om-pickup" name="pickup_day" required></div>
+            <div class="field" data-pickup-fields><label for="om-pickup">Day of pickup</label><input type="date" id="om-pickup" name="pickup_day" required></div>
           </div>
-          <div class="field">
+          <div class="field" data-pickup-fields>
             <label for="om-time">Pickup time</label>
             <select id="om-time" name="pickup_time" required disabled><option value="">Choose a pickup day first…</option></select>
             <p class="field__hint" data-pickup-note>Pickup times follow our opening hours.</p>
           </div>
+          <div data-delivery-fields hidden>
+            <div class="form-row">
+              <div class="field"><label for="om-postal">Postal code</label><input type="text" id="om-postal" name="delivery_postal" placeholder="e.g. T6J 5W3" autocomplete="postal-code" maxlength="8"></div>
+              <div class="field"><label for="om-address">Street address</label><input type="text" id="om-address" name="delivery_address" placeholder="Unit, number and street" autocomplete="street-address"></div>
+            </div>
+            <div class="zonebox" data-delivery-zone hidden></div>
+            <p class="field__hint" data-delivery-note>Type your postal code and we'll show the day your part of the city is delivered.</p>
+          </div>
           <script id="pickup-hours" type="application/json">${JSON.stringify({ hours: PICKUP_HOURS, firstSundayClosed: FIRST_SUNDAY_CLOSED, closed: CLOSED_DATES })}</script>
+          <script id="delivery-config" type="application/json">${JSON.stringify(DELIVERY_CFG).replace(/</g, '\\u003c')}</script>
           <div class="field"><label for="om-allergies">Any allergies?</label><input type="text" id="om-allergies" name="allergies" placeholder="Gluten, nuts, none…"></div>
           <div class="field"><label for="om-notes">Pasta shape &amp; preferences <span style="font-weight:400;opacity:0.7;">(optional)</span></label><textarea id="om-notes" name="notes" placeholder="Note your pasta shape, sauce choice, or any preferences (e.g. tagliatelle, Salsa Plasé)."></textarea></div>
           <div class="form-row">

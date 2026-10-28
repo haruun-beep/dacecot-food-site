@@ -291,6 +291,9 @@
     nav.appendChild(h('button', { class: 'navbtn' + (state.active === '__orders' ? ' active' : ''), onclick: function () { state.active = '__orders'; renderShell(); } }, [
       h('span', { class: 'ic', text: '🧾' }), h('span', { text: 'Orders & Bookings' })
     ]));
+    nav.appendChild(h('button', { class: 'navbtn' + (state.active === '__delivery' ? ' active' : ''), onclick: function () { state.active = '__delivery'; renderShell(); } }, [
+      h('span', { class: 'ic', text: '🚗' }), h('span', { text: 'Delivery' })
+    ]));
     nav.appendChild(h('button', { class: 'navbtn' + (state.active === '__classes' ? ' active' : ''), onclick: function () { state.active = '__classes'; renderShell(); } }, [
       h('span', { class: 'ic', text: '🍝' }), h('span', { text: 'Pasta Classes' })
     ]));
@@ -325,6 +328,7 @@
     if (state.active === '__notifications') renderNotifications(main);
     else if (state.active === '__orders') renderOrders(main);
     else if (state.active === '__reservations') renderReservations(main);
+    else if (state.active === '__delivery') renderDelivery(main);
     else if (state.active === '__classes') renderClasses(main);
     else if (state.active === '__contacts') renderContacts(main);
     else if (state.active === '__analytics') renderAnalytics(main);
@@ -1404,6 +1408,146 @@
       return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
     }
     return raw;
+  }
+
+  /* ---------- delivery: one zone per day, pack, call the driver ---------- */
+  var deliveryWeek = 0, deliveryDay = null;
+  function renderDelivery(main) {
+    main.appendChild(h('div', { class: 'page-head' }, [
+      h('h1', { text: 'Delivery' }),
+      h('p', { text: 'Each day is one part of the city. Pack the day\'s orders, tick them off, and call the driver: every order is booked on Uber Direct with the same pickup window, so one courier collects them all.' })
+    ]));
+    var wrap = h('div', {}, [h('div', { class: 'boot', text: 'Loading…' })]);
+    main.appendChild(wrap);
+
+    api('orders?sub=delivery&week=' + deliveryWeek).then(function (r) {
+      wrap.innerHTML = '';
+      if (r.status !== 200 || !r.body.ok) { wrap.appendChild(h('div', { class: 'notice', text: (r.body && r.body.error) || 'Could not load the delivery week.' })); return; }
+      var b = r.body, days = b.days || [];
+      if (!b.settings.enabled) wrap.appendChild(h('div', { class: 'notice', text: 'Delivery is switched off on the Pasta Shop page. Turn it on under Site Content → Delivery once Uber Direct is connected; orders already placed still show here.' }));
+      if (!b.uber.configured) wrap.appendChild(h('div', { class: 'notice', text: 'Uber Direct is not connected yet — packing works, "Call the driver" will not until the Uber settings are added on Vercel.' }));
+      else if (b.uber.sandbox) wrap.appendChild(h('div', { class: 'notice', text: 'Uber Direct is in TEST mode: deliveries get a practice courier and nobody real drives.' }));
+
+      var row = h('div', { class: 'filter-row' }, []);
+      [[-1, 'Last week'], [0, 'This week'], [1, 'Next week']].forEach(function (t) {
+        row.appendChild(h('button', { class: 'btn btn--sm ' + (deliveryWeek === t[0] ? '' : 'btn--ghost'), onclick: function () { deliveryWeek = t[0]; deliveryDay = null; renderShell(); } }, [t[1]]));
+      });
+      row.appendChild(h('span', { class: 'res-totals', text: 'Zones and days: Site Content → Delivery · courier pickup ' + b.pickup + ' · customers ' + b.settings.window }));
+      wrap.appendChild(row);
+
+      if (!deliveryDay || !days.some(function (d) { return d.key === deliveryDay; })) {
+        var firstWith = days.filter(function (d) { return d.orders.length; })[0];
+        deliveryDay = firstWith ? firstWith.key : (days.filter(function (d) { return d.key >= b.today; })[0] || days[0]).key;
+      }
+      var strip = h('div', { class: 'dlv-week' }, []);
+      days.forEach(function (d) {
+        var on = d.key === deliveryDay, none = !d.zones.length;
+        strip.appendChild(h('button', { class: 'dlv-day' + (on ? ' dlv-day--on' : '') + (none ? ' dlv-day--off' : ''), onclick: function () { deliveryDay = d.key; renderShell(); } }, [
+          h('div', { class: 'dlv-day__dn', text: d.short.slice(0, 3) + (d.key === b.today ? ' · today' : '') }),
+          h('div', { class: 'dlv-day__dd', text: d.short.slice(4) }),
+          h('div', { class: 'dlv-day__z' + (none ? ' dlv-day__z--none' : ''), text: none ? 'No delivery' : d.zones.join(' + ') }),
+          h('div', { class: 'dlv-day__c', text: none ? 'pickup only' : (d.orders.length ? d.orders.length + ' order' + (d.orders.length === 1 ? '' : 's') + (d.run ? (d.run.complete ? ' · delivered' : ' · on the road') : d.packed ? ' · ' + d.packed + ' packed' : '') : 'no orders yet') })
+        ]));
+      });
+      wrap.appendChild(strip);
+
+      var d = days.filter(function (x) { return x.key === deliveryDay; })[0];
+      if (!d) return;
+      var grid = h('div', { class: 'dlv-split' }, []);
+      wrap.appendChild(grid);
+
+      function dayAct(action, extra, confirmMsg, btn) {
+        if (confirmMsg && !window.confirm(confirmMsg)) return;
+        if (btn) btn.disabled = true;
+        api('orders', { method: 'POST', csrf: true, body: Object.assign({ action: action, date: d.key }, extra || {}) }).then(function (rr) {
+          if (rr.status === 200 && rr.body.ok) { toast(rr.body.emailed || 'Done.', 'ok'); renderShell(); }
+          else { toast((rr.body && rr.body.error) || 'Could not do that.', 'err'); if (btn) btn.disabled = false; }
+        }).catch(function () { toast('Network error.', 'err'); if (btn) btn.disabled = false; });
+      }
+
+      /* Left: the day's orders to pack. */
+      var left = h('div', { class: 'card dlv-card' }, []);
+      left.appendChild(h('div', { class: 'dlv-head' }, [
+        h('div', {}, [h('h2', { class: 'card-title', text: d.label }), h('p', { class: 'help', text: d.zones.length ? d.zones.join(' + ') + ' zone · ' + d.orders.length + ' order' + (d.orders.length === 1 ? '' : 's') : 'No delivery zone on this day' })]),
+        (d.orders.length && !d.run) ? h('button', { class: 'btn btn--sm btn--ghost', text: d.packed === d.orders.length ? 'Unpack all' : 'Mark all packed', onclick: function () { dayAct('delivery_pack_day', { packed: d.packed !== d.orders.length }, null, this); } }) : null
+      ]));
+      if (!d.orders.length) left.appendChild(h('p', { class: 'help', text: d.zones.length ? 'No ' + d.zones.join('/').toLowerCase() + ' delivery orders for this day yet.' : 'Customers cannot choose this day. Add a zone for it under Site Content → Delivery if you want to deliver here.' }));
+      d.orders.forEach(function (o) {
+        var booked = !!(o.uber && o.uber.delivery_id);
+        var cb = h('input', { type: 'checkbox' });
+        cb.checked = o.packed; cb.disabled = booked;
+        cb.addEventListener('change', function () {
+          cb.disabled = true;
+          api('orders', { method: 'POST', csrf: true, body: { action: 'delivery_pack', id: o.id, packed: cb.checked } }).then(function (rr) {
+            if (rr.status === 200 && rr.body.ok) renderShell();
+            else { toast((rr.body && rr.body.error) || 'Could not update.', 'err'); cb.checked = !cb.checked; cb.disabled = false; }
+          });
+        });
+        left.appendChild(h('label', { class: 'dlv-ord' + (o.packed ? ' dlv-ord--packed' : '') }, [
+          cb,
+          h('div', {}, [
+            h('div', { class: 'dlv-ord__who' }, [h('strong', { text: o.ref + ' · ' + (o.name || 'Unknown') }), o.payment_status === 'paid' ? h('span', { class: 'chip chip--ok', text: 'Paid' }) : (o.payment_status === 'pending' || o.payment_status === 'reminded') ? h('span', { class: 'chip chip--warn', text: 'Unpaid' }) : null]),
+            h('div', { class: 'dlv-ord__adr', text: o.address + ', ' + o.postal + (o.phone ? ' · ' + o.phone : '') }),
+            h('div', { class: 'dlv-ord__items', text: (o.quantity || '1') + ' × ' + (o.item || 'pasta shop order') + (o.allergies && o.allergies.toLowerCase() !== 'none' ? ' · allergies: ' + o.allergies : '') + (o.notes ? ' · ' + o.notes : '') })
+          ]),
+          h('div', { class: 'dlv-ord__amt' }, [h('b', { text: o.amount_cents != null ? money(o.amount_cents) : '—' }), h('span', { text: 'delivery ' + money(o.delivery_fee_cents) })])
+        ]));
+      });
+      if (d.orders.length && !d.run) {
+        var call = h('button', { class: 'btn btn--full btn--green', text: 'Call the driver · ' + d.orders.length + ' stop' + (d.orders.length === 1 ? '' : 's') + ', one pickup', onclick: function () {
+          dayAct('delivery_dispatch', null, 'Book ' + d.orders.length + ' Uber Direct deliver' + (d.orders.length === 1 ? 'y' : 'ies') + ' from Whyte Ave for ' + d.label + '? Each customer gets an email with their tracking link.', this);
+        } });
+        call.disabled = !d.canDispatch || !b.uber.configured;
+        left.appendChild(h('div', { class: 'dlv-call' }, [
+          h('p', { class: 'help', text: d.canDispatch ? (b.uber.configured ? d.packed + ' of ' + d.orders.length + ' packed · ready to go' : 'Every bag is packed. Connect Uber Direct to call the driver.') : d.dispatchBlocked }),
+          call
+        ]));
+      }
+      grid.appendChild(left);
+
+      /* Right: the courier run. */
+      var right = h('div', { class: 'card dlv-card' }, []);
+      if (!d.run) {
+        right.appendChild(h('h2', { class: 'card-title', text: 'Courier run' }));
+        right.appendChild(h('p', { class: 'help', text: 'Nothing booked for this day yet. Once every order is packed and you call the driver, this panel shows the courier, the batch, each stop in driving order, what Uber charges per stop, and the live status.' }));
+      } else {
+        var run = d.run;
+        right.appendChild(h('div', { class: 'dlv-head' }, [
+          h('div', {}, [h('h2', { class: 'card-title', text: run.batches.length ? 'Batch ' + run.batches.join(', ') : 'Courier run' }), h('p', { class: 'help', text: run.stops.length + ' deliveries · one pickup at da Cecot · ' + run.delivered + ' of ' + run.stops.length + ' delivered' })]),
+          run.complete ? h('span', { class: 'chip chip--ok', text: 'Run complete' }) : h('button', { class: 'btn btn--sm btn--ghost', text: 'Refresh status', onclick: function () { dayAct('delivery_refresh', null, null, this); } })
+        ]));
+        right.appendChild(h('div', { class: 'dlv-courier' }, [
+          h('div', { class: 'dlv-courier__av', text: run.courier && run.courier.name ? run.courier.name.charAt(0) : '…' }),
+          h('div', {}, [h('div', { class: 'dlv-courier__n', text: run.courier && run.courier.name ? run.courier.name : 'Finding a courier near Whyte Ave…' }), h('div', { class: 'help', text: run.courier && run.courier.name ? [run.courier.vehicle, run.courier.phone].filter(Boolean).join(' · ') : 'Uber matches the batch to one courier' })])
+        ]));
+        run.stops.forEach(function (s, i) {
+          var st = s.uber.status || 'pending';
+          right.appendChild(h('div', { class: 'dlv-stop' }, [
+            h('div', { class: 'dlv-stop__seq' + (st === 'delivered' ? ' dlv-stop__seq--done' : st === 'dropoff' ? ' dlv-stop__seq--live' : ''), text: String(s.uber.sequence || i + 1) }),
+            h('div', {}, [
+              h('div', { class: 'dlv-ord__who' }, [h('strong', { text: s.name || 'Customer' }), h('span', { class: 'chip ' + (st === 'delivered' ? 'chip--ok' : st === 'canceled' || st === 'returned' ? 'chip--err' : st === 'pending' ? '' : 'chip--warn'), text: s.statusLabel })]),
+              h('div', { class: 'dlv-ord__adr' }, [
+                h('span', { text: s.address + ', ' + s.postal + ' · ' }),
+                s.uber.tracking_url ? h('a', { href: s.uber.tracking_url, target: '_blank', rel: 'noopener', text: 'tracking link' }) : h('span', { text: 'no tracking link yet' })
+              ]),
+              h('div', { class: 'help', text: s.ref + (s.uber.delivery_id ? ' · ' + s.uber.delivery_id : '') })
+            ]),
+            h('div', { class: 'dlv-ord__amt' }, [h('b', { text: s.uber.fee_cents != null ? money(s.uber.fee_cents) : '—' }), h('span', { text: 'Uber fee' }), h('span', { text: 'customer paid ' + money(s.delivery_fee_cents) })])
+          ]));
+        });
+        right.appendChild(h('div', { class: 'dlv-stats' }, [
+          stat2('Customers paid', money(run.chargedCents)),
+          stat2('Uber, ' + run.stops.length + ' stop' + (run.stops.length === 1 ? '' : 's'), money(run.uberCents)),
+          stat2('Delivery margin', (run.marginCents < 0 ? '−' : '') + money(Math.abs(run.marginCents)), run.marginCents < 0 ? 'bad' : 'good')
+        ]));
+        right.appendChild(h('p', { class: 'help', text: 'Each stop is its own Uber delivery with its own quote. Batching changes who drives, not what Uber charges; the zone fee decides the margin.' }));
+      }
+      grid.appendChild(right);
+    }).catch(function () { wrap.innerHTML = ''; wrap.appendChild(h('div', { class: 'notice', text: 'Could not load the delivery week.' })); });
+
+    function stat2(label, value, cls) {
+      return h('div', { class: 'dlv-stat' + (cls ? ' dlv-stat--' + cls : '') }, [h('div', { class: 'dlv-stat__v', text: value }), h('div', { class: 'dlv-stat__l', text: label })]);
+    }
   }
 
   function renderOrders(main) {
